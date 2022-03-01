@@ -2,3 +2,67 @@
 body{
 	background: blue;
 }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*START SPECIFIC BREAKPOINTS*/
+
+
+
+/*END SPECIFIC BREAKPOINTS*/
+
+
+
+
+
+
+
+
+
+
+/*START TAILWIND BREAKPOINTS*/
+@media screen and (min-width: 640px){ /*sm*/
+    
+}
+
+@media screen and (min-width: 768px){ /*md*/
+    .h1{
+    	@apply leading-tight !important;
+    }
+}
+
+@media screen and (min-width: 1024px){ /*lg*/
+    .para-about{
+        width: 550px;
+    }
+
+    .heroTop{
+        /*max-height: auto;*/
+    }
+}
+
+@media screen and (min-width: 1280px){ /*xl*/
+    
+}
+
+@media screen and (min-width: 1536px){ /*2xl*/
+    
+}
+
+/*END TAILWIND BREAKPOINTS*/

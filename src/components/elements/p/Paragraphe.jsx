@@ -5,7 +5,7 @@ const Paragraphe = (props) => {
 	const {children, classe} = props
 
 	return(
-		<p className={`${classe} md:text-base text-sm font-primary`}>
+		<p className={`${classe} md:text-lg text-base text-gray-600 font-primary`}>
 			{ children }
 		</p>
 	)

@@ -2,16 +2,28 @@ import React from 'react';
 
 const H1 = (props) => {
 
-  const {children, classe}=props;
+  const {
+      children, 
+      size,
+      color,
+      classe
+  }=props;
+
+  let sizeH1, colorH1
+
+  if(size==="big") sizeH1 ="text-3xl md:text-4xl lg:text-5xl "
+  else sizeH1="text-2xl md:text-3xl lg:text-4xl"
+
+  colorH1 = color ? color : "text-white"
 
   return (
     <h1 className={`
-      text-2xl md:text-4xl lg:text-5xl 
+      h1
+      ${ sizeH1 }
+      ${ colorH1 }
+      ${classe}
       font-extrabold 
       font-primary
-      leading-snug
-      capitalize 
-      ${classe}
     `}>
       {children}
     </h1>

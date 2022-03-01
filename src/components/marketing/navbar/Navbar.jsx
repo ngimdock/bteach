@@ -3,8 +3,8 @@ import React from "react"
 const Navbar = () => {
 
 	return(
-		<nav>
-			La barre de navigation
+		<nav className="bg-blue-400 p-10 text-white font-bold text-3xl">
+			La navBar
 		</nav>
 	)
 }

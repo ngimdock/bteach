@@ -15,11 +15,11 @@ module.exports = {
     colors: ({ colors }) => ({
 
       "primary": "#00A8E8",
-        "primary-hover": "#129DD2",
+        "primary-hover": "#1CB8F3",
       "secondary": "#B93749",
         "secondary-hover": "#D3334A",
       "dark": "#192E35",
-
+        "dark-hover": "#073849",
 
       inherit: colors.inherit,
       current: colors.current,
@@ -353,6 +353,8 @@ module.exports = {
       DEFAULT: '1',
     },
     fontFamily: {
+      primary: ['Roboto', 'sans-serif'],
+
       sans: [
         'ui-sans-serif',
         'system-ui',

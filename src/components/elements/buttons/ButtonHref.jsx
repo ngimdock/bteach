@@ -55,7 +55,7 @@ const Button = (props) => {
   }
   else {
     textSize = "text-sm"
-    padding = "py-2 px-5"
+    padding = "py-8 px-10"
   }
 
   /* Rounded */
@@ -74,7 +74,7 @@ const Button = (props) => {
 			href={link}
 			target={target}
 			rel="noreferer"
-			className={`${classe} ${radius} ${padding} ${textSize} ${background} hover:${backgroundHover} ${textColor} font-primary font-semibold`}
+			className={`${classe} ${radius} ${padding} ${textSize} ${background} hover:${backgroundHover} ${textColor} inline-block w-auto font-primary font-semibold`}
 		>
 			{ children }
 		</a>

@@ -2,18 +2,26 @@ import React from 'react';
 
 const H3 = (props) => {
 
-  const {children, classe}=props;
+  const {
+      children,
+      color,
+      classe
+  }=props;
+
+  let colorH2
+
+  colorH2 = color ? color : "text-dark"
 
   return (
-    <h3 className={`
-      text-sm sm:text-lg md:text-2xl 
-      font-bold 
-      font-primary
-      leading-snug
+    <h2 className={`
       ${classe}
+      ${ colorH2 }
+      text-xl md:text-2xl lg:text-3xl
+      font-extrabold 
+      font-primary
     `}>
       {children}
-    </h3>
+    </h2>
   );  
 }
 
