@@ -1,0 +1,313 @@
+/* CSS module for the personal info page of the repeater */
+
+.profileContainer {
+  width: 100%;
+  height: auto;
+}
+
+/* Profil Header section */
+
+.profileHeader {
+  width: 100%;
+  height: 350px;
+  padding: 50px 100px;
+  background-color: #0f272e;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profileImage {
+  width: 250px;
+  height: 250px;
+}
+
+.profileInfoSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 30px;
+  height: 250px;
+  width: calc(100% - 280px);
+}
+
+.profilePersonal {
+  width: calc(100%);
+  display: flex;
+  flex-direction: row;
+}
+
+.profilePersonalInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 150px;
+}
+
+.profileName {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.profileLocation,
+.profileSubject,
+.profileName {
+  color: #fff;
+}
+
+.profileLocation {
+  font-size: 18px;
+}
+
+.profileSubject {
+  font-size: 20px;
+}
+
+.profileControl {
+  align-self: flex-end;
+  padding-bottom: 10px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.profileBtn {
+  width: 240px;
+  margin-top: 20px;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+.profileBtnFirst {
+  width: 270px;
+  background-color: #001e25;
+}
+
+.profileBtnFirst:hover {
+  background-color: #001e25;
+  opacity: .8;
+}
+
+.profileGeneralInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.generalInfoItem {
+  width: auto;
+  height: 80px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  background-color: #001e25;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.generalInfoItem:not(:last-child) {
+  margin-right: 20px;
+}
+
+.generalInfoItem span:first-child {
+  font-size: 14px;
+  color: #fff;
+  opacity: .7;
+}
+
+.generalInfoItem span:last-child {
+  font-size: 20px;
+  color: #fff;
+  opacity: .9;
+}
+
+/* Content Section */
+
+.profileContent {
+  padding: 30px 100px;
+}
+
+/* Media Query section */
+
+@media screen and (max-width: 1000px) {
+  .profileHeader {
+    position: relative;
+    height: 370px;
+    padding: 30px 100px;
+    align-items: flex-start;
+  }
+
+  .profileInfoSection {
+    width: calc(100% - 210px);
+    height: auto;
+  }
+  
+  .profilePersonal {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .profilePersonalInfo {
+    height: auto;
+  }
+
+  .profileName {
+    margin-bottom: 5px;
+  }
+
+  .profileLocation {
+    margin-bottom: 10px;
+  }
+
+  .profileControl {
+    margin-left: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .profileImage {
+    width: 180px;
+    height: 180px;
+  }
+
+  .profileBtn {
+    width: auto;
+    font-size: 12px;
+    margin-left: 0;
+    margin-right: 20px;
+    text-align: center;
+  }
+  
+  .profileBtnFirst {
+    width: auto;
+  }
+
+  .profileGeneralInfo {
+    position: absolute;
+    width: calc(100% - 40px);
+    bottom: 30px;
+    left: 100px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .profileHeader {
+    padding: 20px;
+    height: 340px;
+  }
+
+  .profileContent {
+    padding: 20px;
+  }
+
+  .profileGeneralInfo {
+    bottom: 20px;
+    left: 20px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .profileImage {
+    width: 130px;
+    height: 130px;
+  }
+
+  .profileInfoSection {
+    width: calc(100% - 150px);
+    height: auto;
+    margin-left: 20px;
+  }
+
+  .profileName {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .profileLocation {
+    font-size: 14px;
+  }
+  
+  .profileSubject {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .profileControl {
+    position: absolute;
+    bottom: 115px;
+    left: 20px;
+    width: calc(100% - 20px);
+  }
+
+  .profileGeneralInfo {
+    flex-wrap: wrap;
+  }
+
+  .generalInfoItem {
+    height: auto;
+    line-height: 30px;
+    padding: 5px 10px;
+  }
+
+  .generalInfoItem:not(:last-child) {
+    margin-right: 10px;
+  }
+  
+  .generalInfoItem span:first-child {
+    font-size: 12px;
+    color: #fff;
+    opacity: .7;
+  }
+  
+  .generalInfoItem span:last-child {
+    font-size: 16px;
+    color: #fff;
+    opacity: .9;
+  }
+}
+
+@media screen and (max-width: 404px) {
+  .profileHeader {
+    height: 380px;
+  }
+
+  .profileImage {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profileInfoSection {
+    width: calc(100% - 120px);
+  }
+
+  .profileControl {
+    bottom: 180px;
+  }
+
+  .generalInfoItem {
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .profileHeader {
+    height: 420px;
+  }
+
+  .profileName {
+    margin-bottom: 0;
+  }
+
+  .profileSubject {
+    margin-top: 5px;
+  }
+
+  .profileControl {
+    bottom: 180px;
+  }
+}
