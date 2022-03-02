@@ -22,7 +22,7 @@ npm install
 
 npm start
 
-### 5- Navigate to this url to view the project
+### 5- Navigate to this url in your browser to view the project
 
 http://localhost:3000/
 
