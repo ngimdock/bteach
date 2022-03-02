@@ -20,6 +20,8 @@ module.exports = {
         "secondary-hover": "#D3334A",
       "dark": "#192E35",
         "dark-hover": "#073849",
+      "gray2": "#d1d5db",
+      "gray2-ligth" : "#f3f4f6",
 
       inherit: colors.inherit,
       current: colors.current,

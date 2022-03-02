@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+
 
 const InputText = (props) => {
+
+	const [colorIcone, setColorIcone] = useState("text-gray2")
+	const inputREf = useRef()
+	const btnIconRef = useRef()
+
 
 	const {
 		type,
@@ -9,11 +15,12 @@ const InputText = (props) => {
 		id,
 		placeholder,
 		classe,
-		handleChange
+		handleChange,
+		icone
 	} = props
 
 	return(
-		<div className="w-full relative flex items-center">
+		<div className="w-full relative flex items-center border-b-2 border-gray2">
 			<input 
 				type={type} 
 				name={name} 
@@ -21,10 +28,12 @@ const InputText = (props) => {
 				value={value}
 				placeholder={placeholder}
 				onChange={handleChange}
-				className={` ${classe}  w-full py-2 px-6 py-2 md:py-3  text-gray-600 text-xs md:text-sm rounded-full border-2 border-primary focus:outline-none`}
+				className={` ${classe} group w-full py-2 md:py-3  text-gray-600 text-xs md:text-sm  focus:outline-none focus:bg-gray2-ligth focus:px-6`}
+				onFocus={ () => setColorIcone("text-primary") }
+				onBlur={ () => setColorIcone("text-gray2") }
 				/>
-			<button className="">
-				h
+			<button ref={btnIconRef} className={`${colorIcone} absolute right-0 group-focus:text-primary`}>
+				{ icone }
 			</button>
 		</div>
 	)

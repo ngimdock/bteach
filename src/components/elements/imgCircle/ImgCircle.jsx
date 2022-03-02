@@ -6,22 +6,17 @@ const ImgCircle = ({src, alt, size, classe}) => {
 	let dimention;
 
 	if(size === "small"){
-		dimention = "w-12 h-12"
-	}else if(size === "medium"){
-		dimention = "md:w-20 md:h-20 w-14 h-14"
-	}else if(size==="big"){
-		dimention = "lg:w-36 lg:h-36 md:w-24 md:h-24 w-16 h-16"
+		dimention = "w-8 md:w-10 h-8 md:h-10  rounded-lg "
 	}else{
-		dimention = "w-12 h-12"
+		dimention = "h-full w-full md:w-72  rounded-2xl "
 	}
 
 	return(
 		<Image 
 			image={src} 
 			alt={alt} 
-			className={`${classe} ${dimention} ${styles.defaultStyle} rounded-full`}
+			className={`${classe} ${dimention} ${styles.defaultStyle} `}
 		/>
-	)
-}
+	)}
 
 export default ImgCircle

@@ -31,25 +31,6 @@ function App() {
     ]
   }
 
-  const obj2 = {
-    id: 1, 
-    name: "ngimdock2", 
-    firstName: "zemfack2", 
-    email: "ngimdock2@gmail.com", 
-    password: "123herz2", 
-    phone1: 2677109798, 
-    phone2: 2655951494, 
-    date: "herz2", 
-    sex: "male2", 
-    town: "yaounde", 
-    district: "bonas2", 
-    profilePic: "photo",
-    notes: [
-      {id: 101, stars: 5, message: "note 1 au calme"},
-      {id: 102, stars: 6, message: "note 2 au calme"},
-    ]
-  }
-
   // const dan = new User(obj)
   // console.log(dan)
   // dan.updateUser(obj2)
