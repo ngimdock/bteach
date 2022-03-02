@@ -1,9 +1,10 @@
 import React from "react"
+import style from '../../../css/base.module.css'
 
 const Footer = () => {
 
 	return(
-		<footer className="mt-20 bg-yellow-400 p-10 text-white font-bold text-3xl">
+		<footer className={style.footer}>
 			Le footer
 		</footer>
 	)

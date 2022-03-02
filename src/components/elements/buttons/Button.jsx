@@ -34,7 +34,7 @@ const Button = (props) => {
  	else if(theme === "red"){
  		background = "bg-secondary hover:bg-secondary-hover"
  	}
- 	else{
+ 	else {
  		background = "bg-primary hover:bg-primary-hover"
  	}
 

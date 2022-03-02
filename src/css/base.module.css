@@ -1,0 +1,123 @@
+/* Css module for base component */
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+  z-index: 20;
+}
+
+.navbarLogo {
+  font-size: 24px;
+  font-weight: bold;
+  width: 150px;
+}
+
+.navbarNavigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.navbarNav {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navbarIconMenu {
+  display: none;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: #e00045;
+  color: #fff;
+}
+
+.navbarIconMenu {
+  cursor: pointer;
+}
+
+.navbarNavLink {
+  color: #222;
+  font-size: 16px;
+}
+
+.navbarBtnSignin,
+.navbarBtnSignup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbarBtnSignin {
+  background-color: transparent;
+  color: #222;
+  border: 2px solid transparent;
+  margin-right: 5px;
+}
+
+.navbarBtnSignin:hover {
+  background-color: transparent;
+  border: 2px solid #eee;
+}
+
+.navbarBtnSignup {
+  background-color: #e00045;
+}
+
+.navbarBtnSignup:hover {
+  background-color: #e00045;
+  opacity: .8;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 70px;
+}
+
+.footer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #001d25;
+}
+
+@media screen and (max-width: 800px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navbarLogo {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .navbarNavigation {
+    display: none;
+  }
+
+  .navbarIconMenu {
+    display: flex;
+  }
+}
