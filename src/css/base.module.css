@@ -5,6 +5,8 @@ body {
   margin: 0;
 }
 
+/* Navbar Section */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -40,7 +42,8 @@ body {
   align-items: center;
 }
 
-.navbarIconMenu {
+.navbarIconMenu,
+.navbarIconMenuClose {
   display: none;
   width: 50px;
   height: 50px;
@@ -49,10 +52,16 @@ body {
   border-radius: 100%;
   background-color: #e00045;
   color: #fff;
+  cursor: pointer;
 }
 
-.navbarIconMenu {
-  cursor: pointer;
+.navbarIconMenuClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  background-color: transparent;
+  color: #222;
 }
 
 .navbarNavLink {
@@ -88,12 +97,16 @@ body {
   opacity: .8;
 }
 
+
+/* Content section */
 .content {
   position: relative;
   width: 100%;
   height: auto;
   margin-top: 70px;
 }
+
+/* Footer Section */
 
 .footer {
   position: relative;
@@ -170,6 +183,42 @@ body {
   font-size: 1.2rem;
 }
 
+/* Mobile Menu section */
+
+.mobileMenuContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 30;
+  transition: transform .5s ease;
+}
+
+.mobileMenuTransition {
+  transform: translateX(100%);
+}
+
+.backgroundMenuBlack {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: .5;
+  transition: all .5s ease;
+  z-index: 25;
+}
+
+.backgroundMenuBlackTransition {
+  opacity: 0;
+}
+
+/* Media query section */
+
 @media screen and (max-width: 1000px) {
   .footer {
     flex-direction: column;
@@ -203,7 +252,8 @@ body {
     display: none;
   }
 
-  .navbarIconMenu {
+  .navbarIconMenu,
+  .navbarIconMenuClose {
     display: flex;
   }
 
@@ -231,5 +281,9 @@ body {
   .footerSocialIcon {
     margin-bottom: 0;
     margin-right: 10px;
+  }
+
+  .mobileMenuContainer {
+    width: calc(100% - 80px);
   }
 }
