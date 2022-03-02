@@ -100,6 +100,88 @@ body {
   width: 100%;
   height: auto;
   background-color: #001d25;
+  padding: 80px 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerOne {
+  width: calc(100%/2 - 10px);
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerTwo {
+  width: calc(100%/2 - 5px);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerTitle {
+  font-size: 18px;
+  color: #f7f8f8;
+  text-decoration: underline;
+  font-weight: 700;
+  padding-bottom: 30px;
+  display: block;
+}
+
+.footerNav,
+.footerNavIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.footerNavLink {
+  font-size: 16px;
+  color: #f7f8f8;
+  line-height: 30px;
+}
+
+.footerLogo {
+  font-size: 22px;
+  font-weight: bold;
+  width: auto;
+  display: block;
+  color: #fff;
+  opacity: .9;
+  margin-bottom: 20px;
+}
+
+.footerSocialIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: #fff;
+  color: #001d25;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footerOne {
+    width: calc(100% - 10px);
+  }
+
+  .footerOne:not(:last-child) {
+    margin-bottom: 40px;
+  }
 }
 
 @media screen and (max-width: 800px) {
@@ -110,6 +192,10 @@ body {
   .navbarLogo {
     width: auto;
   }
+
+  .footer {
+    padding: 20px;
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -119,5 +205,31 @@ body {
 
   .navbarIconMenu {
     display: flex;
+  }
+
+  .footerOne {
+    flex-direction: column;
+  }
+
+  .footerTwo {
+    width: calc(100% - 5px);
+    align-items: center;
+  }
+
+  .footerNav {
+    align-items: center;
+  }
+
+  .footerTwo:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .footerNavIcons {
+    flex-direction: row;
+  }
+
+  .footerSocialIcon {
+    margin-bottom: 0;
+    margin-right: 10px;
   }
 }
