@@ -3,7 +3,11 @@ import { FaBars } from "react-icons/fa"
 import style from '../../../css/base.module.css'
 import ALink from "../../elements/a/ALink"
 import Button from "../../elements/buttons/Button"
+import ImgCircle from "../../elements/imgCircle/ImgCircle"
+import NavbarProfilDropdown from "../../utils/dropdowns/NavbarProfileDropdown"
 import MobileMenu from "./MobileMenu"
+
+const profilImage = require('../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg')
 
 const Navbar = () => {
 	const [mobileMenuDisplayed, setMobileMenuDisplayed] = useState(false)
@@ -62,8 +66,27 @@ const Navbar = () => {
 					<ALink classe={style.navbarNavLink} link="#">Les repetiteurs</ALink>
 				</nav>
 
-				<Button size="medium" classe={style.navbarBtnSignin}>CONNEXION</Button>
-				<Button size="medium" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
+				{
+					true ? (
+						<>
+							<Button size="medium" classe={style.navbarBtnSignin}>CONNEXION</Button>
+							<Button size="medium" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
+						</>
+					):(
+						<NavbarProfilDropdown
+							dropElt={
+								<div className={style.navbarProfile}>
+									<span className={style.navbarProfileName}>Dilane kombou</span>
+									<ImgCircle 
+										classe={style.navbarProfileImage} 
+										src={profilImage} 
+										alt="dilane kombou" 
+									/>
+								</div>
+							}
+						/>
+					)
+				}
 			</div>
 
 			<div 
