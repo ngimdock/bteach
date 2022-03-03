@@ -23,6 +23,7 @@
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
+  margin-bottom: 30px;
 }
 
 .recommandationSlider {
@@ -76,6 +77,15 @@
   width: 120px;
   height: 120px;
   margin-bottom: 10px;
+}
+
+.sliderIndicator {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #828282;
 }
 
 @media screen and (max-width: 575px) {

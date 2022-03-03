@@ -85,6 +85,8 @@ const RecommandationCarousel = () => {
         size={25} 
         className={style.recommandationNext} 
       />
+
+      <span className={style.sliderIndicator}>{slideIndex + 1} sur 3</span>
     </section>
   )
 }
