@@ -5,7 +5,7 @@ import ProcessArea from "../../../components/marketing/pageSections/home/Process
 const BodyHome = () => {
 	return(
 		<div>
-			<ProcessArea />
+			{/* <ProcessArea /> */}
 		</div>
 	)
 }

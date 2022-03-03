@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { Children } from 'react'
 
 import Navbar from "../components/marketing/navbar/Navbar"
 import Footer from "../components/marketing/footer/Footer"
+import style from '../css/base.module.css'
 
 const Base = ({ children }) => {
 	return(
-		<div>
+		<>
 			<Navbar />
-			{ children }
+	
+			<main className={style.content}>
+				{ children }
+			</main>
+
 			<Footer />
-		</div>
+		</>
 	)
 }
 

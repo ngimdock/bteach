@@ -1,0 +1,289 @@
+/* Css module for base component */
+body {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Navbar Section */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 100px;
+  z-index: 20;
+}
+
+.navbarLogo {
+  font-size: 24px;
+  font-weight: bold;
+  width: 150px;
+}
+
+.navbarNavigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.navbarNav {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navbarIconMenu,
+.navbarIconMenuClose {
+  display: none;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background-color: #e00045;
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbarIconMenuClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  background-color: transparent;
+  color: #222;
+}
+
+.navbarNavLink {
+  color: #222;
+  font-size: 16px;
+}
+
+.navbarBtnSignin,
+.navbarBtnSignup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbarBtnSignin {
+  background-color: transparent;
+  color: #222;
+  border: 2px solid transparent;
+  margin-right: 5px;
+}
+
+.navbarBtnSignin:hover {
+  background-color: transparent;
+  border: 2px solid #eee;
+}
+
+.navbarBtnSignup {
+  background-color: #e00045;
+}
+
+.navbarBtnSignup:hover {
+  background-color: #e00045;
+  opacity: .8;
+}
+
+
+/* Content section */
+.content {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 70px;
+}
+
+/* Footer Section */
+
+.footer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #001d25;
+  padding: 80px 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerOne {
+  width: calc(100%/2 - 10px);
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerTwo {
+  width: calc(100%/2 - 5px);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footerTitle {
+  font-size: 18px;
+  color: #f7f8f8;
+  text-decoration: underline;
+  font-weight: 700;
+  padding-bottom: 30px;
+  display: block;
+}
+
+.footerNav,
+.footerNavIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.footerNavLink {
+  font-size: 16px;
+  color: #f7f8f8;
+  line-height: 30px;
+}
+
+.footerLogo {
+  font-size: 22px;
+  font-weight: bold;
+  width: auto;
+  display: block;
+  color: #fff;
+  opacity: .9;
+  margin-bottom: 20px;
+}
+
+.footerSocialIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: #fff;
+  color: #001d25;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+/* Mobile Menu section */
+
+.mobileMenuContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 30;
+  transition: transform .5s ease;
+}
+
+.mobileMenuTransition {
+  transform: translateX(100%);
+}
+
+.backgroundMenuBlack {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  opacity: .5;
+  transition: all .5s ease;
+  z-index: 25;
+}
+
+.backgroundMenuBlackTransition {
+  opacity: 0;
+}
+
+/* Media query section */
+
+@media screen and (max-width: 1000px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footerOne {
+    width: calc(100% - 10px);
+  }
+
+  .footerOne:not(:last-child) {
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navbarLogo {
+    width: auto;
+  }
+
+  .footer {
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .navbarNavigation {
+    display: none;
+  }
+
+  .navbarIconMenu,
+  .navbarIconMenuClose {
+    display: flex;
+  }
+
+  .footerOne {
+    flex-direction: column;
+  }
+
+  .footerTwo {
+    width: calc(100% - 5px);
+    align-items: center;
+  }
+
+  .footerNav {
+    align-items: center;
+  }
+
+  .footerTwo:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .footerNavIcons {
+    flex-direction: row;
+  }
+
+  .footerSocialIcon {
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+
+  .mobileMenuContainer {
+    width: calc(100% - 80px);
+  }
+}
