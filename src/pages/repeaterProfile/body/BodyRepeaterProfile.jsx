@@ -2,8 +2,27 @@ import React from 'react'
 import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
+import H3 from '../../../components/elements/titles/H3'
 
 const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
+const imageIllustration = require("../../../medias/illustrations/process1.png")
+
+const ProfileItem = ({ text, color }) => {
+	const defaultColor = color ? color : "#00a8e8"
+
+	return (
+		<span 
+			className={style.profileItem}
+			style={{ 
+				color: defaultColor, 
+				borderWidth: 2, 
+				borderColor: defaultColor 
+			}}
+		>
+			{ text }
+		</span>
+	)
+}
 
 const BodyRepeaterProfile = () => {
 	return(
@@ -47,7 +66,89 @@ const BodyRepeaterProfile = () => {
 			</header>
 
 			<section className={style.profileContent}>
-				Content
+				
+				<H3>Detail de l'offre de repetition</H3>
+
+				<div className={style.profileContentItems}>
+					<article className={style.profileContentItem}>
+						<span className={style.profileContentItemTitle}>
+							Matieres
+						</span>
+
+						<div className={style.profileContentItemBody}>
+							<ProfileItem text="Physique" />
+							<ProfileItem text="Mathematique" />
+							<ProfileItem text="Chimie" />
+							<ProfileItem text="Anglais" />
+						</div>
+					</article>
+
+					<article className={style.profileContentItem}>
+						<span className={style.profileContentItemTitle}>
+							Niveau Scolaire
+						</span>
+
+						<div className={style.profileContentItemBody}>
+							<ProfileItem text="Primaire" color="#e00045" />
+							<ProfileItem text="Secondaire" color="#e00045" />
+							<ProfileItem text="Universite" color="#e00045" />
+						</div>
+					</article>
+
+					<article className={style.profileContentItem}>
+						<span className={style.profileContentItemTitle}>
+							Type de cours
+						</span>
+
+						<div className={style.profileContentItemBody}>
+							<ProfileItem text="Cours individuelle" color="#04e762" />
+							<ProfileItem text="Cours en groupe" color="#04e762" />
+						</div>
+					</article>
+
+					<article className={style.profileContentItem}>
+						<span className={style.profileContentItemTitle}>
+							Lieu du cours
+						</span>
+
+						<div className={style.profileContentItemBody}>
+							<ProfileItem text="Chez eleve" color="#f77f00" />
+							<ProfileItem text="Chez enseignant" color="#f77f00" />
+							<ProfileItem text="En ligne" color="#f77f00" />
+						</div>
+					</article>
+
+					<article className={style.profileContentItem}>
+						<span className={style.profileContentItemTitle}>
+							Profession actuelle
+						</span>
+
+						<div className={style.profileContentItemBody}>
+							<ProfileItem text="Etudiant en Physique" />
+						</div>
+					</article>
+
+					<article className={style.profileContentItem}>
+						<span className={style.profileContentItemTitle}>
+							Description
+						</span>
+
+						<div className={style.profileContentItemBody}>
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus et libero esse earum 
+							autem? Aperiam, id repellendus sed ad recusandae ab obcaecati. Eligendi, sequi? Commodi voluptatum
+							ut ea vero nesciunt?
+						</div>
+					</article>
+
+					<H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
+				</div>
+
+				<ImgCircle 
+					classe={style.profileContentIllustration} 
+					src={imageIllustration} 
+					alt="illustration"
+				/>
+
 			</section>
 		</section>
 	)
