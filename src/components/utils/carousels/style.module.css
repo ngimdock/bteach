@@ -1,0 +1,94 @@
+/* CSS module for recommandation carousel */
+
+:root {
+  --slider-value: 0%
+}
+
+.recommandation {
+  position: relative;
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 0 2px 3px #cacaca;
+  border-radius: 3px;
+}
+
+.recommationContainer {
+  width: calc(100% - 70px);
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.recommandationSlider {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  transition: translate .4s;
+}
+
+.recommandationPrev,
+.recommandationNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition: transform .3s;
+}
+
+.recommandationPrev {
+  left: -15px;
+}
+
+.recommandationPrev:hover {
+  transform: translate(-5px, -50%);
+}
+
+.recommandationNext {
+  right: -15px;
+}
+
+.recommandationNext:hover {
+  transform: translate(5px, -50%);
+}
+
+.recommandationItem {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.recommandationItem > span {
+  font-size: 16px;
+  color: #828282;
+  margin-right: 20px;
+}
+
+.recommandationImage {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 575px) {
+  .recommandationItem {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .recommandationItem > span {
+    margin-right: 0;
+  }
+
+  .recommandationInfo {
+    margin-bottom: 20px;
+  }
+}

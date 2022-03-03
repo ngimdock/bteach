@@ -3,6 +3,7 @@ import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
 import H3 from '../../../components/elements/titles/H3'
+import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
 
 const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 const imageIllustration = require("../../../medias/illustrations/process1.png")
@@ -141,6 +142,8 @@ const BodyRepeaterProfile = () => {
 					</article>
 
 					<H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
+
+					<RecommandationCarousel />
 				</div>
 
 				<ImgCircle 
