@@ -234,6 +234,107 @@ body {
   opacity: 0;
 }
 
+.mobileMenuHeader {
+  width: 100%;
+  min-height: 150px;
+  height: auto;
+  background-color: #009cea;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.mobileMenuHeaderImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.mobileMenuHeaderInfo {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.mobileMenuHeaderName {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.mobileMenuHeaderInfoBtn {
+  border: 2px solid #fff;
+  background-color: #009cea;
+  margin-top: 10px;
+}
+
+.mobildeMenuContent {
+  width: 100%;
+  height: calc(100vh - 150px);
+  padding: 20px;
+}
+
+.mobildeMenuContent > div:first-child {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileMenuNavItem {
+  width: 100%;
+  border-bottom: 1px solid #c4c4c4;
+  padding: 10px;
+  border-left: 4px solid transparent;
+  transition: all .4s;
+}
+
+.mobileMenuNavItem:hover {
+  cursor: pointer;
+  border-left-color: #009cea;
+  background-color: #d0edfc;
+  text-decoration: none;
+}
+
+.mobileMenuNavItemText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #494949;
+}
+
+.mobildeMenuLoginSection {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileMenuLoginText {
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mobileMenuControl {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.mobileMenuLoginBtn {
+  margin-left: 10px;
+  background-color: transparent;
+  border: 2px solid #fff;
+}
+
+.mobileMenuLoginBtn:hover {
+  background-color: transparent;
+}
+
 /* Media query section */
 
 @media screen and (max-width: 1000px) {
@@ -302,5 +403,21 @@ body {
 
   .mobileMenuContainer {
     width: calc(100% - 80px);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .mobileMenuHeader {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mobileMenuHeaderInfo {
+    margin-top: 20px;
+    margin-left: 0;
+  }
+
+  .mobildeMenuContent {
+    height: calc(100vh - 244px);
   }
 }
