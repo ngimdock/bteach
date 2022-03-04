@@ -31,7 +31,7 @@
   height: 100%;
   display: flex;
   flex-wrap: nowrap;
-  transition: translate .4s;
+  transition: translate .4s, transform .4s;
 }
 
 .recommandationPrev,

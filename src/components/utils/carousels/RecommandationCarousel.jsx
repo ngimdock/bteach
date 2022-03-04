@@ -9,7 +9,7 @@ const RecommandationItem = () => {
   return (
     <article className={style.recommandationItem}>
       <span>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, minima!
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius voluptate similique asperiores sapiente est dolores tempora sequi, officia iste rem consectetur fugiat vel nesciunt earum veniam voluptatem aspernatur odit. Qui corrupti odit, perferendis quisquam harum libero recusandae excepturi autem deleniti rerum modi sapiente, animi facere, sint est incidunt illum tenetur!
       </span>
 
       <div className={style.recommandationInfo}>
