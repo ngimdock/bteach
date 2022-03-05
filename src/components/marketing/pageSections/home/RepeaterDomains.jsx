@@ -2,7 +2,7 @@ import React from "react";
 
 import H3 from "../../../elements/titles/H3";
 import DomainCard from "./elements/DomainCard";
-import youngMan from "../../../../medias/photos/young-african-man-standing-isolated.jpg"
+import youngMan from "../../../../medias/photos/young-african-man-standing-isolated (1) (1).jpg"
 import gabrielMatula from "../../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg"
 import businessWoman from "../../../../medias/photos/african-american-business-woman-by-window (1) (1).jpg"
 import blackMan from "../../../../medias/photos/smiling-sporty-black-man-standing-with-his-arms-crossed (1) (2).jpg"
