@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import User from "./entities/User"
 import Note from "./entities/Note"
+import Repeater from "./entities/Repeater"
 
 import Router from "./Router"
 
@@ -10,7 +11,7 @@ import "./css/App.css"
 
 function App() {
 
-  //Ne considez pas le code si dessous, je l'utilise pour faire les tests unitaires sur les classes
+  // Ne considez pas le code si dessous, je l'utilise pour faire les tests unitaires sur les classes
   const obj = {
     id: 10, 
     name: "ngimdock", 
@@ -41,6 +42,8 @@ function App() {
   note1.setIsVisible(false)
   console.log(note1)
 
+  const repeat = new Repeater(obj, "je suis special")
+  console.log(repeat)
   return (
     <BrowserRouter>
       <Router />
