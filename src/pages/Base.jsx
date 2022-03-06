@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React from 'react'
 
 import Navbar from "../components/marketing/navbar/Navbar"
 import Footer from "../components/marketing/footer/Footer"
@@ -8,7 +8,7 @@ const Base = ({ children }) => {
 	return(
 		<>
 			<Navbar />
-	
+		
 			<main className={style.content}>
 				{ children }
 			</main>

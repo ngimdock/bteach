@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { BrowserRouter } from "react-router-dom";
 
 import User from "./entities/User"
@@ -7,9 +7,9 @@ import Note from "./entities/Note"
 import Router from "./Router"
 
 import "./css/App.css"
+import LoadingPage from './components/marketing/navbar/LoadingPage';
 
 function App() {
-
   //Ne considez pas le code si dessous, je l'utilise pour faire les tests unitaires sur les classes
   const obj = {
     id: 10, 
@@ -42,9 +42,13 @@ function App() {
   console.log(note1)
 
   return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+
+      <LoadingPage />
+    </>
   );
 }
 
