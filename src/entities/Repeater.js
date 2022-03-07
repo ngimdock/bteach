@@ -1,7 +1,7 @@
-import User from './User'
+import Person from './Person'
 import Service from './Service'
 
-class Repeater extends User {
+class Repeater extends Person {
 
 	service
 
