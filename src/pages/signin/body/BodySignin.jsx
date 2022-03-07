@@ -7,11 +7,11 @@ const BodySignin = () => {
   let [password, setPassword] = useState("");
 
   return (
-    <div style={{height: "100vh"}} className="flex flex-col justify-center items-center py-10 px-7 w-11/12 h-full max-w-md mx-auto font-primary">
+    <div className="flex flex-col justify-center items-center py-10 w-11/12 h-screen max-w-md mx-auto font-primary">
       <H1 size="big" color="#00171f" classe="">
         Connexion
       </H1>
-      <form className="flex flex-col shadow-lg py-5 px-3 sm:px-5 sm:py-7  rounded-xl w-full">
+      <form className="flex flex-col shadow-md py-5 px-3 sm:px-5 sm:py-7  rounded-xl w-full">
         <input
           className="border-0 border-b-2 focus:outline-none mb-5 pl-3 pb-1.5 pt-1.5 focus:border-primary"
           style={{transition: "border-bottom .4s ease"}}
