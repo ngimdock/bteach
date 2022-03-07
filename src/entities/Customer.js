@@ -22,8 +22,8 @@ class Customer extends Person{
 		this.annonce.updateAnnonce(data)
 	}
 
-	changeVisibility(){
-		this.annonce.setIsVisible()
+	changeAnnonceVisibility(info){
+		this.annonce.setIsVisible(info)
 	}
 
 }

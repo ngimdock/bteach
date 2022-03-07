@@ -1,8 +1,8 @@
 import React from "react"
 import { BrowserRouter } from "react-router-dom";
 
-import Repeater from "./entities/Repeater"
 import Customer from "./entities/Customer"
+import Annonce from "./entities/Annonce"
 
 import Router from "./Router"
 
@@ -59,16 +59,11 @@ function App() {
     message: "STEPHANE est un tres bon repetiteur"
   }
 
-  const repeat = new Repeater(objRepeater)
-  const custo = new Customer(objRepeater)
-  
-  console.log(repeat.getName)
-  repeat.createService(objService)
-  console.log(repeat.getService)
-
-  console.log(custo.getName)
-  custo.createAnnonce(objAnnonce)
-  console.log(custo.getAnnonce)
+  const cust = new Customer(objRepeater)
+  cust.createAnnonce(objAnnonce)
+  console.log(cust.getAnnonce.getIsVisible)
+  cust.changeAnnonceVisibility(1)
+  console.log(cust.getAnnonce.getIsVisible)
 
   return (
     <BrowserRouter>

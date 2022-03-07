@@ -175,9 +175,9 @@ class User{
 		this.district = district
 	}
 
-	changeNoteVisibility(id){
+	changeNoteVisibility(id, info){
 		const index = this.notes.findIndex(note => note.id === id)
-		this.notes[index].setIsVisible()
+		this.notes[index].setIsVisible(info)
 	}
 
 	createNote(note){

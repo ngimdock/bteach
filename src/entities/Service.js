@@ -2,6 +2,8 @@
 class Service{
 
 	isVisible
+	isCertified
+	documetToCertify
 	minPrise
 	currentGradeLevel
 	teachingUnit
@@ -12,6 +14,7 @@ class Service{
 
 	constructor(data){
 		this.initialization(data)
+		this.isCertified = 0
 	}
 
 	get getServiceData(){
@@ -23,6 +26,20 @@ class Service{
 	 */
 	 get getIsVisible(){
 	 	return this.isVisible
+	 }
+
+	 /**
+	 * @returns boolean
+	 */
+	 get getIsCertified(){
+	 	return this.isCertified
+	 }
+
+	 /**
+	 * @returns file
+	 */
+	 get getDocumentToCertify(){
+	 	return this.documetToCertify
 	 }
 
 	/**
@@ -76,6 +93,7 @@ class Service{
 
 			const{
 				minPrise,
+				documetToCertify,
 				currentGradeLevel,
 				teachingUnit,
 				levelsUnit,
@@ -84,7 +102,8 @@ class Service{
 				description
 			} = data
 
-			this.isVisible = true
+			this.isVisible = 0
+			this.documetToCertify = documetToCertify ? documetToCertify : null
 			this.minPrise = minPrise
 			this.currentGradeLevel = currentGradeLevel
 			this.teachingUnit = [...teachingUnit]
@@ -100,8 +119,26 @@ class Service{
 		this.initialization(data)
 	}
 
-	setIsVisible(){ // change visibility of the service
-		this.isVisible = !this.isVisible
+	setIsVisible(info){ // change visibility of the service
+		this.isVisible = info
+	}
+
+	setIsCertified(info){
+		if(info === 1){
+			if(this.documetToCertify){
+				this.isCertified = info
+			}else{
+				throw new Error(
+			        "ERROR: This repeater did not provide the document(diploma) to certify his service"
+			      );
+			}
+		}else{
+			this.documetToCertify = info
+		}
+	}
+
+	setDocumentToCertify(document){
+		this.documetToCertify = document
 	}
 }
 

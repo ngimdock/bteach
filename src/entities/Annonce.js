@@ -8,7 +8,7 @@ class Annonce{
 
 	constructor(data){
 		this.initialization(data)
-		this.isVisible = true
+		this.isVisible = 0
 	}
 
 	get getAnnonceData(){
@@ -61,8 +61,8 @@ class Annonce{
 		this.initialization(data)
 	}
 
-	setIsVisible(){
-		this.isVisible = !this.isVisible
+	setIsVisible(info){
+		this.isVisible = info
 	}
 }
 

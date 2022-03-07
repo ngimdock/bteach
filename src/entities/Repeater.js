@@ -25,8 +25,8 @@ class Repeater extends Person {
 	 	this.service.updateService(data)
 	 }
 
-	 changeVisibility(){ //To show and hide the visibility of the service
-	 	this.service.setIsVisible()
+	 changeVisibility(info){ //To show and hide the visibility of the service
+	 	this.service.setIsVisible(info)
 	 }
 }
 
