@@ -175,13 +175,23 @@ class User{
 		this.district = district
 	}
 
-	giveNote(note){
-		this.notes.push(note)
+	changeNoteVisibility(id){
+		const index = this.notes.findIndex(note => note.id === id)
+		this.notes[index].setIsVisible()
+	}
+
+	createNote(note){
+		this.notes.push(new Note(note))
 	}
 
 	deleteNote(id){
 		let notesTmp = this.notes.filter(note => note.getId !== id)
 		this.notes = notesTmp
+	}
+
+	updateNote(id, data){
+		const index = this.notes.findIndex(note => note.getId === id)
+		this.notes[index].updateNote(data)
 	}
 }
 

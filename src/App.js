@@ -1,8 +1,8 @@
 import React from "react"
 import { BrowserRouter } from "react-router-dom";
 
-import Person from "./entities/Person"
-import Feedback from "./entities/Feedback"
+import User from "./entities/User"
+import Note from "./entities/Note"
 
 import Router from "./Router"
 
@@ -53,27 +53,17 @@ function App() {
     message : "J'ai paye le repetiteur STEPHANE mais il n'a pas fait son travail, je demande qu'on le bloque"
   }
 
-  const objFeedback2 = {
-    id: 123,
-    title : "(modifier) Arnaque d'un repetiteur",
-    message : "(modifier) J'ai paye le repetiteur STEPHANE mais il n'a pas fait son travail, je demande qu'on le bloque"
+  const objNote = {
+    id: 11,
+    starts: 5,
+    message: "STEPHANE est un tres bon repetiteur"
   }
 
-  const objFeedback3 = {
-    id: 124,
-    title : "(modifier 2) Arnaque d'un repetiteur",
-    message : "(modifier 2) J'ai paye le repetiteur STEPHANE mais il n'a pas fait son travail, je demande qu'on le bloque"
-  }
-
-  const per = new Person(objRepeater)
-  console.log(per.getFeedbacks)
-  per.createFeedback(objFeedback2)
-  per.createFeedback(objFeedback3)
-  console.log(per.getFeedbacks[0].getTitle)
-  per.updateFeedback(123, objFeedback3)
-  console.log(per.getFeedbacks[0].getTitle)
-
-  const feed = new Feedback(objFeedback)
+  const user = new User(objRepeater)
+  user.createNote(objNote)
+  console.log(user.notes[0].getIsVisible)
+  user.changeNoteVisibility(101)
+  console.log(user.notes[0].getIsVisible)
 
   return (
     <BrowserRouter>
