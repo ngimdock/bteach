@@ -46,8 +46,8 @@ class Note{
 	 	this.message = message
 	 }
 
-	 setIsVisible(value){
-	 	this.isVisible = value
+	 setIsVisible(){
+	 	this.isVisible = !this.isVisible
 	 }
 }
 

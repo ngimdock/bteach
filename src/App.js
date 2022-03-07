@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import User from "./entities/User"
 import Note from "./entities/Note"
 import Repeater from "./entities/Repeater"
+import Customer from "./entities/Customer"
+import Service from "./entities/Service"
 
 import Router from "./Router"
 
@@ -12,7 +14,7 @@ import "./css/App.css"
 function App() {
 
   // Ne considez pas le code si dessous, je l'utilise pour faire les tests unitaires sur les classes
-  const obj = {
+  const objRepeater = {
     id: 10, 
     name: "ngimdock", 
     firstName: "zemfack", 
@@ -32,18 +34,32 @@ function App() {
     ]
   }
 
-  // const dan = new User(obj)
-  // console.log(dan)
-  // dan.updateUser(obj2)
-  // console.log(dan)
+  const objService ={
+    minPrise: 20000,
+    currentGradeLevel: "Bac + 5 maths",
+    teachingUnit : ["Maths", "Physique", "chimie"],
+    levelsUnit : ["primaire", "secondaire", "Universite"],
+    coursesType: ["cours individuel", "cours en groupe"],
+    coursesLocation : ["chez le prof", "chew l'eleve"],
+    description : "je me decrit comme etatnt un tres bon prof pour ton niveau scolaire"
+  }
 
-  const note1 = new Note({ id: 10, stars: 5, message: "message denote..." })
-  console.log(note1)
-  note1.setIsVisible(false)
-  console.log(note1)
+  const objService2 ={
+    minPrise: 5000,
+    currentGradeLevel: "Bac + 3 physique",
+    teachingUnit : ["Maths", "Physique", "chimie"],
+    levelsUnit : ["primaire", "secondaire", "Universite"],
+    coursesType: ["cours individuel", "cours en groupe"],
+    coursesLocation : ["chez le prof", "chew l'eleve"],
+    description : "(modifier) je me decrit comme etatnt un tres bon prof pour ton niveau scolaire"
+  }
 
-  const repeat = new Repeater(obj, "je suis special")
-  console.log(repeat)
+  const repeat = new Repeater(objRepeater)
+  const serv = new Service(objService)
+  console.log(repeat.getService)
+  repeat.createService(objService)
+  console.log(repeat.service)
+
   return (
     <BrowserRouter>
       <Router />
