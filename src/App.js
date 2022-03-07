@@ -1,11 +1,8 @@
 import React from "react"
 import { BrowserRouter } from "react-router-dom";
 
-import User from "./entities/User"
-import Note from "./entities/Note"
-import Repeater from "./entities/Repeater"
-import Customer from "./entities/Customer"
-import Annonce from "./entities/Annonce"
+import Person from "./entities/Person"
+import Feedback from "./entities/Feedback"
 
 import Router from "./Router"
 
@@ -50,18 +47,33 @@ function App() {
     message : "Je cherche un repetiteur"
   }
 
-  const objAnnonce2 = {
-    classLevel : "Premiere",
-    units : ["Francais, Geo"],
-    message : "(modifier)Je cherche un repetiteur"
+  const objFeedback = {
+    id: 123,
+    title : "Arnaque d'un repetiteur",
+    message : "J'ai paye le repetiteur STEPHANE mais il n'a pas fait son travail, je demande qu'on le bloque"
   }
 
-  const custom = new Customer(objRepeater)
-  console.log(custom.getAnnonce)
-  custom.createAnnonce(objAnnonce)
-  console.log(custom.getAnnonce.getMessage)
-  custom.updateAnnonce(objAnnonce2)
-  console.log(custom.getAnnonce.getMessage)
+  const objFeedback2 = {
+    id: 123,
+    title : "(modifier) Arnaque d'un repetiteur",
+    message : "(modifier) J'ai paye le repetiteur STEPHANE mais il n'a pas fait son travail, je demande qu'on le bloque"
+  }
+
+  const objFeedback3 = {
+    id: 124,
+    title : "(modifier 2) Arnaque d'un repetiteur",
+    message : "(modifier 2) J'ai paye le repetiteur STEPHANE mais il n'a pas fait son travail, je demande qu'on le bloque"
+  }
+
+  const per = new Person(objRepeater)
+  console.log(per.getFeedbacks)
+  per.createFeedback(objFeedback2)
+  per.createFeedback(objFeedback3)
+  console.log(per.getFeedbacks[0].getTitle)
+  per.updateFeedback(123, objFeedback3)
+  console.log(per.getFeedbacks[0].getTitle)
+
+  const feed = new Feedback(objFeedback)
 
   return (
     <BrowserRouter>
