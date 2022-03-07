@@ -5,7 +5,7 @@ import User from "./entities/User"
 import Note from "./entities/Note"
 import Repeater from "./entities/Repeater"
 import Customer from "./entities/Customer"
-import Service from "./entities/Service"
+import Annonce from "./entities/Annonce"
 
 import Router from "./Router"
 
@@ -44,21 +44,24 @@ function App() {
     description : "je me decrit comme etatnt un tres bon prof pour ton niveau scolaire"
   }
 
-  const objService2 ={
-    minPrise: 5000,
-    currentGradeLevel: "Bac + 3 physique",
-    teachingUnit : ["Maths", "Physique", "chimie"],
-    levelsUnit : ["primaire", "secondaire", "Universite"],
-    coursesType: ["cours individuel", "cours en groupe"],
-    coursesLocation : ["chez le prof", "chew l'eleve"],
-    description : "(modifier) je me decrit comme etatnt un tres bon prof pour ton niveau scolaire"
+  const objAnnonce = {
+    classLevel : "Terminale",
+    units : ["Anglais, Philo"],
+    message : "Je cherche un repetiteur"
   }
 
-  const repeat = new Repeater(objRepeater)
-  const serv = new Service(objService)
-  console.log(repeat.getService)
-  repeat.createService(objService)
-  console.log(repeat.service)
+  const objAnnonce2 = {
+    classLevel : "Premiere",
+    units : ["Francais, Geo"],
+    message : "(modifier)Je cherche un repetiteur"
+  }
+
+  const custom = new Customer(objRepeater)
+  console.log(custom.getAnnonce)
+  custom.createAnnonce(objAnnonce)
+  console.log(custom.getAnnonce.getMessage)
+  custom.updateAnnonce(objAnnonce2)
+  console.log(custom.getAnnonce.getMessage)
 
   return (
     <BrowserRouter>
