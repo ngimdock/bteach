@@ -7,8 +7,7 @@ class User{
 	firstName;
 	email;
 	password;
-	phone1;
-	phone2;
+	phone;
 	date;
 	sex;
 	town;
@@ -55,15 +54,8 @@ class User{
 	 /**
 	 * @returns number
 	 */
-	 get getPhone1(){
-	 	return this.phone1
-	 }
-
-	 /**
-	 * @returns number
-	 */
-	 get getPhone2(){
-	 	return this.phone2
+	 get getPhone(){
+	 	return this.phone
 	 }
 
 	 /**
@@ -133,8 +125,7 @@ class User{
 			this.firstName = firstName
 			this.email = email
 			this.password = password
-			this.phone1 = phone1
-			this.phone2 = phone2
+			this.phone = phone
 			this.date = date
 			this.sex = sex
 			this.town = town
@@ -155,8 +146,7 @@ class User{
 			firstName,
 			email,
 			password,
-			phone1,
-			phone2,
+			phone,
 			date,
 			sex,
 			town,
@@ -167,8 +157,7 @@ class User{
 		this.firstName = firstName
 		this.email = email
 		this.password = password
-		this.phone1 = phone1
-		this.phone2 = phone2
+		this.phone = phone
 		this.date = date
 		this.sex = sex
 		this.town = town
