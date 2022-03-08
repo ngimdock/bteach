@@ -1,10 +1,10 @@
 
 class Service{
-
+	id
 	isVisible
 	isCertified
-	documetToCertify
-	minPrise
+	documentToCertify
+	minPrice
 	currentGradeLevel
 	teachingUnit
 	levelsUnit
@@ -19,6 +19,10 @@ class Service{
 
 	get getServiceData(){
 		return this
+	}
+
+	get getId() {
+		return this.id
 	}
 
 	/**
@@ -39,14 +43,14 @@ class Service{
 	 * @returns file
 	 */
 	 get getDocumentToCertify(){
-	 	return this.documetToCertify
+	 	return this.documentToCertify
 	 }
 
 	/**
 	 * @returns Number
 	 */
-	 get getMinPrise(){
-	 	return this.minPrise
+	 get getMinPrice(){
+	 	return this.minPrice
 	 }
 
 	 /**
@@ -92,19 +96,22 @@ class Service{
 		if(data){
 
 			const{
-				minPrise,
-				documetToCertify,
+				id,
+				minPrice,
+				documentToCertify,
 				currentGradeLevel,
 				teachingUnit,
 				levelsUnit,
 				coursesType,
 				coursesLocation,
-				description
+				description,
+				isVisible
 			} = data
 
-			this.isVisible = 0
-			this.documetToCertify = documetToCertify ? documetToCertify : null
-			this.minPrise = minPrise
+			this.id = id
+			this.isVisible = isVisible
+			this.documentToCertify = documentToCertify ? documentToCertify : null
+			this.minPrice = minPrice
 			this.currentGradeLevel = currentGradeLevel
 			this.teachingUnit = [...teachingUnit]
 			this.levelsUnit = [...levelsUnit]
@@ -124,8 +131,8 @@ class Service{
 	}
 
 	setIsCertified(info){
-		if(info === 1){
-			if(this.documetToCertify){
+		if(info){
+			if(this.documentToCertify){
 				this.isCertified = info
 			}else{
 				throw new Error(
@@ -133,12 +140,12 @@ class Service{
 			      );
 			}
 		}else{
-			this.documetToCertify = info
+			this.documentToCertify = info
 		}
 	}
 
 	setDocumentToCertify(document){
-		this.documetToCertify = document
+		this.documentToCertify = document
 	}
 }
 

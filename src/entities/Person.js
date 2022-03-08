@@ -4,7 +4,7 @@ import Feedback from './Feedback'
 class Person extends User {
 	feedbacks
 
-	constructor(data, feedbacks){
+	constructor(data, feedbacks=[]){
 		super(data)
 		this.feedbacks = feedbacks ? feedbacks.map(feedback => new Feedback(feedback)) : []
 	}
