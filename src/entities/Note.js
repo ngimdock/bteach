@@ -11,7 +11,7 @@ class Note{
 		this.id = id
 		this.stars = stars
 		this.message = message
-		this.isVisible = true
+		this.isVisible = 0
 	}
 
 
@@ -46,8 +46,8 @@ class Note{
 	 	this.message = message
 	 }
 
-	 setIsVisible(value){
-	 	this.isVisible = value
+	 setIsVisible(info){
+	 	this.isVisible = info
 	 }
 }
 
