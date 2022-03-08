@@ -1,0 +1,54 @@
+
+.CurrentSearchNav{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 15px 30px;
+	width: auto;
+	overflow-x: auto;
+}
+
+.SearchFilterBox{
+	background: #F8F8F8;
+}
+
+.RepeaterCard{
+	border: 1px solid black;
+	border-radius: 5px;
+	color: #fff;
+	font-weight: 300;
+}
+
+.RepeaterCard .bottom_part{
+	background-color: #00171f;
+}
+
+.w_max_content{
+	width: max-content;
+}
+
+.RepeaterCard .top_part img{
+	height: 300px;
+}
+.RepeaterCard .top_part .card_repeater{
+	height: 300px;
+	width: 363px;
+	position: absolute;
+	background-color: rgba(0, 23, 31, .2);
+}
+.card_repeater .d_bottom_right{
+	position: absolute;
+	bottom: 15px;
+	right: 8px;
+}
+
+@media screen and (max-width: 640px){
+	.RepeaterCard .top_part .card_repeater{
+		width: 350px;
+	}
+}
+
+@media screen and (min-width: 640px) and (max-width: 1024px){
+	.RepeaterCard .top_part .card_repeater{
+		width: 380px;
+	}
+}
