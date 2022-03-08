@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { FaBars } from "react-icons/fa"
+import { Link } from "react-router-dom"
 import style from '../../../css/base.module.css'
 import ALink from "../../elements/a/ALink"
 import Button from "../../elements/buttons/Button"
@@ -59,7 +60,9 @@ const Navbar = () => {
 
 	return(
 		<header className={style.navbar}>
-			<span className={style.navbarLogo}>Bteach</span>
+			<Link to="/">
+				<span className={style.navbarLogo}>Bteach</span>
+			</Link>
 
 			<div className={style.navbarNavigation}>
 				<nav className={style.navbarNav}>
@@ -69,8 +72,8 @@ const Navbar = () => {
 				{
 					true ? (
 						<>
-							<Button size="medium" classe={style.navbarBtnSignin}>CONNEXION</Button>
-							<Button size="medium" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
+							<Button size="medium" link="/sign_in" classe={style.navbarBtnSignin}>CONNEXION</Button>
+							<Button size="medium" link="/client/sign_up" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
 						</>
 					):(
 						<NavbarProfilDropdown

@@ -32,7 +32,7 @@ const CityCircle = (props) => {
 		<div className="DomainCard mx-auto">
 
 			<div className={`${background} lg:py-12 py-5 lg:px-10 px-6 rounded-circle`}>
-				<p className="font-medium text-2xl text-white">{name}</p>
+				<p className="lg:text-2xl text-xl text-white font-medium">{name}</p>
 			</div>
 			
 		</div>

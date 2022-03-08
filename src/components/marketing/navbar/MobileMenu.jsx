@@ -7,9 +7,11 @@ import ALink from '../../elements/a/ALink'
 
 const profileImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 
-const NavItem = ({ text }) => {
+const NavItem = ({ text, link }) => {
+  const defaultLink = link ? link : "#"
+
   return (
-    <ALink classe={style.mobileMenuNavItem} link="#">
+    <ALink classe={style.mobileMenuNavItem} link={defaultLink}>
       <span className={style.mobileMenuNavItemText}>{ text }</span>
     </ALink>
   )
@@ -34,7 +36,7 @@ const MobileMenu = ({ show, onHide }) => {
               <div className={style.mobileMenuHeaderInfo}>
                 <span className={style.mobileMenuHeaderName}>Dilane Kombou</span>
 
-                <Button classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
+                <Button link="/repeater/profile/d" classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
               </div>
             </>
           ):(
@@ -42,8 +44,8 @@ const MobileMenu = ({ show, onHide }) => {
               <span className={style.mobileMenuLoginText}>Authentifiez vous avant de continuer</span>
 
               <div className={style.mobileMenuControl}>
-                <Button size="small" classe={style.mobileMenuLoginBtn}>CONNEXION</Button>
-                <Button size="small" theme="red" classe={style.mobileMenuLoginBtn}>INSCRIPTION</Button>
+                <Button size="small" link="/sign_in" classe={style.mobileMenuLoginBtn}>CONNEXION</Button>
+                <Button size="small" link="/client/sign_up" theme="red" classe={style.mobileMenuLoginBtn}>INSCRIPTION</Button>
               </div>
             </div>
           )
@@ -52,6 +54,7 @@ const MobileMenu = ({ show, onHide }) => {
 
       <div className={style.mobildeMenuContent}>
         <div>
+          <NavItem text="Accueil" link="/" />
           <NavItem text="Les repetiteurs" />
           <NavItem text="Deconnexion" />
         </div>

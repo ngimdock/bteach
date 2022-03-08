@@ -5,6 +5,63 @@ body {
   margin: 0;
 }
 
+/* Loading page Section */
+
+.loadingPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  z-index: 30;
+  opacity: 1;
+  transition: opacity .9s ease;
+}
+
+.loadingPageAnimation {
+  opacity: 0;
+}
+
+.loadingPageLogo {
+  font-size: 30px;
+  font-weight: bold;
+  width: auto;
+  /* color: #fff; */
+}
+
+.loaderSection {
+  width: 100px;
+  height: 5px;
+  background-color: #ffc5d6;
+  /* background-color: #eee; */
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.loaderSectionIn {
+  width: 30px;
+  height: 100%;
+  /* background-color: #009cea; */
+  background-color: #e00045;
+  animation: loaderPage 1s ease-in-out infinite alternate;
+}
+
+@keyframes loaderPage {
+  0% {
+    transform: translateX(-20px);
+  }
+
+  100% {
+    transform: translateX(90px);
+  }
+}
+
 /* Navbar Section */
 
 .navbar {

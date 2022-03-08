@@ -21,7 +21,7 @@ const RepeaterDomains = () => {
 
 			<H3 classe="text-center font-medium text-gray-500">Les domaines des répétiteurs les plus cherchés</H3>
 			<div className="my-5 py-2"></div>
-			<div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-x-5 md:gap-x-5">
+			<div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-5 md:gap-x-5">
 				<DomainCard
 					image={youngMan}
 					discipline="Prof de math 3ieme, 1ere et Tle Serie A, D, C"

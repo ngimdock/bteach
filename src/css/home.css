@@ -72,6 +72,8 @@
 	width: 200px;
 	height: 220px;
 	border-radius: 10px;
+	object-fit: cover;
+	transition: transform .4s;
 }
 
 .img_section{
@@ -153,6 +155,10 @@
 	.testimonial_slider_2 #controls {
 		margin-left: 20px;
 	}
+
+	.img_card {
+		width: 100%;
+	}
 }
 
 .testimonial_slider_2 #controls label{
@@ -183,7 +189,7 @@
 }
 .content_2:before,
 .content_2:after {
-	content: ;
+	content: "";
 	height: 15px;
 	width: 19px;
 	position: absolute;

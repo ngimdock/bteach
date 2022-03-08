@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import { BrowserRouter } from "react-router-dom";
 
 import Customer from "./entities/Customer"
@@ -7,6 +7,7 @@ import Annonce from "./entities/Annonce"
 import Router from "./Router"
 
 import "./css/App.css"
+import LoadingPage from './components/marketing/navbar/LoadingPage';
 
 function App() {
 
@@ -65,9 +66,13 @@ function App() {
   console.log(cust.getAnnonce.getIsVisible)
 
   return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+
+      <LoadingPage />
+    </>
   );
 }
 
