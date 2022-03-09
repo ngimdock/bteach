@@ -13,8 +13,6 @@ const {
   REACT_APP_MEADUREMENT_ID
 } = process.env
 
-console.log(REACT_APP_API_KEY)
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: REACT_APP_API_KEY,
