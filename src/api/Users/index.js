@@ -1,12 +1,42 @@
 // Users operations
 import { db, storage } from '../../firebase'
+import {
+  onSnapshot,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  collection,
+} from 'firebase/firestore'
+import { 
+  getCollection,
+  getCollections
+} from '../utils'
 
 /**
  * Get user
  * @param {String} id 
  */
 const getUser = async (id) => {
-  // To do
+  // Get the user collection
+  const userCollection = getCollection(id, "users")
+
+  try {
+    // Trying getting the document from firestore
+    const user = await getDoc(userCollection)
+
+    return ({
+      ...user.data(), 
+      id: user.id, 
+      password: undefined
+    })
+  } catch (err) {
+    console.error(err)
+
+    return null
+  }
 }
 
 /**
@@ -14,7 +44,31 @@ const getUser = async (id) => {
  * @param {Object} data 
  */
 const createUser = async (data) => {
-  // To do
+  // Get the whole user collection
+  const usersCollection = getCollections("users")
+
+  try {
+    // destructuration of data
+    const {
+      id,
+      name,
+      firstName,
+      email,
+      password,
+      phone,
+      date,
+      sex,
+      town,
+      district,
+      profilePic,
+      notes
+    } = data
+
+    // to do
+
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 /**
