@@ -11,23 +11,23 @@ class Repeater extends Person {
 	}
 
 	/**
-	 * @returns string
+	 * @returns {Service}
 	 */
-	 get getService(){
+	get getService(){
 	 	return this.service 
-	 }
+	}
 
-	 createService(data){
+	createService(data){
 	 	this.service = (new Service(data)).getServiceData
-	 }
+	}
 
-	 updateService(data){
+	updateService(data){
 	 	this.service.updateService(data)
-	 }
+	}
 
-	 changeVisibility(info){ //To show and hide the visibility of the service
+	changeVisibility(info){ //To show and hide the visibility of the service
 	 	this.service.setIsVisible(info)
-	 }
+	}
 }
 
 export default Repeater

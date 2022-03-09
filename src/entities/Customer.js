@@ -15,7 +15,7 @@ class Customer extends Person{
 	}
 
 	createAnnonce(data){
-		this.annonce = (new Annonce(data)).getAnnonceData
+		this.annonce = new Annonce(data)
 	}
 
 	updateAnnonce(data){
