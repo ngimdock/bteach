@@ -1,7 +1,7 @@
 import User from './User'
 import Feedback from './Feedback'
 
-class Person extends User {
+class ActiveUser extends User {
 	feedbacks
 
 	constructor(data, feedbacks=[]){
@@ -33,4 +33,4 @@ class Person extends User {
 	}
 }
 
-export default Person
+export default ActiveUser

@@ -9,6 +9,7 @@ class Annonce{
 
 	constructor(data){
 		this.initialization(data)
+		this.isVisible = 1
 	}
 
 	get getAnnonceData(){
@@ -54,7 +55,6 @@ class Annonce{
 			} = data
 
 			this.id = id
-			this.isVisible = isVisible
 			this.classLevel = classLevel
 			this.units = [...units]
 			this.message = message

@@ -6,12 +6,12 @@ class Note{
 	isVisible;
 
 	constructor(data){
-		const { id, stars, message, isVisible } = data
+		const { id, stars, message } = data
 
 		this.id = id
 		this.stars = stars
 		this.message = message
-		this.isVisible = isVisible
+		this.isVisible = 1
 	}
 
 

@@ -3,6 +3,7 @@ import Note from "./Note"
 class User{
 
 	id;
+	role;
 	name;
 	firstName;
 	email;
@@ -22,6 +23,13 @@ class User{
 	get getId(){
 		return this.id
 	}
+
+	/**
+	 * @returns 0 | 1 | 2
+	 */
+	 get getRole(){
+	 	return this.role
+	 }
 
 	/**
 	 * @returns string

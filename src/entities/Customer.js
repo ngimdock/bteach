@@ -1,7 +1,7 @@
-import Person from './Person'
+import ActiveUser from './ActiveUser'
 import Annonce from './Annonce'
 
-class Customer extends Person{
+class Customer extends ActiveUser{
 
 	annonce
 

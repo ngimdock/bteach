@@ -3,6 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import Customer from "./entities/Customer"
 import Annonce from "./entities/Annonce"
+import Repeater from "./entities/Repeater"
+import Service from "./entities/Service"
 
 import Router from "./Router"
 
@@ -59,11 +61,11 @@ function App() {
     message: "STEPHANE est un tres bon repetiteur"
   }
 
-  const cust = new Customer(objRepeater)
-  cust.createAnnonce(objAnnonce)
-  console.log(cust.getAnnonce.getIsVisible)
-  cust.changeAnnonceVisibility(1)
-  console.log(cust.getAnnonce.getIsVisible)
+  const repeat = new Repeater(objRepeater)
+  repeat.createService(objService)
+  console.log(repeat.getService.getIsVisible)
+  repeat.changeServiceVisibility(0)
+  console.log(repeat.getService.getIsVisible)
 
   return (
     <>

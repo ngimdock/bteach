@@ -14,6 +14,7 @@ class Service{
 
 	constructor(data){
 		this.initialization(data)
+		this.isVisible = 1
 		this.isCertified = 0
 	}
 
@@ -104,12 +105,10 @@ class Service{
 				levelsUnit,
 				coursesType,
 				coursesLocation,
-				description,
-				isVisible
+				description
 			} = data
 
 			this.id = id
-			this.isVisible = isVisible
 			this.documentToCertify = documentToCertify ? documentToCertify : null
 			this.minPrice = minPrice
 			this.currentGradeLevel = currentGradeLevel
