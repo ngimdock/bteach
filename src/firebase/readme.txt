@@ -1,0 +1,1 @@
+This folder contains one file named 'index.js' and it contains all the configuration for setting up firebase inside this project

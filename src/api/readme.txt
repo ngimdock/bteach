@@ -1,0 +1,1 @@
+This folder will contains all the functions that manage entities on the server side (Using firebase)
