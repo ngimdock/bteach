@@ -16,7 +16,7 @@ const InputText = (props) => {
         id={id}
         value={value}
         placeholder={placeholder}
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChange(e)}
         className={` ${classe} group w-full py-2 md:py-3  text-gray-600 text-xs md:text-sm  focus:outline-none focus:bg-gray2-ligth focus:px-6`}
         onFocus={() => setColorIcone("text-primary")}
         onBlur={() => setColorIcone("text-gray2")}
