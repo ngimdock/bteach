@@ -7,6 +7,7 @@ class Customer extends ActiveUser{
 
 	constructor(data){
 		super(data)
+		this.role = 0
 		this.annonce = null
 	}
 

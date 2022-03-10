@@ -3,6 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 
 import ContextProvider from "./ContextProvider"
 
+import User from "./entities/User"
+import Administrator from "./entities/Administrator"
+
 import Customer from "./entities/Customer"
 import Annonce from "./entities/Annonce"
 import Repeater from "./entities/Repeater"
@@ -63,12 +66,14 @@ function App() {
     message: "STEPHANE est un tres bon repetiteur"
   }
 
+  const user = new User(objRepeater)
   const repeat = new Repeater(objRepeater)
-  repeat.createService(objService)
-  console.log(repeat.getService.getIsVisible)
-  repeat.changeServiceVisibility(0)
-  console.log(repeat.getService.getIsVisible)
-
+  const custum = new Customer(objRepeater)
+  const admin = new Administrator(objRepeater)
+  console.log(user.getRole)
+  console.log(repeat.getRole)
+  console.log(custum.getRole)
+  console.log(admin.getRole)
   return (
     <>
       <ContextProvider>

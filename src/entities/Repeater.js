@@ -7,6 +7,7 @@ class Repeater extends ActiveUser {
 
 	constructor(data){
 		super(data)
+		this.role = 1
 		this.service = null
 	}
 
