@@ -1,7 +1,23 @@
+.select{
+	padding: 8px;
+	padding-left: 9px;
+	border-radius: 5px;
+	color: gray;
+}
+
+.radio_button:checked{
+	background-color: blueviolet !important;
+}
+
+@media screen and (max-width: 640px){
+	.radio_label{
+		display: flex;
+	}
+}
 
 .CurrentSearchNav{
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
+	border-top: 2px solid silver;
+	border-bottom: 2px solid silver;
 	padding: 15px 30px;
 	width: auto;
 	overflow-x: auto;
@@ -41,6 +57,18 @@
 	right: 8px;
 }
 
+.badge_client_card{
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.name_client_card{
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+}
+
 @media screen and (max-width: 640px){
 	.RepeaterCard .top_part .card_repeater{
 		width: 350px;
@@ -51,4 +79,33 @@
 	.RepeaterCard .top_part .card_repeater{
 		width: 380px;
 	}
+}
+
+#page-numbers {
+  list-style: none;
+  display: flex;
+  margin-top: 30px;
+}
+
+#page-numbers > li {
+  margin-right: 5px;
+  color: black;
+  font-weight: 500;
+  font-size: 20px;
+  padding: 10px 18px;
+	border-radius: 100%;
+  user-select: none;
+  cursor: pointer;
+}
+#page-numbers > li:hover{
+	color: #fff;
+	background-color: #e00045;
+}
+#page-numbers > li:active{
+	background-color: #e00045;
+	color: white;
+
+}
+.pageNumbers{
+	background-color: #e00045;
 }

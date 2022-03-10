@@ -4,6 +4,8 @@ import CurrentSearchNav from "../../../components/marketing/pageSections/search/
 import H2 from "../../../components/elements/titles/H2";
 import SearchFilter from "../../../components/marketing/pageSections/search/repeaters/SearchFilter";
 import AllRepeater from "../../../components/marketing/pageSections/search/repeaters/AllRepeater";
+import Pagination from "../../../components/marketing/pageSections/search/elements/Pagination";
+import DropdownSortby from "../../../components/marketing/pageSections/search/elements/DropdownSortby";
 
 import search from "../../../css/search.css";
 
@@ -21,11 +23,17 @@ const BodySearchRepeaters = () => {
 				discipline5="Prof de sciences"
 			/>
 
-			<H2 classe="mt-16 mb-7 text-gray-500">Filtre de recherche</H2>
+			<p className="mt-14 mb-7 lg:ml-0 ml-4 text-2xl font-medium text-gray-500">Filtre de recherche</p>
 
 			<SearchFilter />
 
+			<div className="mt-7">
+				<DropdownSortby />
+			</div>
+
 			<AllRepeater />
+
+			<Pagination />
 
 		</div>
 	)
