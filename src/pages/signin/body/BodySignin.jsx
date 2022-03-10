@@ -2,6 +2,8 @@ import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 import React, { useState } from "react";
 import H3 from "../../../components/elements/titles/H3";
 import Input from "../../../components/elements/inputs/Input";
+import style from '../../../css/base.module.css'
+import Button from "../../../components/elements/buttons/Button";
 
 const BodySignin = () => {
   let [email, setEmail] = useState("");
@@ -33,6 +35,28 @@ const BodySignin = () => {
           Connexion
         </button>
       </form>
+
+      <div className="mt-5">
+        <span>Vous n'avez pas encore de compte. inscrivez vous en tant que</span><br />
+
+        <div className="mt-5">
+          <Button 
+            link="/client/sign_up"
+            size="small"
+            style={{ backgroundColor: "#e00045" }}
+          >
+            Client
+          </Button>
+          <Button 
+            link="/repeater/sign_up"
+            size="small"
+            style={{ backgroundColor: "#e00045" }}
+            classe="ml-2"
+          >
+            Repetiteur
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
