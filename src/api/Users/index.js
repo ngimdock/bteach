@@ -8,12 +8,13 @@ import {
   deleteDoc,
   query,
   collection,
+  setDoc,
 } from 'firebase/firestore'
 import { 
   getCollection,
   getCollections
 } from '../utils'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -21,7 +22,7 @@ const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-serv
  * Get user
  * @param {String} id 
  */
-const getUser = async (id) => {
+const firebaseUserGetUser = async (id) => {
   // Get the user collection
   const userCollection = getCollection(id, "users")
 
@@ -38,13 +39,18 @@ const getUser = async (id) => {
 }
 
 /**
+ * Get the current user
+ * @param {String} accessToken 
+ */
+const firebaseUserGetCurrentUser = async (accessToken) => {
+  // To do
+}
+
+/**
  * Create a user
  * @param {Object} data 
  */
-const createUser = async (data) => {
-  // Get the whole user collection
-  const usersCollection = getCollections("users")
-
+const firebaseUserCreateUser = async (datas) => {
   try {
     // destructuration of data
     const {
@@ -58,7 +64,7 @@ const createUser = async (data) => {
       town,
       district,
       role
-    } = data
+    } = datas
 
     // Create an instance of a User in firebase
     const credentials = await createUserWithEmailAndPassword(auth, email, password)
@@ -66,7 +72,15 @@ const createUser = async (data) => {
     // creation date declaration
     const creation_user_date = Date.now()
 
-    const newUser = await addDoc(usersCollection, {
+    // Get the new user id
+    const uid = credentials.user.auth.currentUser.uid
+
+
+    // Get the whole user collection
+    const userCollection = getCollection(uid, "users")
+
+    // Insertion of the user in firestore
+    await setDoc(userCollection, {
       firstName,
       lastName,
       email,
@@ -80,11 +94,8 @@ const createUser = async (data) => {
       role
     })
 
-    // Get the new user id
-    const uid = newUser.id
-
     // Get user basing on his uid
-    const { data, error } = await getUser(uid)
+    const { data, error } = await firebaseUserGetUser(uid)
 
     if (data) {
       return { data: { ...data, accessToken: credentials.user?.accessToken } }
@@ -99,11 +110,41 @@ const createUser = async (data) => {
 }
 
 /**
+ * Login a user
+ * @param {String} email 
+ * @param {String} password 
+ */
+const firebaseUserLogin = async (email, password) => {
+  if (email && password) {
+    try {
+      // Login the user
+      const credentials = await signInWithEmailAndPassword(auth, email, password)
+
+      // Get the new user id
+      const uid = credentials.user.auth.currentUser.uid
+
+      // Get user basing on his uid
+      const { data, error } = await firebaseUserGetUser(uid)
+
+      if (data) {
+        return { data: { ...data, accessToken: credentials.user?.accessToken } }
+      } 
+
+      return error
+    } catch (err) {
+      console.log(err)
+    }
+  } else {
+    return { error: "Fournissez un email et un password non vide" }
+  }
+}
+
+/**
  * Update a user
  * @param {String} id 
  * @param {Object} data 
  */
-const updateUser = async (id, data) => {
+const firebaseUserUpdateUser = async (id, data) => {
   // To do
 }
 
@@ -111,13 +152,15 @@ const updateUser = async (id, data) => {
  * Delete a user
  * @param {String} id 
  */
-const deleteUser = async (id) => {
+const firebaseUserDeleteUser = async (id) => {
   // To do
 }
 
 export {
-  getUser,
-  createUser,
-  updateUser,
-  deleteUser
+  firebaseUserGetUser,
+  firebaseUserGetCurrentUser,
+  firebaseUserCreateUser,
+  firebaseUserLogin,
+  firebaseUserUpdateUser,
+  firebaseUserDeleteUser
 }

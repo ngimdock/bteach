@@ -4,7 +4,7 @@ import Input from "../../../components/elements/inputs/Input";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import Radio from "../../../components/elements/inputs/Radio";
 import ALink from "../../../components/elements/a/ALink";
-import { createUser } from "../../../api/Users";
+import { firebaseUserCreateUser } from "../../../api/Users";
 
 const BodySignupRepeater = () => {
   let [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ const BodySignupRepeater = () => {
     if (validateForm()) {
       try {
         // Create a user and store his data in the database
-        const { data, error } = await createUser({
+        const { data, error } = await firebaseUserCreateUser({
           firstName: formData.nom,
           lastName: formData.prenom,
           email: formData.email,
