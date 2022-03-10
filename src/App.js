@@ -1,6 +1,8 @@
 import React from 'react'
 import { BrowserRouter } from "react-router-dom";
 
+import ContextProvider from "./ContextProvider"
+
 import Customer from "./entities/Customer"
 import Annonce from "./entities/Annonce"
 import Repeater from "./entities/Repeater"
@@ -69,9 +71,11 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
+      <ContextProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </ContextProvider>
 
       <LoadingPage />
     </>
