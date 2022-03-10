@@ -267,8 +267,8 @@ const BodySignupClient = () => {
         className="shadow-md-x py-5 px-3 mt-10 sm:px-5 sm:py-7 rounded-xl w-full"
         onSubmit={(e) => e.preventDefault()}
       >
-        {formStep1}
-        {formStep2}
+        {formStep1()}
+        {formStep2()}
       </form>
     </div>
   );
