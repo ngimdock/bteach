@@ -70,7 +70,7 @@ const Navbar = () => {
 				</nav>
 
 				{
-					true ? (
+					!true ? (
 						<>
 							<Button size="medium" link="/sign_in" classe={style.navbarBtnSignin}>CONNEXION</Button>
 							<Button size="medium" link="/client/sign_up" classe={style.navbarBtnSignup}>INSCRIPTION</Button>

@@ -1,6 +1,7 @@
 import { 
   collection, 
   CollectionReference, 
+  doc, 
   DocumentData 
 } from "firebase/firestore"
 import { db } from "../../firebase"
@@ -12,7 +13,7 @@ import { db } from "../../firebase"
  * @returns {CollectionReference<DocumentData>}
  */
 export const getCollection = (id, collectionName) => {
-  return collection(db, collectionName, id)
+  return doc(db, collectionName, id)
 }
 
 /**

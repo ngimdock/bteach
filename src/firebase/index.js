@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
+import { getAuth } from 'firebase/auth'
 
 // Fetch data from .env file
 const {
@@ -32,4 +33,7 @@ const db = getFirestore(app)
 // Initialize Storage
 const storage = getStorage(app)
 
-export { db, storage }
+// Initialize authentication
+const auth = getAuth(app)
+
+export { db, storage, auth }

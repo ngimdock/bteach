@@ -25,7 +25,7 @@ const NavbarProfilDropdown = ({ dropElt }) => {
           <div className="px-1 py-1 ">
             <Menu.Item>
               {({ active }) => (
-                <Link to={`#`}>
+                <Link to={`/repeater/profile/dilane`}>
                   <button
                     className={`${
                       active ? 'bg-gray-100 text-primary' : 'text-gray-900'
