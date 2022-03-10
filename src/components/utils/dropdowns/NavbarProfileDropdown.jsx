@@ -2,9 +2,27 @@ import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BsPerson, BsBoxArrowRight } from "react-icons/bs"
 import { Link } from 'react-router-dom'
+import { firebaseUserLogout } from '../../../api/Users'
 
 
 const NavbarProfilDropdown = ({ dropElt }) => {
+
+  const logout = async () => {
+    try {
+      const { data } = await firebaseUserLogout()
+
+      if (data) {
+        console.log("Logged out")
+
+        localStorage.setItem("bteach-token", null)
+      } else {
+        console.log("error while logout")
+      }
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
 	return(
 		<Menu as="div" className="relative inline-block text-left font-primary">
       <div>
@@ -47,6 +65,7 @@ const NavbarProfilDropdown = ({ dropElt }) => {
                   className={`${
                     active ? 'bg-gray-100 text-primary' : 'text-gray-900'
                   } group flex items-center space-x-2 w-full px-2 py-2 text-sm`}
+                  onClick={logout}
                 >
                   <BsBoxArrowRight size="25" className="icon" />
                   <span>

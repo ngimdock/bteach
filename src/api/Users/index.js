@@ -14,7 +14,7 @@ import {
   getCollection,
   getCollections
 } from '../utils'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -139,6 +139,18 @@ const firebaseUserLogin = async (email, password) => {
   }
 }
 
+const firebaseUserLogout = async () => {
+  try {
+    await signOut(auth)
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: err }
+  }
+}
+
 /**
  * Update a user
  * @param {String} id 
@@ -160,6 +172,7 @@ export {
   firebaseUserGetUser,
   firebaseUserGetCurrentUser,
   firebaseUserCreateUser,
+  firebaseUserLogout,
   firebaseUserLogin,
   firebaseUserUpdateUser,
   firebaseUserDeleteUser
