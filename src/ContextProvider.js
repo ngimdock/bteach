@@ -98,6 +98,17 @@ const ContextProvider = ({ children }) => {
 		dispatchUser(changeAnnonceVisibility(info))
 	}
 
+	const userDeleteRepeater = (id) => {
+		//code here
+		console.log(`suppression du repetiteur numero ${id}`)
+	}
+
+	const userCertifiedRepeater = (id) => {
+		//code here
+		console.log(`certification du repetiteur numero ${id}`)
+	}
+
+
 	const currentUserContextValue ={
 		currentUser,
 		login: userLogin,
@@ -118,7 +129,9 @@ const ContextProvider = ({ children }) => {
 
 		createAnnonce: userCreateAnnonce,
 		updateAnnonce: userUpdateAnnonce,
-		changeAnnonceVisibility: userChangeAnnonceVisibility
+		changeAnnonceVisibility: userChangeAnnonceVisibility,
+		deleteRepeater: userDeleteRepeater,
+		certifiedRepeater: userCertifiedRepeater
 	}
 
 	return (

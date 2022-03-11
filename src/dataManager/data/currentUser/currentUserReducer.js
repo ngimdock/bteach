@@ -220,9 +220,9 @@ const currentUserReducer = (state, action) => {
 		case UPDATE_SERVICE: {
 			if(action.payload){
 				if(state.getRole === 1 && state.getService !== null){
-					const { id, data } = action.payload
+					const { data } = action.payload
 					const repeater = new Repeater(state)
-					repeater.updateService(id, data)
+					repeater.updateService(data)
 					return repeater
 				}
 			}
@@ -239,6 +239,49 @@ const currentUserReducer = (state, action) => {
 			}
 			return state
 		}
+
+		case CREATE_ANNONCE: {
+			if(action.payload){
+				if(state.getRole === 0){
+					const customer = new Customer(state)
+					customer.createAnnonce(action.payload)
+					return customer
+				}
+			}
+			return state
+		}
+
+		case UPDATE_ANNONCE: {
+			if(action.payload){
+				if(state.getRole === 0 && state.getAnnonce !== null){
+					const customer = new Customer(state)
+					customer.updateAnnonce(action.payload)
+					console.log(action.payload)
+					return customer
+				}
+			}
+			return state
+		}
+
+		case CHANGE_ANNONCE_VISIBILITY: {
+			if(action.payload !== undefined){
+				if(state.getRole === 0 && state.getAnnonce !== null){
+					const customer = new Customer(state)
+					customer.changeAnnonceVisibility(action.payload)
+					return customer
+				}
+			}
+			return state
+		}
+
+		case DELETE_REPEATER: {
+			//code here
+		}
+
+		case CERTIFIED_REPEATER: {
+			//code here
+		}
+
 
 		default: return state
 

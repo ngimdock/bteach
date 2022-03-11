@@ -142,13 +142,10 @@ const createAnnonce = (data) => {
 	}
 }
 
-const updateAnnonce = (idAnnonce, data) => {
+const updateAnnonce = (data) => {
 	return{
 		type: UPDATE_ANNONCE,
-		payload: {
-			idAnnonce,
-			data
-		}
+		payload: data
 	}
 }
 

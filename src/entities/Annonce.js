@@ -1,7 +1,6 @@
 
 class Annonce{
 
-	id
 	isVisible
 	classLevel
 	units
@@ -62,7 +61,22 @@ class Annonce{
 	}
 
 	updateAnnonce(data){
-		this.initialization(data)
+		if(data){
+			const {
+				id,
+				classLevel,
+				units,
+				message,
+				isVisible
+			} = data
+
+			console.log(units)
+
+			this.id = id
+			this.classLevel = classLevel ? classLevel : this.classLevel
+			this.units = units ? [...units] : [...this.units]
+			this.message = message ? message : this.message
+		}
 	}
 
 	setIsVisible(info){

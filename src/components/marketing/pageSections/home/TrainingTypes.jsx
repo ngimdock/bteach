@@ -58,16 +58,17 @@ const TrainingTypes = () => {
 		    documentToCertify: "Le document a certifier"
 		}
 
-		const objServiceUpdate ={
-		    minPrise: 43888,
-		    currentGradeLevel: "Terminale C",
-		    teachingUnit : ["EPS", "Physique"],
-		    levelsUnit : ["maternelle"],
-		    coursesType: ["cours particuliers"],
-		    description : "2-ieme description decrit comme etatnt un tres bon prof pour ton niveau scolaire",
-		    documentToCertify: "LE meilleur document/",
-		    coursesLocation : ["En ligne"],
-		}
+		const objAnnonce = {
+		    classLevel : "Terminale",
+		    units : ["Anglais, Philo"],
+		    message : "Je cherche un repetiteur"
+		  }
+
+		 const objAnnonceUpdate = {
+		    classLevel : "premiere",
+		    units : ["espagnol"],
+		    message : "a la recherche..."
+		  }
 
 
 	const { 
@@ -90,12 +91,15 @@ const TrainingTypes = () => {
 
 			createAnnonce,
 			updateAnnonce,
-			changeAnnonceVisibility
+			changeAnnonceVisibility,
+
+			deleteRepeater,
+			certifiedRepeater
 		 } = useContext(currentUserContext)
 
 
 	useEffect(() => {
-		login({role: 1, ...objUser})
+		login({role: 0, ...objUser})
 	}, [])
 
 	useEffect(() => {
@@ -104,11 +108,11 @@ const TrainingTypes = () => {
 	}, [currentUser])
 
 	const handleClick1 = (event) => {
-		createService(objService)
+		deleteRepeater(10)
 	}
 
 	const handleClick2 = (event) => {
-		changeServiceVisibility(0)
+		certifiedRepeater(20)
 	}
 
 	return(

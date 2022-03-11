@@ -15,12 +15,15 @@ const currentUserContext  = React.createContext({
 	deleteFeedback: (id) => {},
 
 	createService: (data) => {},
-	updateService: (id, data) => {},
+	updateService: (data) => {},
 	changeServiceVisibility: (info) => {},
 
 	createAnnonce: (data) => {},
-	updateAnnonce: (id, data) => {},
-	changeAnnonceVisibility: (info) => {}
+	updateAnnonce: (data) => {},
+	changeAnnonceVisibility: (info) => {},
+
+	deleteRepeater: (id) => {},
+	certifiedRepeater: (id) => {}
 })
 
 export default currentUserContext
