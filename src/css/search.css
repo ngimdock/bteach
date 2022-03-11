@@ -1,0 +1,111 @@
+.select{
+	padding: 8px;
+	padding-left: 9px;
+	border-radius: 5px;
+	color: gray;
+}
+
+.radio_button:checked{
+	background-color: blueviolet !important;
+}
+
+@media screen and (max-width: 640px){
+	.radio_label{
+		display: flex;
+	}
+}
+
+.CurrentSearchNav{
+	border-top: 2px solid silver;
+	border-bottom: 2px solid silver;
+	padding: 15px 30px;
+	width: auto;
+	overflow-x: auto;
+}
+
+.SearchFilterBox{
+	background: #F8F8F8;
+}
+
+.RepeaterCard{
+	border: 1px solid black;
+	border-radius: 5px;
+	color: #fff;
+	font-weight: 300;
+}
+
+.RepeaterCard .bottom_part{
+	background-color: #00171f;
+}
+
+.w_max_content{
+	width: max-content;
+}
+
+.RepeaterCard .top_part img{
+	height: 300px;
+}
+.RepeaterCard .top_part .card_repeater{
+	height: 300px;
+	width: 363px;
+	position: absolute;
+	background-color: rgba(0, 23, 31, .2);
+}
+.card_repeater .d_bottom_right{
+	position: absolute;
+	bottom: 15px;
+	right: 8px;
+}
+
+.badge_client_card{
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.name_client_card{
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+}
+
+@media screen and (max-width: 640px){
+	.RepeaterCard .top_part .card_repeater{
+		width: 350px;
+	}
+}
+
+@media screen and (min-width: 640px) and (max-width: 1024px){
+	.RepeaterCard .top_part .card_repeater{
+		width: 380px;
+	}
+}
+
+#page-numbers {
+  list-style: none;
+  display: flex;
+  margin-top: 30px;
+}
+
+#page-numbers > li {
+  margin-right: 5px;
+  color: black;
+  font-weight: 500;
+  font-size: 20px;
+  padding: 10px 18px;
+	border-radius: 100%;
+  user-select: none;
+  cursor: pointer;
+}
+#page-numbers > li:hover{
+	color: #fff;
+	background-color: #e00045;
+}
+#page-numbers > li:active{
+	background-color: #e00045;
+	color: white;
+
+}
+.pageNumbers{
+	background-color: #e00045;
+}

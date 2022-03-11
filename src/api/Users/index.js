@@ -76,7 +76,7 @@ const firebaseUserCreateUser = async (datas) => {
     const uid = credentials.user.auth.currentUser.uid
 
 
-    // Get the whole user collection
+    // Get a user collection
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
@@ -139,8 +139,13 @@ const firebaseUserLogin = async (email, password) => {
   }
 }
 
+/**
+ * Signout a user
+ * @returns {Object}
+ */
 const firebaseUserLogout = async () => {
   try {
+    // SignOut a user
     await signOut(auth)
 
     return { data: true }
