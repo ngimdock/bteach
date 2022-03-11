@@ -14,7 +14,7 @@ import {
   getCollection,
   getCollections
 } from '../utils'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -40,10 +40,42 @@ const firebaseUserGetUser = async (id) => {
 
 /**
  * Get the current user
- * @param {String} accessToken 
+ * @param {() => void} globalStateLogin 
  */
-const firebaseUserGetCurrentUser = async (accessToken) => {
-  // To do
+const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid
+
+      try {
+        const getUserData = async () => {
+          // Get info of the current user basing on his user id
+          const { data } = await firebaseUserGetUser(uid)
+  
+          if (data) {
+            // Store the data of the currentuse inside the global state
+            globalStateLogin(data)
+  
+            return
+          }
+  
+          console.log({ error: "User introuvable" })
+  
+          return
+        }
+
+        getUserData()
+      } catch (err) {
+        console.log(err)
+
+        console.log({ error: "Un probleme est survenu" })
+
+        return
+      }
+    } else {
+      console.log({ error: "Aucun user n'est connecte" })
+    }
+  })
 }
 
 /**
@@ -80,7 +112,7 @@ const firebaseUserCreateUser = async (datas) => {
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
-    await setDoc(userCollection, {
+    const user = await setDoc(userCollection, {
       firstName,
       lastName,
       email,
@@ -94,14 +126,11 @@ const firebaseUserCreateUser = async (datas) => {
       role
     })
 
-    // Get user basing on his uid
-    const { data, error } = await firebaseUserGetUser(uid)
-
-    if (data) {
-      return { data: { ...data, accessToken: credentials.user?.accessToken } }
+    if (user) {
+      return { data: true }
     } 
 
-    return error
+    return { error: "Une erreur est survenu lors de la creation du user" }
   } catch (err) {
     console.error(err)
 
@@ -120,17 +149,11 @@ const firebaseUserLogin = async (email, password) => {
       // Login the user
       const credentials = await signInWithEmailAndPassword(auth, email, password)
 
-      // Get the new user id
-      const uid = credentials.user.auth.currentUser.uid
-
-      // Get user basing on his uid
-      const { data, error } = await firebaseUserGetUser(uid)
-
-      if (data) {
-        return { data: { ...data, accessToken: credentials.user?.accessToken } }
+      if (credentials) {
+        return { data: true }
       } 
 
-      return error
+      return { error: "Une erreur est survenu lors de la connection" }
     } catch (err) {
       console.log(err)
     }

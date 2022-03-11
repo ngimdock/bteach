@@ -16,7 +16,7 @@ const BodySignin = () => {
         const { data, error } = await firebaseUserLogin(email, password)
 
         if (data) {
-          console.log(data)
+          console.log("User login successfully")
         } else {
           console.log(error)
         }
