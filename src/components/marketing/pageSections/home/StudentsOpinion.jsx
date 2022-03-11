@@ -18,14 +18,14 @@ const StudentsOpinion = () => {
 
 			let myfor = allElements[i].getAttribute('for');
 
-			if ((myfor !== null) && (myfor == ('slide_2_' + pagenum))) {
+			if ((myfor !== null) && (myfor === ('slide_2_' + pagenum))) {
 
 				allElements[i].click();
 
 				break;
 			}
 		}
-		if (pagenum == 4) {
+		if (pagenum === 4) {
 			pagenum = 1;
 		} else {
 			pagenum++;
