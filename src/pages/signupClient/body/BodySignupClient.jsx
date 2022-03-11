@@ -3,6 +3,7 @@ import H3 from "../../../components/elements/titles/H3";
 import Input from "../../../components/elements/inputs/Input";
 import Radio from "../../../components/elements/inputs/Radio";
 import ALink from '../../../components/elements/a/ALink'
+import { firebaseUserCreateUser } from '../../../api/Users'
 
 const BodySignupClient = () => {
   let [formData, setFormData] = useState({
@@ -24,6 +25,65 @@ const BodySignupClient = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (validateForm()) {
+      try {
+        // Create a user and store his data in the database
+        const { data, error } = await firebaseUserCreateUser({
+          firstName: formData.nom,
+          lastName: formData.prenom,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.telephone,
+          date: 0,
+          sex: formData.sexe,
+          town: formData.ville,
+          district: formData.quartier,
+          role: 0
+        })
+
+        if (data) {
+          // store the access token inside the browser
+          localStorage.setItem("bteach-token", data.accessToken)
+        } else {
+          console.log(error)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
+  const validateForm = () => {
+    const {
+      nom,
+      prenom,
+      telephone,
+      email,
+      password,
+      ville,
+      quartier,
+      sexe
+    } = formData
+
+    if (
+      nom &&
+      prenom &&
+      telephone &&
+      email &&
+      password &&
+      ville &&
+      quartier &&
+      sexe 
+    ) {
+      return true
+    }
+
+    return false
+  }
+
   return (
     <div className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
       <H3 color="#00171f" classe="mb-10 text-center">
@@ -32,7 +92,7 @@ const BodySignupClient = () => {
       </H3>
       <form
         className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-full"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <Input
           type="text"
