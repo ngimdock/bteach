@@ -55,7 +55,7 @@ const MobileMenu = ({ show, onHide }) => {
       <div className={style.mobildeMenuContent}>
         <div>
           <NavItem text="Accueil" link="/" />
-          <NavItem text="Les repetiteurs" />
+          <NavItem text="Les repetiteurs" link="/search/repeaters" />
           <NavItem text="Deconnexion" />
         </div>
       </div>

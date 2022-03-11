@@ -13,13 +13,13 @@ const CurrentSearchNav = (props) => {
 
 	return(
 
-		<div className="CurrentSearchNav flex justify-center">
+		<div className="CurrentSearchNav">
 			
-			<p className="mx-10">{discipline1}</p>
-			<p className="mx-10">{discipline2}</p>
-			<p className="mx-10">{discipline3}</p>
-			<p className="mx-10">{discipline4}</p>
-			<p className="mx-10">{discipline5}</p>
+			<p>{discipline1}</p>
+			<p>{discipline2}</p>
+			<p>{discipline3}</p>
+			<p>{discipline4}</p>
+			<p>{discipline5}</p>
 
 		</div>
 

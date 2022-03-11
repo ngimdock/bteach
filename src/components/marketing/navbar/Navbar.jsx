@@ -66,7 +66,7 @@ const Navbar = () => {
 
 			<div className={style.navbarNavigation}>
 				<nav className={style.navbarNav}>
-					<ALink classe={style.navbarNavLink} link="#">Les repetiteurs</ALink>
+					<ALink classe={style.navbarNavLink} link="/search/repeaters">Les repetiteurs</ALink>
 				</nav>
 
 				{

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const RepeaterCard = (props) => {
 
 	let {
@@ -39,7 +38,7 @@ const RepeaterCard = (props) => {
 						</div>
 					</div>
 				</div>
-				<img src={photo} alt="Profile" className="w-full" />
+				<img src={photo} alt="Profile" />
 			</div>
 
 			<div className="bottom_part p-5">

@@ -16,22 +16,36 @@
 }
 
 .CurrentSearchNav{
+	display: flex;
+	justify-content: center;
 	border-top: 2px solid silver;
 	border-bottom: 2px solid silver;
-	padding: 15px 30px;
-	width: auto;
+	padding: 10px;
+	width: 100vw;
 	overflow-x: auto;
+	flex-shrink: 0;
+}
+
+.CurrentSearchNav p {
+	width: auto;
+	display: flex;
+	flex-shrink: 0;
+}
+
+.CurrentSearchNav p:not(:last-child) {
+	margin-right: 30px;
 }
 
 .SearchFilterBox{
 	background: #F8F8F8;
+	padding: 0 0 20px 0;
 }
 
 .RepeaterCard{
-	border: 1px solid black;
 	border-radius: 5px;
 	color: #fff;
 	font-weight: 300;
+	position: relative;
 }
 
 .RepeaterCard .bottom_part{
@@ -42,12 +56,18 @@
 	width: max-content;
 }
 
+.RepeaterCard .top_part {
+	width: auto;
+}
+
 .RepeaterCard .top_part img{
 	height: 300px;
+	width: 100%;
+  object-fit: cover;
 }
 .RepeaterCard .top_part .card_repeater{
 	height: 300px;
-	width: 363px;
+	width: 100%;
 	position: absolute;
 	background-color: rgba(0, 23, 31, .2);
 }
@@ -67,18 +87,6 @@
 	position: absolute;
 	bottom: 20px;
 	left: 20px;
-}
-
-@media screen and (max-width: 640px){
-	.RepeaterCard .top_part .card_repeater{
-		width: 350px;
-	}
-}
-
-@media screen and (min-width: 640px) and (max-width: 1024px){
-	.RepeaterCard .top_part .card_repeater{
-		width: 380px;
-	}
 }
 
 #page-numbers {
@@ -108,4 +116,10 @@
 }
 .pageNumbers{
 	background-color: #e00045;
+}
+
+@media screen and (max-width: 767px) {
+	.CurrentSearchNav {
+		justify-content: flex-start;
+	}
 }

@@ -6,14 +6,13 @@ import SearchFilter from "../../../components/marketing/pageSections/search/repe
 import AllRepeater from "../../../components/marketing/pageSections/search/repeaters/AllRepeater";
 import Pagination from "../../../components/marketing/pageSections/search/elements/Pagination";
 import DropdownSortby from "../../../components/marketing/pageSections/search/elements/DropdownSortby";
-
-import search from "../../../css/search.css";
+import "../../../css/search.css";
 
 
 const BodySearchRepeaters = () => {
 	return(
 
-		<div className="lg:px-24 lg:py-8">
+		<div className="lg:px-24 lg:py-8" style={{overflow: "hidden"}}>
 
 			<CurrentSearchNav 
 				discipline1="Prof de maths"
@@ -23,7 +22,7 @@ const BodySearchRepeaters = () => {
 				discipline5="Prof de sciences"
 			/>
 
-			<p className="mt-14 mb-7 lg:ml-0 ml-4 text-2xl font-medium text-gray-500">Filtre de recherche</p>
+			<p className="mt-10 mb-5 lg:ml-0 ml-4 text-2xl font-medium text-gray-500">Filtre de recherche</p>
 
 			<SearchFilter />
 
