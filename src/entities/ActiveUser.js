@@ -2,11 +2,13 @@ import User from './User'
 import Feedback from './Feedback'
 
 class ActiveUser extends User {
+
 	feedbacks
 
-	constructor(data, feedbacks=[]){
+	constructor(data){
 		super(data)
-		this.feedbacks = feedbacks ? feedbacks.map(feedback => new Feedback(feedback)) : []
+		const allFeedback = data.feedbacks ? data.feedbacks.map(feedback => new Feedback(feedback)) : []
+		this.feedbacks = allFeedback
 	}
 
 	/**
@@ -28,8 +30,12 @@ class ActiveUser extends User {
 	}
 
 	updateFeedback(id, data){
-		const index = this.feedbacks.findIndex(feedback => feedback.id === id)
-		this.feedbacks[index].updateFeedback(data)
+		console.log("lol")
+		const index = this.feedbacks.findIndex(feedback => feedback.getId === id)
+		
+		if(index > -1){
+			this.feedbacks[index].updateFeedback(data)
+		}
 	}
 }
 

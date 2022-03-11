@@ -4,7 +4,7 @@ class Service{
 	isVisible
 	isCertified
 	documentToCertify
-	minPrice
+	minPrise
 	currentGradeLevel
 	teachingUnit
 	levelsUnit
@@ -98,7 +98,7 @@ class Service{
 
 			const{
 				id,
-				minPrice,
+				minPrise,
 				documentToCertify,
 				currentGradeLevel,
 				teachingUnit,
@@ -110,7 +110,7 @@ class Service{
 
 			this.id = id
 			this.documentToCertify = documentToCertify ? documentToCertify : null
-			this.minPrice = minPrice
+			this.minPrise = minPrise
 			this.currentGradeLevel = currentGradeLevel
 			this.teachingUnit = [...teachingUnit]
 			this.levelsUnit = [...levelsUnit]
@@ -122,7 +122,29 @@ class Service{
 	}
 
 	updateService(data){
-		this.initialization(data)
+		if(data){
+			const{
+				id,
+				minPrise,
+				documentToCertify,
+				currentGradeLevel,
+				teachingUnit,
+				levelsUnit,
+				coursesType,
+				coursesLocation,
+				description
+			} = data
+
+			this.id = id ? id : this.id
+			this.documentToCertify = documentToCertify ? documentToCertify : this.documentToCertify
+			this.minPrise = minPrise ? minPrise : this.minPrise
+			this.currentGradeLevel = currentGradeLevel ? currentGradeLevel : this.currentGradeLevel
+			this.teachingUnit = teachingUnit ? [...teachingUnit] : [...this.teachingUnit]
+			this.levelsUnit = levelsUnit ? [...levelsUnit] : [...this.levelsUnit]
+			this.coursesType = coursesType ? [...coursesType] : [...this.coursesType]
+			this.coursesLocation = coursesLocation ? [...coursesLocation] : [...this.coursesLocation]
+			this.description = description ? description : this.description
+		}
 	}
 
 	setIsVisible(info){ // change visibility of the service

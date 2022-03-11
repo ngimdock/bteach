@@ -8,7 +8,7 @@ class Repeater extends ActiveUser {
 	constructor(data){
 		super(data)
 		this.role = 1
-		this.service = null
+		this.service = data.service ? new Service(data.service) : null
 	}
 
 	/**
@@ -16,6 +16,10 @@ class Repeater extends ActiveUser {
 	 */
 	get getService(){
 	 	return this.service 
+	}
+
+	get getRepeaterData(){
+		return this
 	}
 
 	createService(data){

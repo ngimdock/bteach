@@ -21,32 +21,32 @@ import {
 
 	DELETE_REPEATER,
 	CERTIFIED_REPEATER
-} from "./types"
+} from "./type"
 
 
 //Default user Actions
 
-const login(data) => {
+const login = (data) => {
 	return{
 		type: LOGIN,
 		payload: data
 	}
 }
 
-const logout() => {
+const logout = () => {
 	return{
 		type: LOGOUT
 	}
 }
 
-const updateInfo(data) => {
+const updateInfo = (data) => {
 	return{
 		type: UPDATE_INFO,
 		payload: data
 	}
 }
 
-const updateProfilePic(picture) => {
+const updateProfilePic = (picture) => {
 	return{
 		type: UPDATE_PROFILE_PIC,
 		payload: picture
@@ -61,11 +61,11 @@ const createNote = (data) => {
 	}
 }
 
-const updateNote = (idNote, data) => {
+const updateNote = (id, data) => {
 	return{
 		type: UPDATE_NOTE,
 		payload: {
-			idNote,
+			id,
 			data
 		}
 	}
@@ -88,11 +88,11 @@ const createFeedback = (data) => {
 	}
 }
 
-const updateFeedback = (idFeedback, data) => {
+const updateFeedback = (id, data) => {
 	return{
 		type: UPDATE_FEEDBACK,
 		payload: {
-			idFeedback,
+			id,
 			data
 		}
 	}
@@ -115,11 +115,11 @@ const createService = (data) => {
 	}
 }
 
-const updateService = (idService, data) => {
+const updateService = (id, data) => {
 	return{
 		type: UPDATE_SERVICE,
 		payload: {
-			idService,
+			id,
 			data
 		}
 	}

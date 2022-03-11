@@ -7,6 +7,10 @@ class Administrator extends User{
 		this.role = 3
 	}
 
+	get getAdministratorData(){
+		return this
+	}
+
 	deleteRepeater(id){
 		//code here
 	}

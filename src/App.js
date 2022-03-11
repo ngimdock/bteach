@@ -70,10 +70,7 @@ function App() {
   const repeat = new Repeater(objRepeater)
   const custum = new Customer(objRepeater)
   const admin = new Administrator(objRepeater)
-  console.log(user.getRole)
-  console.log(repeat.getRole)
-  console.log(custum.getRole)
-  console.log(admin.getRole)
+  
   return (
     <>
       <ContextProvider>

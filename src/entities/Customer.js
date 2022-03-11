@@ -8,11 +8,15 @@ class Customer extends ActiveUser{
 	constructor(data){
 		super(data)
 		this.role = 0
-		this.annonce = null
+		this.annonce = data.annonce ? new Annonce(data.annonce) : null
 	}
 
 	get getAnnonce(){
 		return this.annonce
+	}
+
+	get getCustomerData(){
+		return this
 	}
 
 	createAnnonce(data){
