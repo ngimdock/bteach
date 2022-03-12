@@ -135,7 +135,7 @@ const firebaseUserCreateUser = async (datas) => {
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
-    const user = await setDoc(userCollection, {
+    await setDoc(userCollection, {
       firstName,
       lastName,
       email,
@@ -149,11 +149,7 @@ const firebaseUserCreateUser = async (datas) => {
       role
     })
 
-    if (user) {
-      return { data: true }
-    } 
-
-    return { error: "Une erreur est survenu lors de la creation du user" }
+    return { data: true }
   } catch (err) {
     console.error(err)
 
