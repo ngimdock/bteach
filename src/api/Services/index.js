@@ -39,7 +39,21 @@ const firebaseServiceGetMyService = async (idUser) => {
  * @param {String} idService 
  */
 const firebaseServiceGetService = async (idService) => {
-  // To do
+  try {
+    // Get reference to a collection
+    const serviceCollectionRef = getCollection(idService, "services")
+
+    // Get the service
+    const service = await getDoc(serviceCollectionRef)
+
+    if (service) {
+      return { data: { ...service.data(), id: service.id } }
+    }
+
+    return { error: "Service introuvable" }
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 /**
