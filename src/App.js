@@ -1,8 +1,15 @@
 import React from 'react'
 import { BrowserRouter } from "react-router-dom";
 
+import ContextProvider from "./ContextProvider"
+
+import User from "./entities/User"
+import Administrator from "./entities/Administrator"
+
 import Customer from "./entities/Customer"
 import Annonce from "./entities/Annonce"
+import Repeater from "./entities/Repeater"
+import Service from "./entities/Service"
 
 import Router from "./Router"
 
@@ -59,17 +66,18 @@ function App() {
     message: "STEPHANE est un tres bon repetiteur"
   }
 
-  const cust = new Customer(objRepeater)
-  cust.createAnnonce(objAnnonce)
-  console.log(cust.getAnnonce.getIsVisible)
-  cust.changeAnnonceVisibility(1)
-  console.log(cust.getAnnonce.getIsVisible)
-
+  const user = new User(objRepeater)
+  const repeat = new Repeater(objRepeater)
+  const custum = new Customer(objRepeater)
+  const admin = new Administrator(objRepeater)
+  
   return (
     <>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
+      <ContextProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </ContextProvider>
 
       <LoadingPage />
     </>

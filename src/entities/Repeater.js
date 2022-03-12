@@ -1,13 +1,14 @@
-import Person from './Person'
+import ActiveUser from './ActiveUser'
 import Service from './Service'
 
-class Repeater extends Person {
+class Repeater extends ActiveUser {
 
 	service
 
 	constructor(data){
 		super(data)
-		this.service = null
+		this.role = 1
+		this.service = data.service ? new Service(data.service) : null
 	}
 
 	/**
@@ -15,6 +16,10 @@ class Repeater extends Person {
 	 */
 	get getService(){
 	 	return this.service 
+	}
+
+	get getRepeaterData(){
+		return this
 	}
 
 	createService(data){
@@ -25,7 +30,7 @@ class Repeater extends Person {
 	 	this.service.updateService(data)
 	}
 
-	changeVisibility(info){ //To show and hide the visibility of the service
+	changeServiceVisibility(info){ //To show and hide the visibility of the service
 	 	this.service.setIsVisible(info)
 	}
 }
