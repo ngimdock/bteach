@@ -1,5 +1,5 @@
 // Service operations
-import { addDoc, doc, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore'
+import { addDoc, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore'
 import { db, storage } from '../../firebase'
 import { firebaseUserGetUser } from '../Users'
 import { getCollection, getCollections } from '../utils'
@@ -47,12 +47,23 @@ const firebaseServiceGetService = async (idService) => {
     const service = await getDoc(serviceCollectionRef)
 
     if (service) {
-      return { data: { ...service.data(), id: service.id } }
+      const serviceData = { ...service.data(), id: service.id}
+
+      // Get owner info
+      const { data: owner, error } = await firebaseUserGetUser(serviceData.owner.id)
+
+      if (owner) {
+        return { data: { ...serviceData, owner } }
+      }
+
+      return { error }
     }
 
     return { error: "Service introuvable" }
   } catch (err) {
     console.log(err)
+
+    return { error: "Une erreur est survenu" }
   }
 }
 
@@ -67,25 +78,22 @@ const firebaseServiceGetServices = (globalStateAddServices = (datas) => {}) => {
 
     // Get services
     onSnapshot(servicesCollectionRef, async (snapshot) => {
-      const getUser = async (id, servicesData, services) => {
+      const getUser = async (id, serviceData, services) => {
         // Get the user
-        const { data } = await firebaseUserGetUser(id)
-
-        // Change the owner property
-        servicesData.owner = data
+        const { data: owner } = await firebaseUserGetUser(id)
 
         // Add the service to the list
-        services.push(servicesData)
+        services.push({...serviceData, owner})
       }
 
       // Initialization of the of the services
       const services = []
 
       for (let service of snapshot.docs) {
-        const servicesData = { ...service.data(), id: service.id }
-        const userReference = servicesData.owner
+        const serviceData = { ...service.data(), id: service.id }
+        const userReference = serviceData.owner
 
-        await getUser(userReference.id, servicesData, services)
+        await getUser(userReference.id, serviceData, services)
       }
 
       console.log(services)
@@ -153,8 +161,20 @@ const firebaseServiceUpdateService = async (idUser, idService, data) => {
  * @param {String} idUser
  * @param {String} idService 
  */
-const firebaseServiceChangeVisibilityOfService = async (idUser, idService) => {
-  // To do
+const firebaseServiceChangeVisibilityOfService = async (idUser, idService, value) => {
+  try {
+    // Get reference to a collection
+    const serviceCollectionRef = getCollection(idService, "services")
+
+    // Change the visibility
+    await updateDoc(serviceCollectionRef, { isVisible: value })
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu" }
+  }
 }
 
 export {
