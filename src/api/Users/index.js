@@ -15,7 +15,7 @@ import {
   getCollections
 } from '../utils'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { firebaseServiceCreateService } from '../Services'
+import { firebaseServiceCreateService, firebaseServiceGetMyService } from '../Services'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -54,6 +54,22 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
           const { data } = await firebaseUserGetUser(uid)
   
           if (data) {
+            let user = null
+            // await firebaseServiceCreateService(uid)
+
+            // Get service if the user is a repeater
+            if (data.role === 1) {
+              const { data: service } = await firebaseServiceGetMyService(uid)
+  
+              if (service) {
+                user = { ...data, name: data.lastName, lastName: undefined, service }
+                console.log({ user })
+              }
+            }
+
+            user = {...data, name: data.lastName, lastName: undefined}
+            console.log({ user })
+
             // Store the data of the currentuse inside the global state
             globalStateLogin(data)
   
@@ -70,8 +86,6 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
         console.log(err)
 
         console.log({ error: "Un probleme est survenu" })
-
-        return
       }
     } else {
       console.log({ error: "Aucun user n'est connecte" })

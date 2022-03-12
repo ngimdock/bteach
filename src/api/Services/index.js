@@ -1,15 +1,37 @@
 // Service operations
-import { addDoc, doc, getDocs, onSnapshot } from 'firebase/firestore'
+import { addDoc, doc, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore'
 import { db, storage } from '../../firebase'
 import { firebaseUserGetUser } from '../Users'
-import { getCollections } from '../utils'
+import { getCollection, getCollections } from '../utils'
 
 /**
  * Get a service of a specific user
  * @param {String} idUser 
  */
 const firebaseServiceGetMyService = async (idUser) => {
-  // To do
+  try { 
+    // Get reference to a collection
+    const servicesCollectionRef = getCollections("services")
+    const ownerCollectionRef = getCollection(idUser, "users")
+
+    // Make a query
+    const q = query(servicesCollectionRef, where("owner", "==", ownerCollectionRef))
+
+    // Get a service
+    const querySnapShot = await getDocs(q)
+
+    const services = []
+
+    querySnapShot.forEach(doc => {
+      services.push({ ...doc.data(), id: doc.id })
+    })
+
+    return { data: services[0] }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu lors de la recuperation du service" }
+  }
 }
 
 /**
@@ -83,7 +105,20 @@ const firebaseServiceCreateService = async (idUser) => {
     const serviceCollectionRef = getCollections("services")
 
     // Add a new service
-    await addDoc(serviceCollectionRef, { owner: doc(db, `users/${idUser}`) })
+    await addDoc(serviceCollectionRef, { 
+      coursesLocation: "",
+      coursesType: "",
+      currentGradeLevel: "",
+      description: "",
+      isCertified: false,
+      isVisible: false,
+      levelsUnit: [],
+      minPrice: 0,
+      teachingUnit: [],
+      categories: [],
+      degrees: [],
+      owner: doc(db, `users/${idUser}`) 
+    })
   } catch (err) {
     console.log(err)
   }
