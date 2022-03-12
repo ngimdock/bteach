@@ -1,5 +1,14 @@
 // Service operations
-import { addDoc, doc, getDoc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore'
+import { 
+  addDoc, 
+  doc, 
+  getDoc, 
+  getDocs, 
+  onSnapshot, 
+  query, 
+  updateDoc, 
+  where 
+} from 'firebase/firestore'
 import { db, storage } from '../../firebase'
 import { firebaseUserGetUser } from '../Users'
 import { getCollection, getCollections } from '../utils'
@@ -158,10 +167,10 @@ const firebaseServiceUpdateService = async (idUser, idService, data) => {
 
 /**
  * Change the visibility of a service
- * @param {String} idUser
  * @param {String} idService 
+ * @param {Boolean} value
  */
-const firebaseServiceChangeVisibilityOfService = async (idUser, idService, value) => {
+const firebaseServiceChangeVisibilityOfService = async (idService, value) => {
   try {
     // Get reference to a collection
     const serviceCollectionRef = getCollection(idService, "services")

@@ -14,8 +14,16 @@ import {
   getCollection,
   getCollections
 } from '../utils'
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { firebaseServiceCreateService, firebaseServiceGetMyService } from '../Services'
+import { 
+  createUserWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  signOut 
+} from 'firebase/auth'
+import { 
+  firebaseServiceCreateService, 
+  firebaseServiceGetMyService 
+} from '../Services'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -211,6 +219,15 @@ const firebaseUserDeleteUser = async (id) => {
   // To do
 }
 
+/**
+ * Change the profile photo of the given user
+ * @param {String} id 
+ * @param {String} photoURL 
+ */
+const firebaseUserChangeProfilPic = async (id, photoURL) => {
+  // To do
+}
+
 export {
   firebaseUserGetUser,
   firebaseUserGetCurrentUser,
@@ -218,5 +235,6 @@ export {
   firebaseUserLogout,
   firebaseUserLogin,
   firebaseUserUpdateUser,
+  firebaseUserChangeProfilPic,
   firebaseUserDeleteUser
 }
