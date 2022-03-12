@@ -1,9 +1,9 @@
 
 class Service{
-
+	id
 	isVisible
 	isCertified
-	documetToCertify
+	documentToCertify
 	minPrise
 	currentGradeLevel
 	teachingUnit
@@ -14,11 +14,16 @@ class Service{
 
 	constructor(data){
 		this.initialization(data)
+		this.isVisible = 1
 		this.isCertified = 0
 	}
 
 	get getServiceData(){
 		return this
+	}
+
+	get getId() {
+		return this.id
 	}
 
 	/**
@@ -39,14 +44,14 @@ class Service{
 	 * @returns file
 	 */
 	 get getDocumentToCertify(){
-	 	return this.documetToCertify
+	 	return this.documentToCertify
 	 }
 
 	/**
 	 * @returns Number
 	 */
-	 get getMinPrise(){
-	 	return this.minPrise
+	 get getMinPrice(){
+	 	return this.minPrice
 	 }
 
 	 /**
@@ -92,8 +97,9 @@ class Service{
 		if(data){
 
 			const{
+				id,
 				minPrise,
-				documetToCertify,
+				documentToCertify,
 				currentGradeLevel,
 				teachingUnit,
 				levelsUnit,
@@ -102,8 +108,8 @@ class Service{
 				description
 			} = data
 
-			this.isVisible = 0
-			this.documetToCertify = documetToCertify ? documetToCertify : null
+			this.id = id
+			this.documentToCertify = documentToCertify ? documentToCertify : null
 			this.minPrise = minPrise
 			this.currentGradeLevel = currentGradeLevel
 			this.teachingUnit = [...teachingUnit]
@@ -116,7 +122,29 @@ class Service{
 	}
 
 	updateService(data){
-		this.initialization(data)
+		if(data){
+			const{
+				id,
+				minPrise,
+				documentToCertify,
+				currentGradeLevel,
+				teachingUnit,
+				levelsUnit,
+				coursesType,
+				coursesLocation,
+				description
+			} = data
+
+			this.id = id ? id : this.id
+			this.documentToCertify = documentToCertify ? documentToCertify : this.documentToCertify
+			this.minPrise = minPrise ? minPrise : this.minPrise
+			this.currentGradeLevel = currentGradeLevel ? currentGradeLevel : this.currentGradeLevel
+			this.teachingUnit = teachingUnit ? [...teachingUnit] : [...this.teachingUnit]
+			this.levelsUnit = levelsUnit ? [...levelsUnit] : [...this.levelsUnit]
+			this.coursesType = coursesType ? [...coursesType] : [...this.coursesType]
+			this.coursesLocation = coursesLocation ? [...coursesLocation] : [...this.coursesLocation]
+			this.description = description ? description : this.description
+		}
 	}
 
 	setIsVisible(info){ // change visibility of the service
@@ -124,8 +152,8 @@ class Service{
 	}
 
 	setIsCertified(info){
-		if(info === 1){
-			if(this.documetToCertify){
+		if(info){
+			if(this.documentToCertify){
 				this.isCertified = info
 			}else{
 				throw new Error(
@@ -133,12 +161,12 @@ class Service{
 			      );
 			}
 		}else{
-			this.documetToCertify = info
+			this.documentToCertify = info
 		}
 	}
 
 	setDocumentToCertify(document){
-		this.documetToCertify = document
+		this.documentToCertify = document
 	}
 }
 

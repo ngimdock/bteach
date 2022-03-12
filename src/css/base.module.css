@@ -357,6 +357,8 @@ body {
   font-size: 16px;
   font-weight: 500;
   color: #494949;
+  width: 100%;
+  display: block;
 }
 
 .mobildeMenuLoginSection {

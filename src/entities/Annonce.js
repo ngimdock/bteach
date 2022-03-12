@@ -8,7 +8,7 @@ class Annonce{
 
 	constructor(data){
 		this.initialization(data)
-		this.isVisible = 0
+		this.isVisible = 1
 	}
 
 	get getAnnonceData(){
@@ -46,11 +46,14 @@ class Annonce{
 	initialization(data){
 		if(data){
 			const {
+				id,
 				classLevel,
 				units,
-				message
+				message,
+				isVisible
 			} = data
 
+			this.id = id
 			this.classLevel = classLevel
 			this.units = [...units]
 			this.message = message
@@ -58,7 +61,22 @@ class Annonce{
 	}
 
 	updateAnnonce(data){
-		this.initialization(data)
+		if(data){
+			const {
+				id,
+				classLevel,
+				units,
+				message,
+				isVisible
+			} = data
+
+			console.log(units)
+
+			this.id = id
+			this.classLevel = classLevel ? classLevel : this.classLevel
+			this.units = units ? [...units] : [...this.units]
+			this.message = message ? message : this.message
+		}
 	}
 
 	setIsVisible(info){

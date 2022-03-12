@@ -1,21 +1,26 @@
-import Person from './Person'
+import ActiveUser from './ActiveUser'
 import Annonce from './Annonce'
 
-class Customer extends Person{
+class Customer extends ActiveUser{
 
 	annonce
 
 	constructor(data){
 		super(data)
-		this.annonce = null
+		this.role = 0
+		this.annonce = data.annonce ? new Annonce(data.annonce) : null
 	}
 
 	get getAnnonce(){
 		return this.annonce
 	}
 
+	get getCustomerData(){
+		return this
+	}
+
 	createAnnonce(data){
-		this.annonce = (new Annonce(data)).getAnnonceData
+		this.annonce = new Annonce(data)
 	}
 
 	updateAnnonce(data){

@@ -11,7 +11,7 @@ class Note{
 		this.id = id
 		this.stars = stars
 		this.message = message
-		this.isVisible = 0
+		this.isVisible = 1
 	}
 
 

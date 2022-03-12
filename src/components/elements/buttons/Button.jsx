@@ -12,7 +12,9 @@ const Button = (props) => {
 		classe,
 		target,
 		rounded,
-		action
+		action,
+		style,
+		onClick
 	} = props
 
 
@@ -71,7 +73,9 @@ const Button = (props) => {
 			target={target}
 			onClick={ action ? (e) => action(e) : null}
 			className={`${classe} ${radius} ${padding} ${textSize} ${background} ${backgroundHover} ${textColor} inline-block uppercase md:tracking-wider text-white animate-moyen font-primary`}
-				>
+			style={style}
+			onClick={onClick}
+		>
 			{ children }
 		</Link>
 	)
