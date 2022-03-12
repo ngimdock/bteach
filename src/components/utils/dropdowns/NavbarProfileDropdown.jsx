@@ -1,20 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BsPerson, BsBoxArrowRight } from "react-icons/bs"
 import { Link } from 'react-router-dom'
 import { firebaseUserLogout } from '../../../api/Users'
+import currentUserContext from '../../../dataManager/context/currentUserContext'
 
 
 const NavbarProfilDropdown = ({ dropElt }) => {
+  const { logout: userLogout } = useContext(currentUserContext)
 
   const logout = async () => {
     try {
       const { data } = await firebaseUserLogout()
 
       if (data) {
-        console.log("Logged out")
-
-        localStorage.setItem("bteach-token", null)
+        userLogout()
       } else {
         console.log("error while logout")
       }

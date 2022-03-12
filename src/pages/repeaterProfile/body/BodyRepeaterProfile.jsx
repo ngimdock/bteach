@@ -29,8 +29,8 @@ const ProfileItem = ({ text, color }) => {
 const BodyRepeaterProfile = () => {
 
 	useEffect(() => {
-		getServiceFromFirebase()
-		changeVisibilityOfAService()
+		// getServiceFromFirebase()currentUser
+		// changeVisibilityOfAService()
 	}, [])
 
 	// Unit testing
