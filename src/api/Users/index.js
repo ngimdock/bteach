@@ -76,7 +76,6 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
             }
 
             user = {...data, name: data.lastName, lastName: undefined}
-            console.log({ user })
 
             // Store the data of the currentuse inside the global state
             globalStateLogin(user)
@@ -220,7 +219,7 @@ const firebaseUserDeleteUser = async (id) => {
  * @param {String} id 
  * @param {String} photoURL 
  */
-const firebaseUserChangeProfilPic = async (id, photoURL) => {
+const firebaseUserChangeProfilePic = async (id, photoURL) => {
   // To do
 }
 
@@ -231,6 +230,6 @@ export {
   firebaseUserLogout,
   firebaseUserLogin,
   firebaseUserUpdateUser,
-  firebaseUserChangeProfilPic,
+  firebaseUserChangeProfilePic,
   firebaseUserDeleteUser
 }

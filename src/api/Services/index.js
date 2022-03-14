@@ -134,9 +134,10 @@ const firebaseServiceCreateService = async (idUser) => {
 
     // Create a reference
     const serviceCollectionRef = getCollections("services")
+    const userCollectionRef = getCollection(idUser, "users")
 
-    // Add a new service
-    await addDoc(serviceCollectionRef, { 
+    // Generate a new Service data
+    const serviceData = { 
       coursesLocation: "",
       coursesType: "",
       currentGradeLevel: "",
@@ -148,8 +149,11 @@ const firebaseServiceCreateService = async (idUser) => {
       teachingUnit: [],
       categories: [],
       degrees: [],
-      owner: doc(db, `users/${idUser}`) 
-    })
+      owner: userCollectionRef
+    }
+
+    // Add a new service
+    await addDoc(serviceCollectionRef, serviceData)
   } catch (err) {
     console.log(err)
   }
