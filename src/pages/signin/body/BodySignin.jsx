@@ -3,20 +3,24 @@ import H3 from "../../../components/elements/titles/H3";
 import Input from "../../../components/elements/inputs/Input";
 import Button from "../../../components/elements/buttons/Button";
 import { firebaseUserLogin } from "../../../api/Users";
+import { Navigate } from 'react-router-dom'
 
 const BodySignin = () => {
+  // Set local state
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
+  let [redirectHome, setRedirectHome] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (validateForm()) {
       try {
+        // Try to connect the user in
         const { data, error } = await firebaseUserLogin(email, password)
 
         if (data) {
-          console.log(data)
+          setRedirectHome(true)
         } else {
           console.log(error)
         }
@@ -36,6 +40,11 @@ const BodySignin = () => {
 
   return (
     <div className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-md mx-auto font-primary">
+      {
+        redirectHome && <Navigate to="/" />
+      }
+      
+      
       <H3 color="#00171f" classe="mb-10">
         Connexion
       </H3>

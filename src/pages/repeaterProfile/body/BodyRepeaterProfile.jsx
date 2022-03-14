@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
 import H3 from '../../../components/elements/titles/H3'
 import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
+import { firebaseServiceChangeVisibilityOfService, firebaseServiceGetService } from '../../../api/Services'
 
 const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 const imageIllustration = require("../../../medias/illustrations/process1.png")
@@ -26,6 +27,25 @@ const ProfileItem = ({ text, color }) => {
 }
 
 const BodyRepeaterProfile = () => {
+
+	useEffect(() => {
+		// getServiceFromFirebase()currentUser
+		// changeVisibilityOfAService()
+	}, [])
+
+	// Unit testing
+	const getServiceFromFirebase = async () => {
+		const { data, error } = await firebaseServiceGetService("46Xlbv6AsjRKzBDISY2t")
+
+		console.log({data})
+	}
+
+	const changeVisibilityOfAService = async () => {
+		const { data, error } = await firebaseServiceChangeVisibilityOfService("1", "46Xlbv6AsjRKzBDISY2t", false)
+	
+		console.log({ visibility: data, error })
+	}
+
 	return(
 		<section className={style.profileContainer}>
 			<header className={style.profileHeader}>
@@ -42,8 +62,8 @@ const BodyRepeaterProfile = () => {
 						</div>
 
 						<div className={style.profileControl}>
-							<Button size="medium" classe={`${style.profileBtn} ${style.profileBtnFirst}`}>RECOMMANDER DILANE</Button>
-							<Button size="medium" classe={style.profileBtn}>CONTACTER DILANE</Button>
+							<Button size="medium" classe={`${style.profileBtn} ${style.profileBtnFirst}`}>RECOMMANDER</Button>
+							<Button size="medium" classe={style.profileBtn}>CONTACTER</Button>
 						</div>
 					</div>
 

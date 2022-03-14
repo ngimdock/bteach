@@ -5,7 +5,7 @@ import { db, storage } from '../../firebase'
  * Get all the notes available
  * @param {String} idService
  */
-const getNotes = async (idService) => {
+const firebaseGetNotes = async (idService) => {
   // To do
 }
 
@@ -14,11 +14,11 @@ const getNotes = async (idService) => {
  * @param {String} idUser 
  * @param {Object} data 
  */
-const createNote = async (idUser, data) => {
+const firebaseCreateNote = async (idUser, data) => {
   // To do
 }
 
 export {
-  getNotes,
-  createNote
+  firebaseGetNotes,
+  firebaseCreateNote
 }

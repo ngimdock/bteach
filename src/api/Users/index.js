@@ -14,7 +14,16 @@ import {
   getCollection,
   getCollections
 } from '../utils'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { 
+  createUserWithEmailAndPassword, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  signOut 
+} from 'firebase/auth'
+import { 
+  firebaseServiceCreateService, 
+  firebaseServiceGetMyService 
+} from '../Services'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -40,10 +49,56 @@ const firebaseUserGetUser = async (id) => {
 
 /**
  * Get the current user
- * @param {String} accessToken 
+ * @param {() => void} globalStateLogin 
  */
-const firebaseUserGetCurrentUser = async (accessToken) => {
-  // To do
+const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid
+
+      try {
+        const getUserData = async () => {
+          // Get info of the current user basing on his user id
+          const { data } = await firebaseUserGetUser(uid)
+  
+          if (data) {
+            let user = null
+            // await firebaseServiceCreateService(uid)
+
+            // Get service if the user is a repeater
+            if (data.role === 1) {
+              const { data: service } = await firebaseServiceGetMyService(uid)
+  
+              if (service) {
+                user = { ...data, name: data.lastName, lastName: undefined, service }
+                console.log({ user })
+              }
+            }
+
+            user = {...data, name: data.lastName, lastName: undefined}
+            console.log({ user })
+
+            // Store the data of the currentuse inside the global state
+            globalStateLogin(user)
+  
+            return
+          }
+  
+          console.log({ error: "User introuvable" })
+  
+          return
+        }
+
+        getUserData()
+      } catch (err) {
+        console.log(err)
+
+        console.log({ error: "Un probleme est survenu" })
+      }
+    } else {
+      console.log({ error: "Aucun user n'est connecte" })
+    }
+  })
 }
 
 /**
@@ -76,7 +131,7 @@ const firebaseUserCreateUser = async (datas) => {
     const uid = credentials.user.auth.currentUser.uid
 
 
-    // Get the whole user collection
+    // Get a user collection
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
@@ -94,14 +149,7 @@ const firebaseUserCreateUser = async (datas) => {
       role
     })
 
-    // Get user basing on his uid
-    const { data, error } = await firebaseUserGetUser(uid)
-
-    if (data) {
-      return { data: { ...data, accessToken: credentials.user?.accessToken } }
-    } 
-
-    return error
+    return { data: true }
   } catch (err) {
     console.error(err)
 
@@ -120,17 +168,11 @@ const firebaseUserLogin = async (email, password) => {
       // Login the user
       const credentials = await signInWithEmailAndPassword(auth, email, password)
 
-      // Get the new user id
-      const uid = credentials.user.auth.currentUser.uid
-
-      // Get user basing on his uid
-      const { data, error } = await firebaseUserGetUser(uid)
-
-      if (data) {
-        return { data: { ...data, accessToken: credentials.user?.accessToken } }
+      if (credentials) {
+        return { data: true }
       } 
 
-      return error
+      return { error: "Une erreur est survenu lors de la connection" }
     } catch (err) {
       console.log(err)
     }
@@ -139,8 +181,13 @@ const firebaseUserLogin = async (email, password) => {
   }
 }
 
+/**
+ * Signout a user
+ * @returns {Object}
+ */
 const firebaseUserLogout = async () => {
   try {
+    // SignOut a user
     await signOut(auth)
 
     return { data: true }
@@ -168,6 +215,15 @@ const firebaseUserDeleteUser = async (id) => {
   // To do
 }
 
+/**
+ * Change the profile photo of the given user
+ * @param {String} id 
+ * @param {String} photoURL 
+ */
+const firebaseUserChangeProfilPic = async (id, photoURL) => {
+  // To do
+}
+
 export {
   firebaseUserGetUser,
   firebaseUserGetCurrentUser,
@@ -175,5 +231,6 @@ export {
   firebaseUserLogout,
   firebaseUserLogin,
   firebaseUserUpdateUser,
+  firebaseUserChangeProfilPic,
   firebaseUserDeleteUser
 }

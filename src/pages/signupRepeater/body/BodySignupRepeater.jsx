@@ -50,8 +50,7 @@ const BodySignupRepeater = () => {
         })
 
         if (data) {
-          // store the access token inside the browser
-          localStorage.setItem("bteach-token", data.accessToken)
+          console.log("User created successfully")
         } else {
           console.log(error)
         }

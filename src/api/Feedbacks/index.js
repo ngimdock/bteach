@@ -1,15 +1,15 @@
 // Feedback operations
 import { db, storage } from '../../firebase'
 
-const getFeebacks = async () => {
+const firebaseGetFeebacks = async () => {
   // To do
 }
 
-const createFeebacks = async (idUser, data) => {
+const firebaseCreateFeebacks = async (idUser, data) => {
   // To do
 }
 
 export {
-  getFeebacks,
-  createFeebacks
+  firebaseGetFeebacks,
+  firebaseCreateFeebacks
 }

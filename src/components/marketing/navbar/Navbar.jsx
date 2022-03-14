@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { FaBars } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import style from '../../../css/base.module.css'
+import currentUserContext from "../../../dataManager/context/currentUserContext"
 import ALink from "../../elements/a/ALink"
 import Button from "../../elements/buttons/Button"
 import ImgCircle from "../../elements/imgCircle/ImgCircle"
@@ -11,8 +12,12 @@ import MobileMenu from "./MobileMenu"
 const profilImage = require('../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg')
 
 const Navbar = () => {
+	// Set local state
 	const [mobileMenuDisplayed, setMobileMenuDisplayed] = useState(false)
 	const [backgroundMenuBlackVisible, setBackgroundMenuBlackVisible] = useState(false)
+
+	// Get global state
+	const { currentUser } = useContext(currentUserContext)
 
 	// UseEffect section
 
@@ -66,11 +71,11 @@ const Navbar = () => {
 
 			<div className={style.navbarNavigation}>
 				<nav className={style.navbarNav}>
-					<ALink classe={style.navbarNavLink} link="#">Les repetiteurs</ALink>
+					<ALink classe={style.navbarNavLink} link="/search/repeaters">Les repetiteurs</ALink>
 				</nav>
 
 				{
-					!true ? (
+					!currentUser ? (
 						<>
 							<Button size="medium" link="/sign_in" classe={style.navbarBtnSignin}>CONNEXION</Button>
 							<Button size="medium" link="/client/sign_up" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
@@ -79,10 +84,10 @@ const Navbar = () => {
 						<NavbarProfilDropdown
 							dropElt={
 								<div className={style.navbarProfile}>
-									<span className={style.navbarProfileName}>Dilane kombou</span>
+									<span className={style.navbarProfileName}>{ `${currentUser.getFirstName} ${currentUser.getName}` }</span>
 									<ImgCircle 
 										classe={style.navbarProfileImage} 
-										src={profilImage} 
+										src={currentUser.getProfilePic} 
 										alt="dilane kombou" 
 									/>
 								</div>
