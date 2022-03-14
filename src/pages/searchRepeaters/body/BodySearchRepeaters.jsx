@@ -33,8 +33,6 @@ const BodySearchRepeaters = () => {
 
 			<AllRepeater />
 
-			<Pagination />
-
 		</div>
 	)
 }

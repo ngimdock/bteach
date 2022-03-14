@@ -22,7 +22,7 @@ const SearchFilter = () => {
 						<DropdownGender />
 					</div>
 					<div className="mt-7 flex">
-						<p className="text-bold ml-4 text-gray-500">Lieux cours :</p>
+						<p className="text-bold text-gray-500">Lieux cours :</p>
 						<div className="ml-3">
 							<RadioButton name="courseLocation" items={['Chez élève', 'Chez prof', 'En ligne']}/>
 						</div>
