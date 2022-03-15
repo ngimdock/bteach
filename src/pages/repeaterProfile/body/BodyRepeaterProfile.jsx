@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
 import H3 from '../../../components/elements/titles/H3'
 import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
 import { firebaseServiceChangeVisibilityOfService, firebaseServiceGetService } from '../../../api/Services'
+import { firebaseCreateFeebacks, firebaseGetFeebacks } from '../../../api/Feedbacks'
+import currentUserContext from '../../../dataManager/context/currentUserContext'
 
 const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 const imageIllustration = require("../../../medias/illustrations/process1.png")
@@ -27,10 +29,13 @@ const ProfileItem = ({ text, color }) => {
 }
 
 const BodyRepeaterProfile = () => {
+	const { currentUser } = useContext(currentUserContext)
 
 	useEffect(() => {
 		// getServiceFromFirebase()currentUser
 		// changeVisibilityOfAService()
+		// createFeedback()
+		firebaseGetFeebacks()
 	}, [])
 
 	// Unit testing
@@ -44,6 +49,18 @@ const BodyRepeaterProfile = () => {
 		const { data, error } = await firebaseServiceChangeVisibilityOfService("1", "46Xlbv6AsjRKzBDISY2t", false)
 	
 		console.log({ visibility: data, error })
+	}
+
+	const createFeedback = async () => {
+		if (currentUser) {
+			const { data, error } = await firebaseCreateFeebacks(currentUser.getId, "Beautiful")
+
+			if (data) {
+				console.log("Feedback Created successfully")
+			} else {
+				console.log(error)
+			}
+		}
 	}
 
 	return(

@@ -31,9 +31,11 @@ const MobileMenu = ({ show, onHide }) => {
   // Logout function
   const logout = async () => {
     try {
+      // Try to log out the current user
       const { data } = await firebaseUserLogout()
 
       if (data) {
+        // Delete the currentuse from the global state
         userLogout()
       } else {
         console.log("error while logout")
@@ -67,12 +69,12 @@ const MobileMenu = ({ show, onHide }) => {
         {
           currentUser ? (
             <>
-              <ImgCircle classe={style.mobileMenuHeaderImage} src={profileImage} />
+              <ImgCircle classe={style.mobileMenuHeaderImage} src={currentUser.getProfilePic} />
 
               <div className={style.mobileMenuHeaderInfo}>
                 <span className={style.mobileMenuHeaderName}>{ `${currentUser.getFirstName} ${currentUser.getName}` }</span>
 
-                <Button onClick={handleNavigateToProfile} classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
+                <Button action={handleNavigateToProfile} classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
               </div>
             </>
           ):(
