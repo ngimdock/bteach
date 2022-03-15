@@ -7,6 +7,7 @@ import { BsEyeSlash } from "react-icons/bs";
 import H3 from "../../../components/elements/titles/H3";
 import Button from "../../../components/elements/buttons/Button";
 import Paragraphe from "../../../components/elements/p/Paragraphe";
+import image from "../../../medias/photos/pexels-rfstudio-3061415 (1).jpg";
 
 const text =
   "Je suis gaelle kengne, éleve de premiere C en physique je cherche un repetiteur en physique pour mieux comprendre les notions enseignes en cours afin de passer mon probatoire avec une bonne mention.";
@@ -16,34 +17,34 @@ const text2 = "N'hesitez pas à me contacter pour plus de detail...";
 
 const BodyClientProfile = () => {
   return (
-    <div className="bg-[#00000090] w-full h-full flex flex-col items-center justify-center py-20">
+    <div className="bg-[#00000069] w-full h-full flex flex-col items-center justify-center py-20">
       <div className="w-11/12 h-full md:max-h-full md:max-w-3xl flex flex-col items-center justify-center">
-        <IoCloseSharp className="text-secondary w-8 h-8 md:w-16 md:h-16 self-end" />
+        <IoCloseSharp className="text-secondary w-8 h-8 md:w-16 md:h-16 self-end cursor-pointer" />
         <div className="rounded-md bg-white grid grid-cols-1 grid-flow-row gap-4 max-w-3xl p-4 md:px-10 md:py-8 md:gap-6">
           <div className="text-secondary flex items-center">
-            <RiAlertFill className="h-" />
+            <RiAlertFill />
             <span className="ml-2 items-center text-xs md:text-base">
               Pour voir les contacts de Gaelle vous devez{" "}
-              <Link
-                to="/client/sign_up"
-                className="underline decoration-secondary"
-              >
+              <Link to="/sign_in" className="underline decoration-secondary">
                 vous connecter
               </Link>{" "}
               ou{" "}
-              <Link to="/" className="underline decoration-secondary">
+              <Link
+                to="/repeater/sign_up"
+                className="underline decoration-secondary"
+              >
                 créer un compte
               </Link>
             </span>
           </div>
-          <div className="grid grid-cols-1 grid-flow-row xs:grid-rows-1 xs:grid-flow-col gap-3">
+          <div className="grid grid-cols-1 grid-flow-row xs:grid-rows-1 xs:grid-flow-col gap-3 md:gap-6">
             <img
-              className="rounded-md"
-              src="../../../medias/photos/africanWomen.jpg"
+              className="rounded-md max-h-52 w-48 object-cover object-center"
+              src={image}
               alt="client thumbnail"
             />
             <div className="grid grid-col-1 grid-flow-row gap-3">
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col md:flex-row gap-3 md:gap-0">
                 <div className="flex flex-col gap-1 md:gap-3 basis-7/12">
                   <H3>Gaelle kengne tamho</H3>
                   <Paragraphe children="Filieres: Svt, Physique, Chimie" />
