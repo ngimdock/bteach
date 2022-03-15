@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 
 import RectangularLink from "./elements/RectangularLink";
 import currentUserContext from "../../../../dataManager/context/currentUserContext"
+import servicesContext from "../../../../dataManager/context/servicesContext"
 
 
 const TrainingTypes = () => {
@@ -97,22 +98,25 @@ const TrainingTypes = () => {
 			certifiedRepeater
 		 } = useContext(currentUserContext)
 
+	const {
+		services,
+		addService,
+		addAllServices,
+		removeService
+	} = useContext(servicesContext)
+
 
 	useEffect(() => {
-		login({role: 0, ...objUser})
-	}, [])
+		console.log(services)
+	}, [services])
 
-	useEffect(() => {
-		console.log(currentUser)
-
-	}, [currentUser])
 
 	const handleClick1 = (event) => {
-		deleteRepeater(10)
+		addAllServices("hello service")
 	}
 
 	const handleClick2 = (event) => {
-		certifiedRepeater(20)
+		removeService("machin")
 	}
 
 	return(
