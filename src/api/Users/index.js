@@ -25,6 +25,8 @@ import {
   firebaseServiceGetMyService 
 } from '../Services'
 
+import { firebaseCreateNote } from "../Notes"
+
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
 /**
@@ -60,6 +62,10 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
         const getUserData = async () => {
           // Get info of the current user basing on his user id
           const { data } = await firebaseUserGetUser(uid)
+
+
+          const note = await firebaseCreateNote(uid, { message: "Message de note", stars: 3 })
+
   
           if (data) {
             let user = null
@@ -130,7 +136,7 @@ const firebaseUserCreateUser = async (datas) => {
     const uid = credentials.user.auth.currentUser.uid
 
 
-    // Get a user collection
+    // Get a user collection reference
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
