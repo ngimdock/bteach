@@ -31,49 +31,17 @@ const ProfileItem = ({ text, color }) => {
 const BodyRepeaterProfile = () => {
 	const { currentUser } = useContext(currentUserContext)
 
-	useEffect(() => {
-		// getServiceFromFirebase()currentUser
-		// changeVisibilityOfAService()
-		// createFeedback()
-		firebaseGetFeebacks()
-	}, [])
-
-	// Unit testing
-	const getServiceFromFirebase = async () => {
-		const { data, error } = await firebaseServiceGetService("46Xlbv6AsjRKzBDISY2t")
-
-		console.log({data})
-	}
-
-	const changeVisibilityOfAService = async () => {
-		const { data, error } = await firebaseServiceChangeVisibilityOfService("1", "46Xlbv6AsjRKzBDISY2t", false)
-	
-		console.log({ visibility: data, error })
-	}
-
-	const createFeedback = async () => {
-		if (currentUser) {
-			const { data, error } = await firebaseCreateFeebacks(currentUser.getId, "Beautiful")
-
-			if (data) {
-				console.log("Feedback Created successfully")
-			} else {
-				console.log(error)
-			}
-		}
-	}
-
 	return(
 		<section className={style.profileContainer}>
 			<header className={style.profileHeader}>
-				<ImgCircle src={profilImage} alt="profile" classe={style.profileImage} />
+				<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
 
 				<div className={style.profileInfoSection}>
 					<div className={style.profilePersonal}>
 						<div className={style.profilePersonalInfo}>
-							<span className={style.profileName}>Dilane Kombou</span>
+							<span className={style.profileName}>{ `${currentUser.getName} ${currentUser.getFirstName}` }</span>
 							<span>
-								<span className={style.profileLocation}>Yaounde (Nkolbisson)</span>
+								<span className={style.profileLocation}>{ `${currentUser.getTown} ( ${currentUser.getDistrict} )` }</span>
 							</span>
 							<span className={style.profileSubject}>Filiere: Physique, Chimie</span>
 						</div>
