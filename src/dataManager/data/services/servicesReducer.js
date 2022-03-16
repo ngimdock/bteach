@@ -6,7 +6,8 @@ import Service from "../../../entities/Service"
 import { 
 	ADD_SERVICE, 
 	ADD_ALL_SERVICES, 
-	REMOVE_SERVICE
+	REMOVE_SERVICE,
+	UPDATE_SERVICE
 } from "./types"
 
 import{
@@ -17,18 +18,38 @@ import{
 
 const servicesReducer = (state=[], action) => {
 	switch(action.type){
-		case ADD_SERVICE : {
-			console.log("ajout de service")
+		case ADD_SERVICE: {
+			const services = [...state]
+
+			if(action.payload){
+				services.push(new Service(action.payload))
+				return services
+			}
 			return state
 		}
 
-		case ADD_ALL_SERVICES : {
-			console.log("ajout de tous les services")
+		case ADD_ALL_SERVICES: { //fetch all services from database
+			if(action.payload){
+				let services = []
+				for(let serv of action.payload){
+					services.push(new Service(serv))
+				}
+
+				return services
+			}
 			return state
 		}
 
-		case REMOVE_SERVICE : {
-			console.log("suppression de service")
+		case REMOVE_SERVICE: {
+			const services = [...state]
+
+			if(action.payload){
+				const index = services.findIndex(service => service.getId === action.payload)
+				if(index > -1){
+					services.splice(index, 1)
+				}
+				return services
+			}
 			return state
 		}
 

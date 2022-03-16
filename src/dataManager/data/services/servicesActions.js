@@ -21,7 +21,6 @@ const removeService = (idService) => {
 	}
 }
 
-
 export {
 	addService,
 	addAllServices,
