@@ -3,12 +3,14 @@ import React from "react";
 
 class Pagination extends React.Component {
 
-	constructor(props) {
-		super(props);
+	constructor(data) {
+		super()
+		this.initialization(data)
 		this.state = {
-			cards: ['Card1','Card2','Card3','Card4','Card5','Card6','Card7','Card8','Card9','Card10','Card11','Card12','Card13','Card14','Card15','Card16','Card17','Card18','Card19','Card20','Card21','Card22','Card23','Card24','Card25','Card26'],
+			//cards: ['Card1','Card2','Card3','Card4','Card5','Card6','Card7','Card8','Card9','Card10','Card11','Card12','Card13','Card14','Card15','Card16','Card17','Card18','Card19','Card20','Card21','Card22','Card23','Card24','Card25','Card26'],
+			data: [],
 			currentPage: 1,
-			cardsPerPage: 6
+			dataPerPage: 6
 		};
 		this.handleClick = this.handleClick.bind(this);
 		this.handleMoveLeft = this.handleMoveLeft.bind(this);
@@ -32,21 +34,53 @@ class Pagination extends React.Component {
 		});
 	}
 
+	initialization(data){
+		if(data){
+			const {
+				id,
+				name,
+				firstName,
+				email,
+				password,
+				phone1,
+				phone2,
+				date,
+				sex,
+				town,
+				district,
+				profilePic,
+			} = data
+
+			this.id = id
+			this.name = name
+			this.firstName = firstName
+			this.email = email
+			this.password = password
+			this.phone1 = phone1
+			this.phone2 = phone2
+			this.date = date
+			this.sex = sex
+			this.town = town
+			this.district = district
+			this.profilePic = profilePic
+		}
+	}
+
 	render() {
-		const { cards, currentPage, cardsPerPage } = this.state;
+		const { data, currentPage, dataPerPage } = this.state;
 
-		//displaying current cards
-		const indexOfLastCard = currentPage * cardsPerPage;
-		const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-		const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
+		//displaying current data
+		const indexOfLastCard = currentPage * dataPerPage;
+		const indexOfFirstCard = indexOfLastCard - dataPerPage;
+		const currentdata = data.slice(indexOfFirstCard, indexOfLastCard);
 
-		const renderCards = currentCards.map((card, index) => {
+		const renderdata = currentdata.map((card, index) => {
 			return <li key={index}>{card}</li>;
 		});
 
 		//displaying page numbers
 		const pageNumbers = [];
-		for (let i = 1; i <= Math.ceil(cards.length / cardsPerPage); i++) {
+		for (let i = 1; i <= Math.ceil(data.length / dataPerPage); i++) {
 			pageNumbers.push(i);
 		}
 
@@ -68,7 +102,7 @@ class Pagination extends React.Component {
 			<div className="">
 				<div>
 					<ul>
-						{renderCards}
+						{renderdata}
 					</ul>
 					<div className="flex justify-end">
 						<button onClick={this.handleMoveLeft} className="h-12 border-r-0 border-rose-600 px-4 hover:text-rose-600">
