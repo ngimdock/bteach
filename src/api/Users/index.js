@@ -61,13 +61,6 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
         const getUserData = async () => {
           // Get info of the current user basing on his user id
           const { data } = await firebaseUserGetUser(uid)
-
-
-          // Create note
-          // const res = await firebaseCreateNote(uid, "46Xlbv6AsjRKzBDISY2t", { message: "good", stars: 4 })
-
-          // console.log(res)
-
   
           if (data) {
             let user = null
@@ -75,16 +68,15 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
             // Get service if the user is a repeater
             console.log({ data })
             if (Number(data.role) === 1) {
-              console.log("service")
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
                 user = { ...data, name: data.lastName, lastName: undefined, service }
                 console.log({ user })
-              }
 
-              // Store the data of the currentuse inside the global state
-              globalStateLogin(user)
+                // Store the data of the currentuse inside the global state
+                globalStateLogin(user)
+              }
             } else {
               user = {...data, name: data.lastName, lastName: undefined}
 

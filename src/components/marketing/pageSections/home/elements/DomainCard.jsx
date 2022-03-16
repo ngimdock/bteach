@@ -16,14 +16,13 @@ const DomainCard = (props) => {
 		<div className="DomainCard lg:mx-auto mx-2">
 
 				<div className="">
-					<div className="domain"></div>
+					<div className="domain">
+						<div className="DomainCard_text">
+							<Paragraphe classe="font-bold text-gray-100">{discipline}</Paragraphe>
+						</div>
+					</div>
 					<img src={image} alt={alt} className="img_card" />
 				</div>
-
-				<div className="DomainCard_text">
-					<Paragraphe classe="font-bold text-gray-100">{discipline}</Paragraphe>
-				</div>
-			
 		</div>
 
 	);

@@ -7,7 +7,10 @@ import { firebaseServiceGetServices } from '../api/Services'
 import currentUserContext from '../dataManager/context/currentUserContext'
 import { firebaseGetNotes } from '../api/Notes'
 
-const Base = ({ children }) => {
+const Base = ({ children, backgroundColor }) => {
+	const defaultBackgroundColor = backgroundColor ? backgroundColor:"#fff"
+
+	// Get Global state
 	const { login } = useContext(currentUserContext)
 
 	useEffect(() => {
@@ -31,7 +34,7 @@ const Base = ({ children }) => {
 		<>
 			<Navbar />
 		
-			<main className={style.content}>
+			<main className={style.content} style={{ backgroundColor: defaultBackgroundColor }}>
 				{ children }
 			</main>
 
