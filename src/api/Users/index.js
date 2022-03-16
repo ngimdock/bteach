@@ -24,6 +24,7 @@ import {
   firebaseServiceCreateService, 
   firebaseServiceGetMyService 
 } from '../Services'
+import { firebaseCreateNote } from '../Notes'
 
 import { firebaseCreateNote } from "../Notes"
 
@@ -64,27 +65,34 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
           const { data } = await firebaseUserGetUser(uid)
 
 
-          const note = await firebaseCreateNote(uid, { message: "Message de note", stars: 3 })
+          // Create note
+          // const res = await firebaseCreateNote(uid, "46Xlbv6AsjRKzBDISY2t", { message: "good", stars: 4 })
+
+          // console.log(res)
 
   
           if (data) {
             let user = null
-            // await firebaseServiceCreateService(uid)
 
             // Get service if the user is a repeater
-            if (data.role === 1) {
+            console.log({ data })
+            if (Number(data.role) === 1) {
+              console.log("service")
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
                 user = { ...data, name: data.lastName, lastName: undefined, service }
                 console.log({ user })
               }
+
+              // Store the data of the currentuse inside the global state
+              globalStateLogin(user)
+            } else {
+              user = {...data, name: data.lastName, lastName: undefined}
+
+              // Store the data of the currentuse inside the global state
+              globalStateLogin(user)
             }
-
-            user = {...data, name: data.lastName, lastName: undefined}
-
-            // Store the data of the currentuse inside the global state
-            globalStateLogin(user)
   
             return
           }
@@ -154,7 +162,13 @@ const firebaseUserCreateUser = async (datas) => {
       role
     })
 
-    return { data: true }
+    if (role === 1) {
+      await firebaseServiceCreateService(uid)
+
+      return { data: true }
+    } else {
+      return { data: true }
+    }
   } catch (err) {
     console.error(err)
 

@@ -39,6 +39,7 @@ const currentUserReducer = (state, action) => {
 				return customer
 			}
 			else if(role === 1){
+				console.log({ payload: action.payload })
 				const repeater = new Repeater(action.payload)
 				return repeater
 			}else{

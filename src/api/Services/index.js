@@ -29,13 +29,13 @@ const firebaseServiceGetMyService = async (idUser) => {
     // Get a service
     const querySnapShot = await getDocs(q)
 
-    const services = []
+    
+    const doc = querySnapShot.docs[0]
+    console.log(doc.data())
 
-    querySnapShot.forEach(doc => {
-      services.push({ ...doc.data(), id: doc.id })
-    })
+    const service = {...doc.data(), id: doc.id}
 
-    return { data: services[0] }
+    return { data: service }
   } catch (err) {
     console.log(err)
 

@@ -1,15 +1,33 @@
 // Note operations
+import { addDoc, onSnapshot, query, where } from 'firebase/firestore'
 import { db, storage } from '../../firebase'
-import { getCollection, getCollections } from "../utils"
-
-import { addDoc } from "firebase/firestore"
+import { getCollection, getCollections } from '../utils'
 
 /**
  * Get all the notes available
  * @param {String} idService
  */
-const firebaseGetNotes = async (idService) => {
-  
+const firebaseGetNotes = (idService, globalStateAddNotes = (data) => {}) => {
+  // Get Note collection reference
+  const notesCollectionRef = getCollections("notes")
+  const serviceCollectionRef = getCollection(idService, "services")
+
+  const q = query(notesCollectionRef, where("service", "==", serviceCollectionRef))
+
+  onSnapshot(q, (snapshots) => {
+    // Empty array for notes
+    const notes = []
+
+    // Get data of notes
+    snapshots.docs.forEach(doc => {
+      notes.push({ ...doc.data(), id: doc.id })
+    })
+
+    // Add to the global state
+    globalStateAddNotes(notes)
+
+    console.log({notes})
+  })
 }
 
 /**
@@ -17,32 +35,35 @@ const firebaseGetNotes = async (idService) => {
  * @param {String} idUser 
  * @param {Object} data 
  */
-const firebaseCreateNote = async (idUser, data) => {
+const firebaseCreateNote = async (idUser, idService, data) => {
+  // Get collection reference
+  const userCollectionRef = getCollection(idUser, "users")
+  const notesCollectionRef = getCollections("notes")
+  const serviceCollectionRef = getCollection(idService, "services")
 
-  const notesCollectionsRef = getCollections("notes")
-  const userRef = getCollection(idUser, "users")
-
-  try{
+  try {
     const {
       message,
       stars
     } = data
 
-    if(message && stars >= 0){
-      const note = {
+    if (message && stars >= 0) {
+      await addDoc(notesCollectionRef, {
         message,
         stars,
         isVisible: true,
-        author: userRef
-      }
+        author: userCollectionRef,
+        service: serviceCollectionRef
+      })
 
-      await addDoc(notesCollectionsRef, note)
       return { data: true }
-    }else {
+    } else {
       return { error: "Vos donnees ne sont pas complet" }
     }
-  }catch (error){
-    return { error: error }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Un probleme est survenu lors de la creation de la note" }
   }
 }
 

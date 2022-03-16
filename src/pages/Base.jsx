@@ -5,6 +5,7 @@ import style from '../css/base.module.css'
 import { firebaseUserGetCurrentUser } from '../api/Users'
 import { firebaseServiceGetServices } from '../api/Services'
 import currentUserContext from '../dataManager/context/currentUserContext'
+import { firebaseGetNotes } from '../api/Notes'
 
 const Base = ({ children }) => {
 	const { login } = useContext(currentUserContext)
@@ -15,6 +16,9 @@ const Base = ({ children }) => {
 
 		// Get list of service
 		firebaseServiceGetServices()
+
+		// Get notes
+		firebaseGetNotes("jVpgh96a2ApbikGVxJMx")
 
 		// if (data) {
 		// 	console.log(data)
