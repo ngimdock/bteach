@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
@@ -7,6 +7,10 @@ import RecommandationCarousel from '../../../components/utils/carousels/Recomman
 import { firebaseServiceChangeVisibilityOfService, firebaseServiceGetService } from '../../../api/Services'
 import { firebaseCreateFeebacks, firebaseGetFeebacks } from '../../../api/Feedbacks'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
+import { BsCameraFill } from 'react-icons/bs'
+import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
+import { firebaseUserChangeProfilePic } from '../../../api/Users'
+import { uploadImage } from '../../../api/utils'
 
 const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 const imageIllustration = require("../../../medias/illustrations/process1.png")
@@ -29,12 +33,111 @@ const ProfileItem = ({ text, color }) => {
 }
 
 const BodyRepeaterProfile = () => {
-	const { currentUser } = useContext(currentUserContext)
+	// Get global state
+	const { currentUser, updateProfilePic } = useContext(currentUserContext)
+
+	// Set locale state
+	const [isHover, setIsHover] = useState(false)
+	const [image, setImage] = useState(null)
+	const [imagePreview, setImagePreview] = useState("")
+	const [imageURL, setImageURL] = useState("")
+	const [uploading, setUploading] = useState(false)
+	const [modalOpen, setModalOpen] = useState(false)
+	const [progress, setProgress] = useState(0)
+
+	// Use ref section
+	const inputRef = useRef()
+
+	// Use effect section
+	useEffect(() => {
+		if (imageURL) {
+			changeProfilePhoto(setImageURL)
+		}
+	}, [imageURL])
+
+	// Some handlers
+	const handleOpenFileSystem = () => {
+		inputRef.current.click()
+	}
+
+	const handleSelectImage = (e) => {
+		e.preventDefault()
+
+		const file = e.target.files[0]
+		const preview = URL.createObjectURL(file)
+
+		setImage(file)
+		setImagePreview(preview)
+
+		setModalOpen(true)
+	}
+
+	const handleProgressUpload = (progress) => {
+		console.log(progress)
+		setProgress(progress)
+	}
+
+	const handleGetImageUrl = (image) => {
+		setImageURL(image)
+	}
+
+	const changeProfilePhoto = async (removeImageUrl) => {
+		try {
+			const { data, error } = await firebaseUserChangeProfilePic(currentUser.getId, imageURL)
+
+			if (data) {
+				updateProfilePic(imageURL)
+				removeImageUrl("")
+			}
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	const handleUploadImage = () => {
+		setUploading(true)
+
+		uploadImage("profiles", image, handleGetImageUrl, handleProgressUpload, setUploading)
+	}
 
 	return(
 		<section className={style.profileContainer}>
+			{
+				modalOpen && <AddProfilPhotoModal 
+					image={imagePreview}
+					onHide={() => setModalOpen(false)}
+					onChangeProfil={handleOpenFileSystem}
+					onUploadProfil={handleUploadImage}
+					onCloseProgress={() =>setProgress(0)}
+					percentage={progress}
+					uploading={uploading}
+				/>
+			}
+			
+
 			<header className={style.profileHeader}>
-				<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
+				<div 
+					className={style.profileImageContainer}
+					onMouseEnter={() => setIsHover(true)}
+					onMouseLeave={() => setIsHover(false)}
+				>
+					<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
+
+					<span 
+						className={`${style.profileImageIcon} ${isHover && style.profileImageIconAnimation}`}
+						onClick={handleOpenFileSystem}
+					>
+						<BsCameraFill size={20} color="#fff" />
+					</span>
+
+					<input 
+						ref={inputRef} 
+						hidden 
+						type="file" 
+						accept='image/*' 
+						onChange={handleSelectImage}
+					/>
+				</div>
 
 				<div className={style.profileInfoSection}>
 					<div className={style.profilePersonal}>

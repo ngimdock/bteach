@@ -21,7 +21,7 @@ const Base = ({ children, backgroundColor }) => {
 		firebaseServiceGetServices()
 
 		// Get notes
-		firebaseGetNotes("jVpgh96a2ApbikGVxJMx")
+		// firebaseGetNotes("jVpgh96a2ApbikGVxJMx")
 
 		// if (data) {
 		// 	console.log(data)

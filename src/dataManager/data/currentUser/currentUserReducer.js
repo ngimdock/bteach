@@ -34,6 +34,8 @@ const currentUserReducer = (state, action) => {
 		case LOGIN: {
 			const { role } = action.payload
 
+			console.log({payload: action.payload})
+
 			if(role === 0) {
 				const customer = new Customer(action.payload)
 				return customer

@@ -12,7 +12,8 @@ import {
 } from 'firebase/firestore'
 import { 
   getCollection,
-  getCollections
+  getCollections,
+  uploadImage
 } from '../utils'
 import { 
   createUserWithEmailAndPassword, 
@@ -40,7 +41,9 @@ const firebaseUserGetUser = async (id) => {
     // Trying getting the document from firestore
     const user = await getDoc(userCollection)
 
-    return { data: {...user.data(), id} }
+    const userData = { ...user.data(), id: user.id }
+
+    return { data: userData }
   } catch (err) {
     console.error(err)
 
@@ -83,6 +86,8 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
               // Store the data of the currentuse inside the global state
               globalStateLogin(user)
             }
+
+            console.log({ user })
   
             return
           }
@@ -229,8 +234,19 @@ const firebaseUserDeleteUser = async (id) => {
  * @param {String} id 
  * @param {String} photoURL 
  */
-const firebaseUserChangeProfilePic = async (id, photoURL) => {
-  // To do
+const firebaseUserChangeProfilePic = async (id, imageURL) => {
+  // Get reference
+  const userCollectionReference = getCollection(id, "users")
+
+  try {
+    await updateDoc(userCollectionReference, { profilePic: imageURL })
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu" }
+  }
 }
 
 export {
