@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 
 import RectangularLink from "./elements/RectangularLink";
 import currentUserContext from "../../../../dataManager/context/currentUserContext"
+import servicesContext from "../../../../dataManager/context/servicesContext"
 
 
 const TrainingTypes = () => {

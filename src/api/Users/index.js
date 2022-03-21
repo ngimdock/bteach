@@ -134,7 +134,7 @@ const firebaseUserCreateUser = async (datas) => {
     const uid = credentials.user.auth.currentUser.uid
 
 
-    // Get a user collection
+    // Get a user collection reference
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore

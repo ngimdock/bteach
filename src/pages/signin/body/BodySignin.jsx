@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import H3 from "../../../components/elements/titles/H3";
 import Input from "../../../components/elements/inputs/Input";
 import Button from "../../../components/elements/buttons/Button";
 import { firebaseUserLogin } from "../../../api/Users";
 import { Navigate } from 'react-router-dom'
 import LoadingCircle from "../../../components/utils/loaders/LoaderCircle"
+
+import currentUserContext from "../../../dataManager/context/currentUserContext"
 
 const BodySignin = () => {
   // Set local state
