@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import CurrentSearchNav from "../../../components/marketing/pageSections/search/elements/CurrentSearchNav";
 import H2 from "../../../components/elements/titles/H2";
@@ -8,10 +8,14 @@ import Pagination from "../../../components/marketing/pageSections/search/elemen
 import DropdownSortby from "../../../components/marketing/pageSections/search/elements/DropdownSortby";
 import "../../../css/search.css";
 
-
 const BodySearchRepeaters = () => {
-	return(
+	const [filters, setFilters] = useState([])
 
+	const handleGetCurrentFilters = (filters) => {
+		setFilters(filters)
+	}
+
+	return(
 		<div className="lg:px-24 lg:py-8" style={{overflow: "hidden"}}>
 
 			<CurrentSearchNav 
@@ -24,13 +28,13 @@ const BodySearchRepeaters = () => {
 
 			<p className="mt-10 mb-5 lg:ml-0 ml-4 text-2xl font-medium text-gray-500">Filtre de recherche</p>
 
-			<SearchFilter />
+			<SearchFilter onGetCurrentFilter={handleGetCurrentFilters} />
 
-			<div className="mt-7">
+			<div className="mt-2">
 				<DropdownSortby />
 			</div>
 
-			<AllRepeater />
+			<AllRepeater filters={filters} />
 
 			<Pagination />
 

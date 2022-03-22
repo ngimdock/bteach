@@ -108,6 +108,10 @@ class User{
 	 	return this.notes
 	 }
 
+	get getFullName () {
+		return `${this.firstName[0].toUpperCase() + this.firstName.substr(1)} ${this.name[0].toUpperCase() + this.name.substr(1)}`
+	}
+
 	initialization(data){
 		if(data){
 			const {

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Dropdown from "./Dropdown";
 
 
-const DropdownCities = () => {
+const DropdownCities = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Villes' },
@@ -15,7 +15,11 @@ const DropdownCities = () => {
 	const [value, setValue] = useState('Villes');
 
 	const handleChange = (event) => {
-		setValue(event.target.value);
+		const value = event.target.value
+		setValue(value);
+
+		if (value !== "Villes")
+			onAddFilter("ville", value)
 	};
 
 	return (

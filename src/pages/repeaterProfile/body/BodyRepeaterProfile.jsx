@@ -142,7 +142,7 @@ const BodyRepeaterProfile = () => {
 				<div className={style.profileInfoSection}>
 					<div className={style.profilePersonal}>
 						<div className={style.profilePersonalInfo}>
-							<span className={style.profileName}>{ `${currentUser.getName} ${currentUser.getFirstName}` }</span>
+							<span className={style.profileName}>{ currentUser.getFullName}</span>
 							<span>
 								<span className={style.profileLocation}>{ `${currentUser.getTown} ( ${currentUser.getDistrict} )` }</span>
 							</span>
