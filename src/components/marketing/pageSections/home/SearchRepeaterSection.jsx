@@ -12,7 +12,7 @@ import H2 from '../../../elements/titles/H2';
 const SearchRepeaterSection = () => {
 
 	return(
-		<Container classe="mt-16 px-5 md:px-10">
+		<Container classe="mt-20 md:mt-32 px-5 md:px-10">
 			<div className="flex flex-col space-y-3 md:space-x-6 lg:space-x-10 items-center md:flex-row">
 				<img src={image} alt="smile student" className="img_section hidden md:inline-block w-40 h-auto md:w-72 lg:w-80 " />
 				<div className="shrink flex flex-col items-center md:items-start my-5 py-2 lg:mt-12 lg:px-0">

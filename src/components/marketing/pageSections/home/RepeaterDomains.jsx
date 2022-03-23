@@ -15,7 +15,7 @@ import Container from '../../../utils/Container';
 const RepeaterDomains = () => {
 
 	return(
-		<Container>
+		<Container classe="mt-20 md:mt-32">
 			<div className="container_sections_home w-full">
 
 				<H2 classe="text-center">Les domaines des répétiteurs les plus cherchés</H2>

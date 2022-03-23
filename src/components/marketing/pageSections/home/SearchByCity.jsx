@@ -10,7 +10,7 @@ import Paragraphe from '../../../elements/p/Paragraphe';
 const SearchByCity = () => {
 
 	return(
-		<Container classe="mt-40 px-5 md:px-10">
+		<Container classe="mt-20 md:mt-40 px-5 md:px-10">
 			<H2 classe="text-center">Les meilleurs repétiteurs dans votre ville</H2>
 			<Paragraphe classe="text-center mt-3">Chercher les repétiteurs près de chez vous</Paragraphe>
 			<div className="my-5 py-2"></div>

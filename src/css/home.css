@@ -2,19 +2,10 @@
 .home_banner1{
 	background-image: url(../medias/background/bg-herotop.jpg);
 	background-size: cover;
-	height: 400px;
 }
 
 .home_banner2{
 	background-color: rgba(0, 29, 37, .9);
-}
-
-.home_banner3{
-	background-image: url(../medias/photos/img-herotop.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: right;
-	height: 400px;
 }
 
 @media screen and (min-width: 640px){

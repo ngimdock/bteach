@@ -2,9 +2,9 @@ import React from "react";
 
 import H2 from "../../../elements/titles/H2";
 import Steps from "./elements/Steps";
-import process1 from "../../../../medias/illustrations/process1.png"
-import process2 from "../../../../medias/illustrations/process2.png"
-import process3 from "../../../../medias/illustrations/process3.png"
+import process1 from "../../../../medias/illustrations/process1.svg"
+import process2 from "../../../../medias/illustrations/process2.svg"
+import process3 from "../../../../medias/illustrations/process3.svg"
 import Container from '../../../utils/Container';
 
 
@@ -12,12 +12,11 @@ import Container from '../../../utils/Container';
 const StudentsSteps = () => {
 
 	return(
-		<Container>
-			<div className="container_sections_home">
+		<Container classe="mt-20 md:mt-32">
+			<div className="container_sections_home w-full">
 				
-				<H2>Une procédure simple pour atteindre le succès</H2>
-				<div className="my-5 py-2"></div>
-				<div className="grid lg:grid-cols-3 md:grid-cols-2 lg:gap-x-20 md:gap-x-20">
+				<H2 classe="text-center">Une procédure simple pour atteindre le succès</H2>
+				<div className="grid lg:grid-cols-3 md:grid-cols-2 lg:gap-x-20 md:gap-x-20 mt-8">
 					<Steps 
 						number="1"
 						image={process1}

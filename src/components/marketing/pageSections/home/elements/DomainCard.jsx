@@ -21,7 +21,7 @@ const DomainCard = (props) => {
 				</div>
 
 				<div className="DomainCard_text">
-					<Paragraphe classe="font-bold text-gray-100">{discipline}</Paragraphe>
+					<Paragraphe classe="group-hover:text-primary font-bold text-gray-100 transition linear">{discipline}</Paragraphe>
 				</div>
 			
 		</div>

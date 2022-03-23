@@ -7,7 +7,7 @@ import RecommandationCarousel from '../../../components/utils/carousels/Recomman
 import { firebaseServiceChangeVisibilityOfService, firebaseServiceGetService } from '../../../api/Services'
 
 const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
-const imageIllustration = require("../../../medias/illustrations/process1.png")
+const imageIllustration = require("../../../medias/illustrations/process1.svg")
 
 const ProfileItem = ({ text, color }) => {
 	const defaultColor = color ? color : "#00a8e8"
