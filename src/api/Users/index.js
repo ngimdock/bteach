@@ -75,8 +75,8 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
-                user = { ...data, name: data.lastName, lastName: undefined, service }
-                console.log({ user })
+                user = { ...data, service }
+                console.log(user)
 
                 // Store the data of the currentuse inside the global state
                 globalStateLogin(user)
@@ -87,8 +87,6 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
               // Store the data of the currentuse inside the global state
               globalStateLogin(user)
             }
-
-            console.log({ user })
   
             return
           }

@@ -84,7 +84,7 @@ const Navbar = () => {
 						<NavbarProfilDropdown
 							dropElt={
 								<div className={style.navbarProfile}>
-									<span className={style.navbarProfileName}>{ `${currentUser.getFirstName} ${currentUser.getName}` }</span>
+									<span className={style.navbarProfileName}>{ `${currentUser.getFullName}` }</span>
 									<ImgCircle 
 										classe={style.navbarProfileImage} 
 										src={currentUser.getProfilePic} 

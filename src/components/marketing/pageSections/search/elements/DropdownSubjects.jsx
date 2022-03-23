@@ -6,8 +6,8 @@ const DropdownSubjects = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Matières' },
-		{ value: 'Informatique' },
-		{ value: 'Mathématique' },
+		{ value: 'informatique' },
+		{ value: 'mathematiques' },
 	];
 
 	const [value, setValue] = useState('Matières');
