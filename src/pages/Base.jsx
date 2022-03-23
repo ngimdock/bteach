@@ -44,18 +44,18 @@ const Base = ({ children, backgroundColor }) => {
 		// 	console.log(error)
 		// }
 
-		const data = {
-			minPrice: 20000,
-			currentGradeLevel: "Etudiant en master",
-			teachingUnit: ["mathematiques", "chimie", "anglais"],
-			levelsUnit: ["terminal"],
-			coursesType: ["renforcement"],
-			coursesLocation: ["chez eleve", "chez prof"],
-			description: "je suis un bon prof",
-      isVisible: true
-		}
+		// const data = {
+		// 	minPrice: 20000,
+		// 	currentGradeLevel: "Etudiant en master",
+		// 	teachingUnit: ["mathematiques", "chimie", "anglais"],
+		// 	levelsUnit: ["terminal"],
+		// 	coursesType: ["renforcement"],
+		// 	coursesLocation: ["chez eleve", "chez prof"],
+		// 	description: "je suis un bon prof",
+    //   isVisible: true
+		// }
 
-		updateService(data)
+		// updateService(data)
 	}, [])
 
 	const updateService = async (data) => {
