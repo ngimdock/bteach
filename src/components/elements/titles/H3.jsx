@@ -13,7 +13,7 @@ const H3 = (props) => {
   colorH2 = color ? color : "text-dark"
 
   return (
-    <h2 className={`
+    <h3 className={`
       ${classe}
       ${ colorH2 }
       text-xl md:text-2xl lg:text-3xl
@@ -21,7 +21,7 @@ const H3 = (props) => {
       font-primary
     `}>
       {children}
-    </h2>
+    </h3>
   );  
 }
 

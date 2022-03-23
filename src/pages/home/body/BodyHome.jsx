@@ -11,6 +11,7 @@ import Button from "../../../components/elements/buttons/Button";
 import Container from "../../../components/utils/Container";
 
 import home from "../../../css/home.css"
+import ProcessArea from '../../../components/marketing/pageSections/home/ProcessArea';
 
 const BodyHome = () => {
 	return(
@@ -22,6 +23,7 @@ const BodyHome = () => {
 			<SearchByCity />
 			<TrainingTypes />
 			<StudentsOpinion />
+			<ProcessArea />
 		</Container>
 	)
 }

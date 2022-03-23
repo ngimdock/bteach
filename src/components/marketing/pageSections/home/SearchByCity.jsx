@@ -1,17 +1,18 @@
 import React from "react";
 
-import H3 from "../../../elements/titles/H3";
+import H2 from "../../../elements/titles/H2";
 import Button from "../../../elements/buttons/Button";
 import CityCircle from "./elements/CityCircle";
 import Container from '../../../utils/Container';
+import Paragraphe from '../../../elements/p/Paragraphe';
 
 
 const SearchByCity = () => {
 
 	return(
-		<Container classe="mt-32">
-			<H3 classe="text-center font-medium">Les meilleurs repétiteurs dans votre ville</H3>
-			<p className="text-center">Chercher les repétiteurs près de chez vous</p>
+		<Container classe="mt-40 px-5 md:px-10">
+			<H2 classe="text-center">Les meilleurs repétiteurs dans votre ville</H2>
+			<Paragraphe classe="text-center mt-3">Chercher les repétiteurs près de chez vous</Paragraphe>
 			<div className="my-5 py-2"></div>
 
 			<div className="grid justify-items-center gap-y-10 lg:gap-y-0 mx-auto items-center sm:grid-cols-2 lg:grid-cols-4">

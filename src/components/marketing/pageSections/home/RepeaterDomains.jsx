@@ -1,6 +1,6 @@
 import React from "react";
 
-import H3 from "../../../elements/titles/H3";
+import H2 from "../../../elements/titles/H2";
 import DomainCard from "./elements/DomainCard";
 import youngMan from "../../../../medias/photos/young-african-man-standing-isolated (1) (1).jpg"
 import gabrielMatula from "../../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg"
@@ -18,9 +18,8 @@ const RepeaterDomains = () => {
 		<Container>
 			<div className="container_sections_home">
 
-				<H3 classe="text-center font-medium text-gray-500">Les domaines des répétiteurs les plus cherchés</H3>
-				<div className="my-5 py-2"></div>
-				<div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-5 md:gap-x-5">
+				<H2 classe="text-center">Les domaines des répétiteurs les plus cherchés</H2>
+				<div className="mt-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-5 md:gap-x-5">
 					<DomainCard
 						image={youngMan}
 						discipline="Prof de math 3ieme, 1ere et Tle Serie A, D, C"

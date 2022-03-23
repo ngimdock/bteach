@@ -1,6 +1,6 @@
 import React from "react";
 
-import H3 from "../../../elements/titles/H3";
+import H2 from "../../../elements/titles/H2";
 import Steps from "./elements/Steps";
 import process1 from "../../../../medias/illustrations/process1.png"
 import process2 from "../../../../medias/illustrations/process2.png"
@@ -15,7 +15,7 @@ const StudentsSteps = () => {
 		<Container>
 			<div className="container_sections_home">
 				
-				<H3 classe="text-center font-medium text-gray-500">Une procédure simple pour atteindre le succès</H3>
+				<H2>Une procédure simple pour atteindre le succès</H2>
 				<div className="my-5 py-2"></div>
 				<div className="grid lg:grid-cols-3 md:grid-cols-2 lg:gap-x-20 md:gap-x-20">
 					<Steps 
