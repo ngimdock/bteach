@@ -1,0 +1,19 @@
+/* Loader css module */
+
+.loader {
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 100%;
+  animation: loader-animation .6s infinite linear;
+  flex-shrink: 0;
+}
+
+@keyframes loader-animation {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

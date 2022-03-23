@@ -70,7 +70,7 @@ const Navbar = () => {
 			</Link>
 
 			<div className={style.navbarNavigation}>
-				<nav className={style.navbarNav}>
+				<nav className={`${style.navbarNav}`} style={{marginRight: 30}}>
 					<ALink classe={style.navbarNavLink} link="/search/repeaters">Les repetiteurs</ALink>
 				</nav>
 

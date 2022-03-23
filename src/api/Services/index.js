@@ -29,13 +29,13 @@ const firebaseServiceGetMyService = async (idUser) => {
     // Get a service
     const querySnapShot = await getDocs(q)
 
-    const services = []
+    
+    const doc = querySnapShot.docs[0]
+    console.log(doc.data())
 
-    querySnapShot.forEach(doc => {
-      services.push({ ...doc.data(), id: doc.id })
-    })
+    const service = {...doc.data(), id: doc.id}
 
-    return { data: services[0] }
+    return { data: service }
   } catch (err) {
     console.log(err)
 
@@ -134,9 +134,10 @@ const firebaseServiceCreateService = async (idUser) => {
 
     // Create a reference
     const serviceCollectionRef = getCollections("services")
+    const userCollectionRef = getCollection(idUser, "users")
 
-    // Add a new service
-    await addDoc(serviceCollectionRef, { 
+    // Generate a new Service data
+    const serviceData = { 
       coursesLocation: "",
       coursesType: "",
       currentGradeLevel: "",
@@ -148,8 +149,11 @@ const firebaseServiceCreateService = async (idUser) => {
       teachingUnit: [],
       categories: [],
       degrees: [],
-      owner: doc(db, `users/${idUser}`) 
-    })
+      owner: userCollectionRef
+    }
+
+    // Add a new service
+    await addDoc(serviceCollectionRef, serviceData)
   } catch (err) {
     console.log(err)
   }

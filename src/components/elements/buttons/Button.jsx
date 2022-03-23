@@ -13,8 +13,7 @@ const Button = (props) => {
 		target,
 		rounded,
 		action,
-		style,
-		onClick
+		style
 	} = props
 
 

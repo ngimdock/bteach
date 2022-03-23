@@ -25,6 +25,8 @@ import {
   firebaseServiceGetMyService 
 } from '../Services'
 
+import { firebaseCreateNote } from "../Notes"
+
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
 /**
@@ -60,26 +62,36 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
         const getUserData = async () => {
           // Get info of the current user basing on his user id
           const { data } = await firebaseUserGetUser(uid)
+
+
+          // Create note
+          // const res = await firebaseCreateNote(uid, "46Xlbv6AsjRKzBDISY2t", { message: "good", stars: 4 })
+
+          // console.log(res)
+
   
           if (data) {
             let user = null
-            // await firebaseServiceCreateService(uid)
 
             // Get service if the user is a repeater
-            if (data.role === 1) {
+            console.log({ data })
+            if (Number(data.role) === 1) {
+              console.log("service")
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
                 user = { ...data, name: data.lastName, lastName: undefined, service }
                 console.log({ user })
               }
+
+              // Store the data of the currentuse inside the global state
+              globalStateLogin(user)
+            } else {
+              user = {...data, name: data.lastName, lastName: undefined}
+
+              // Store the data of the currentuse inside the global state
+              globalStateLogin(user)
             }
-
-            user = {...data, name: data.lastName, lastName: undefined}
-            console.log({ user })
-
-            // Store the data of the currentuse inside the global state
-            globalStateLogin(user)
   
             return
           }
@@ -131,7 +143,7 @@ const firebaseUserCreateUser = async (datas) => {
     const uid = credentials.user.auth.currentUser.uid
 
 
-    // Get a user collection
+    // Get a user collection reference
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
@@ -149,7 +161,13 @@ const firebaseUserCreateUser = async (datas) => {
       role
     })
 
-    return { data: true }
+    if (role === 1) {
+      await firebaseServiceCreateService(uid)
+
+      return { data: true }
+    } else {
+      return { data: true }
+    }
   } catch (err) {
     console.error(err)
 
@@ -220,7 +238,7 @@ const firebaseUserDeleteUser = async (id) => {
  * @param {String} id 
  * @param {String} photoURL 
  */
-const firebaseUserChangeProfilPic = async (id, photoURL) => {
+const firebaseUserChangeProfilePic = async (id, photoURL) => {
   // To do
 }
 
@@ -231,6 +249,6 @@ export {
   firebaseUserLogout,
   firebaseUserLogin,
   firebaseUserUpdateUser,
-  firebaseUserChangeProfilPic,
+  firebaseUserChangeProfilePic,
   firebaseUserDeleteUser
 }

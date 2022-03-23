@@ -1,7 +1,11 @@
 import React, { useReducer } from 'react'
 
 import currentUserContext from "./dataManager/context/currentUserContext"
+import serviceContext from "./dataManager/context/servicesContext"
+
 import currentUserReducer from "./dataManager/data/currentUser/currentUserReducer"
+import servicesReducer from "./dataManager/data/services/servicesReducer"
+
 
 import {
 	login,
@@ -26,15 +30,23 @@ import {
 
 	deleteRepeater,
 	certifiedRepeater
-} from "./dataManager/data/currentUser/currentUserAction" 
+} from "./dataManager/data/currentUser/currentUserAction"
+
+import {
+	addService,
+	addAllServices,
+	removeService
+} from "./dataManager/data/services/servicesActions" 
 
 
 const ContextProvider = ({ children }) => {
 
 	const [currentUser, dispatchUser] = useReducer(currentUserReducer, null)
+	const [services, dispatchServices] = useReducer(servicesReducer, []) 
 
 	//current user dispa
 	const userLogin = (data) => {
+		console.log({ service: data })
 		dispatchUser(login(data))
 	}
 
@@ -108,6 +120,18 @@ const ContextProvider = ({ children }) => {
 		console.log(`certification du repetiteur numero ${id}`)
 	}
 
+	//services dispatch actions
+	const servicesAddService = (data) => {
+		dispatchServices(addService(data))
+	}
+
+	const servicesAddAllServices = (arrayOfServices) => {
+		dispatchServices(addAllServices(arrayOfServices))
+	}
+
+	const servicesRemoveService = (idService) => {
+		dispatchServices(removeService(idService))
+	}
 
 	const currentUserContextValue ={
 		currentUser,
@@ -134,9 +158,18 @@ const ContextProvider = ({ children }) => {
 		certifiedRepeater: userCertifiedRepeater
 	}
 
+	const servicesContextValue = {
+		services,
+		addService: servicesAddService,
+		addAllServices: servicesAddAllServices,
+		removeService: servicesRemoveService
+	}
+
 	return (
 		<currentUserContext.Provider value={currentUserContextValue} >
-			{ children }
+			<serviceContext.Provider value={servicesContextValue}>
+				{ children }
+			</serviceContext.Provider>
 		</currentUserContext.Provider >
 	)
 }

@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import H3 from "../../../components/elements/titles/H3";
 import Input from "../../../components/elements/inputs/Input";
 import Button from "../../../components/elements/buttons/Button";
 import { firebaseUserLogin } from "../../../api/Users";
 import { Navigate } from 'react-router-dom'
 
+import currentUserContext from "../../../dataManager/context/currentUserContext"
+
 const BodySignin = () => {
   // Set local state
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [redirectHome, setRedirectHome] = useState(false)
+  const { currentUser } = useContext(currentUserContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,6 +23,8 @@ const BodySignin = () => {
         const { data, error } = await firebaseUserLogin(email, password)
 
         if (data) {
+          console.log("hello boy")
+          console.log(currentUser)
           setRedirectHome(true)
         } else {
           console.log(error)

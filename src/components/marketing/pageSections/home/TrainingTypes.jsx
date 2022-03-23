@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from "react";
 
 import RectangularLink from "./elements/RectangularLink";
 import currentUserContext from "../../../../dataManager/context/currentUserContext"
-import Container from "../../../utils/Container";
+import servicesContext from "../../../../dataManager/context/servicesContext"
+import Container from "../../../utils/Container"
 
 
 const TrainingTypes = () => {
@@ -48,16 +49,16 @@ const TrainingTypes = () => {
 			message : "petit bandit"
 		}
 
-		const objService ={
-		    minPrise: 20000,
-		    currentGradeLevel: "Bac + 5 maths",
-		    teachingUnit : ["Maths", "Physique", "chimie"],
-		    levelsUnit : ["primaire", "secondaire", "Universite"],
-		    coursesType: ["cours individuel", "cours en groupe"],
-		    coursesLocation : ["chez le prof", "chew l'eleve"],
-		    description : "je me decrit comme etatnt un tres bon prof pour ton niveau scolaire",
-		    documentToCertify: "Le document a certifier"
-		}
+		// const objService ={
+		//     minPrise: 20000,
+		//     currentGradeLevel: "Bac + 5 maths",
+		//     teachingUnit : ["Maths", "Physique", "chimie"],
+		//     levelsUnit : ["primaire", "secondaire", "Universite"],
+		//     coursesType: ["cours individuel", "cours en groupe"],
+		//     coursesLocation : ["chez le prof", "chew l'eleve"],
+		//     description : "je me decrit comme etatnt un tres bon prof pour ton niveau scolaire",
+		//     documentToCertify: "Le document a certifier"
+		// }
 
 		const objAnnonce = {
 		    classLevel : "Terminale",
@@ -65,11 +66,20 @@ const TrainingTypes = () => {
 		    message : "Je cherche un repetiteur"
 		  }
 
-		 const objAnnonceUpdate = {
-		    classLevel : "premiere",
-		    units : ["espagnol"],
-		    message : "a la recherche..."
-		  }
+		const objService = {
+			id: 111,
+			minPrice: 25000,
+			teachingUnit: ["Maths", "informatique", "Chimie"],
+			levelsUnit: ["Ecole primaire", "Ecole secondaire", "Universite"],
+			coursesLocation: ["chez le prof", "chez l'eleve", "En ligne"],
+			coursesType: ["cours individuel", "cours en groupe"],
+			currentGradeLevel: "Niveau 3 informatique",
+			degrees: [],
+			category: [],
+			description: "Je suis un repetiteur competent",
+			isCertified: 0,
+			isVisible: 1
+		}
 
 
 	const { 
@@ -101,13 +111,12 @@ const TrainingTypes = () => {
 	return(
 
 		<Container classe="mt-20 md:mt-32 flex justify-center ">
-			<div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-y-8">
+			<div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-y-8w-full grid lg:grid-cols-4 md:grid-cols-2 gap-y-8">
 				<RectangularLink link="">Formation primaire</RectangularLink>
 				<RectangularLink link="">Formation secondaire</RectangularLink>
 				<RectangularLink link="">Formation université</RectangularLink>
 				<RectangularLink link="" className="block mx-auto">Formation spécialisée</RectangularLink>
 			</div>
-
 		</Container>
 
 	);
