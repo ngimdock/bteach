@@ -1,7 +1,6 @@
 import Repeater from "../../../entities/Repeater"
 import Customer from "../../../entities/Customer"
 import Administrator from "../../../entities/Administrator"
-import Service from "../../../entities/Service"
 
 import {
 	LOGIN,
@@ -276,10 +275,14 @@ const currentUserReducer = (state, action) => {
 
 		case DELETE_REPEATER: {
 			//code here
+
+			return state
 		}
 
 		case CERTIFIED_REPEATER: {
 			//code here
+
+			return state
 		}
 
 

@@ -1,8 +1,7 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
-import Service from '../../../../../entities/Service'
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
@@ -45,8 +44,6 @@ const AllRepeater = ({ filters }) => {
 
 	useEffect(() => {
 		setLocalFilters(filters)
-		
-		console.log(Localfilters)
 	}, [filters])
 
 	const displayServiceBasedOnFilters = () => {

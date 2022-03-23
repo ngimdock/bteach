@@ -1,19 +1,12 @@
 // Users operations
-import { auth, db, storage } from '../../firebase'
+import { auth } from '../../firebase'
 import {
-  onSnapshot,
   getDoc,
-  addDoc,
   updateDoc,
-  deleteDoc,
-  query,
-  collection,
   setDoc,
 } from 'firebase/firestore'
 import { 
-  getCollection,
-  getCollections,
-  uploadImage
+  getCollection
 } from '../utils'
 import { 
   createUserWithEmailAndPassword, 
@@ -25,7 +18,6 @@ import {
   firebaseServiceCreateService, 
   firebaseServiceGetMyService 
 } from '../Services'
-import { firebaseCreateNote } from '../Notes'
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 

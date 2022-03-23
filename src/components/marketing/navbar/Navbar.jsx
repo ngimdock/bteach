@@ -9,8 +9,6 @@ import ImgCircle from "../../elements/imgCircle/ImgCircle"
 import NavbarProfilDropdown from "../../utils/dropdowns/NavbarProfileDropdown"
 import MobileMenu from "./MobileMenu"
 
-const profilImage = require('../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg')
-
 const Navbar = () => {
 	// Set local state
 	const [mobileMenuDisplayed, setMobileMenuDisplayed] = useState(false)

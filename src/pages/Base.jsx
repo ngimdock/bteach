@@ -3,7 +3,9 @@ import Navbar from "../components/marketing/navbar/Navbar"
 import Footer from "../components/marketing/footer/Footer"
 import style from '../css/base.module.css'
 import { firebaseUserGetCurrentUser } from '../api/Users'
-import { firebaseServiceGetServices, firebaseServiceUpdateService } from '../api/Services'
+import { 
+	firebaseServiceGetServices
+} from '../api/Services'
 import currentUserContext from '../dataManager/context/currentUserContext'
 // import { firebaseGetNotes } from '../api/Notes'
 import serviceContext from '../dataManager/context/servicesContext'
@@ -34,33 +36,7 @@ const Base = ({ children, backgroundColor }) => {
 
 		// Get list of service
 		firebaseServiceGetServices(addAllServicesRef.current())
-
-		// Get notes
-		// firebaseGetNotes("jVpgh96a2ApbikGVxJMx")
-
-		// if (data) {
-		// 	console.log(data)
-		// } else {
-		// 	console.log(error)
-		// }
-
-		// const data = {
-		// 	minPrice: 20000,
-		// 	currentGradeLevel: "Etudiant en master",
-		// 	teachingUnit: ["mathematiques", "chimie", "anglais"],
-		// 	levelsUnit: ["terminal"],
-		// 	coursesType: ["renforcement"],
-		// 	coursesLocation: ["chez eleve", "chez prof"],
-		// 	description: "je suis un bon prof",
-    //   isVisible: true
-		// }
-
-		// updateService(data)
 	}, [])
-
-	const updateService = async (data) => {
-		await firebaseServiceUpdateService("Ol0I5hJQawJdk0WwRJ1I", data)
-	}
 
 	return(
 		<>
