@@ -1,20 +1,10 @@
-import Repeater from "../../../entities/Repeater"
-import Customer from "../../../entities/Customer"
-import Administrator from "../../../entities/Administrator"
 import Service from "../../../entities/Service"
 
 import { 
 	ADD_SERVICE, 
 	ADD_ALL_SERVICES, 
-	REMOVE_SERVICE,
-	UPDATE_SERVICE
+	REMOVE_SERVICE
 } from "./types"
-
-import{
-	addService,
-	addAllServices,
-	removeService
-} from "./servicesActions"
 
 const servicesReducer = (state=[], action) => {
 	switch(action.type){
@@ -31,6 +21,7 @@ const servicesReducer = (state=[], action) => {
 		case ADD_ALL_SERVICES: { //fetch all services from database
 			if(action.payload){
 				let services = []
+
 				for(let serv of action.payload){
 					services.push(new Service(serv))
 				}

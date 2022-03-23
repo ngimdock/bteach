@@ -1,22 +1,26 @@
 import React from "react";
+import { BsPerson } from "react-icons/bs";
 
 const RepeaterCard = (props) => {
-
 	let {
-		photo,
-		salary,
-		age,
-		city,
-		street,
-		discipline,
-		canMove,
-		courseLocation
+		data: service
 	} = props
 
-	if(canMove === "True")
-		canMove = "Peut se déplacer";
-	else
-		canMove = "Ne peut se déplacer";
+	const getDiscipline = () => {
+		return service.getTeachingUnit.join(", ")
+	}
+
+	const getCoursesLocation = () => {
+		return service.getCoursesLocation.join(", ")
+	}
+
+	const getAge = () => {
+		const birthDay = Number(service.getOwner.getDate)
+		const currentDate = Date.now()
+		const diffDate = Math.floor((currentDate - birthDay)/1000)
+
+		return Math.floor(diffDate / 31536000)
+	}
 
 	return(
 
@@ -31,23 +35,28 @@ const RepeaterCard = (props) => {
 					</div>
 					<div className="flex justify-end d_bottom_right">
 						<div className="p-1 px-3 border border-1 border-white w_max_content">
-							<p>{salary}cfa/mois</p>
+							<p>{service.getMinPrice} cfa/mois</p>
 						</div>
 						<div className="p-1 px-3 mx-3 border border-1 border-white w_max_content">
-							<p>{age} ans</p>
+							<p>{getAge()} ans</p>
 						</div>
 					</div>
 				</div>
-				<img src={photo} alt="Profile" />
+				<img src={service.getOwner.getProfilePic} alt="Profile" />
 			</div>
 
 			<div className="bottom_part p-5">
+				<div className="flex mb-3">
+					<BsPerson size={25} />
+					<p className="ml-3">{ service.getOwner.getFullName }</p>
+				</div>
+
 				<div className="flex">
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
 					  	<path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
 					 	<path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
 					</svg>
-					<p className="ml-3">{city}({street})</p>
+					<p className="ml-3">{service.getOwner.getTown} ( {service.getOwner.getDistrict} )</p>
 				</div>
 				<div className="flex mt-3">
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -55,16 +64,16 @@ const RepeaterCard = (props) => {
 					 	<path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
 						<path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
 					</svg>
-					<p className="ml-3">{discipline}</p>
+					<p className="ml-3">{getDiscipline()}</p>
 				</div>
-				<div className="flex mt-3">
+				{/* <div className="flex mt-3">
 					<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 					  	<path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 					</svg>
 					<p className="ml-3">{canMove}</p>
-				</div>
+				</div> */}
 				<div className="p-1 px-3 border border-1 border-white mt-4 w_max_content">
-					<p>{courseLocation}</p>
+					<p>{getCoursesLocation()}</p>
 				</div>
 			</div>
 

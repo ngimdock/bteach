@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Dropdown from "./Dropdown";
 
 
-const DropdownSubjects = () => {
+const DropdownGenders = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Sexe' },
@@ -13,7 +13,11 @@ const DropdownSubjects = () => {
 	const [value, setValue] = useState('Sexe');
 
 	const handleChange = (event) => {
-		setValue(event.target.value);
+		const value = event.target.value
+		setValue(value);
+
+		if (value !== "Sexe")
+			onAddFilter("sexe", value)
 	};
 
 	return (
@@ -27,4 +31,4 @@ const DropdownSubjects = () => {
 	);
 };
 
-export default DropdownSubjects;
+export default DropdownGenders;

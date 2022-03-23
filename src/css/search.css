@@ -118,6 +118,19 @@
 	background-color: #e00045;
 }
 
+.filters-section {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.filters-items {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
 @media screen and (max-width: 767px) {
 	.CurrentSearchNav {
 		justify-content: flex-start;
