@@ -9,6 +9,7 @@ import { BsCameraFill } from 'react-icons/bs'
 import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
 import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
+import { getByText } from '@testing-library/react'
 
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
@@ -32,6 +33,7 @@ const ProfileItem = ({ text, color }) => {
 const BodyRepeaterProfile = () => {
 	// Get global state
 	const { currentUser, updateProfilePic } = useContext(currentUserContext)
+
 
 	// Set locale state
 	const [isHover, setIsHover] = useState(false)
@@ -78,6 +80,15 @@ const BodyRepeaterProfile = () => {
 		}
 	}, [imageURL])
 
+	useEffect(() => {
+		if (currentUser.getRole === 1){
+			console.log("repeater")
+			const {
+
+			} = currentUser.getService
+		}
+	}, []);
+
 	// Some handlers
 	const handleOpenFileSystem = () => {
 		inputRef.current.click()
@@ -109,6 +120,28 @@ const BodyRepeaterProfile = () => {
 
 		uploadImage("profiles", image, handleGetImageUrl, handleProgressUpload, setUploading)
 	}
+
+	const formatUnits = (unitToFormated) => {
+		const initialFormat = ""
+
+		const unitFormated = unitToFormated.reduce((prevValue, currentValue) => {
+			return `${ prevValue + ", " + currentValue }`
+		}, initialFormat)
+
+		return unitFormated
+	}
+
+	//extract data from current use
+	const {
+		getMinPrice,
+		getCurrentGradeLevel,
+		getTeachingUnit,
+		getLevelsUnit,
+		getCoursesType,
+		getCoursesLocation,
+		getDescription
+	} = currentUser.getService
+
 
 	return(
 		<section className={style.profileContainer}>
@@ -156,7 +189,18 @@ const BodyRepeaterProfile = () => {
 							<span>
 								<span className={style.profileLocation}>{ `${currentUser.getTown} ( ${currentUser.getDistrict} )` }</span>
 							</span>
-							<span className={style.profileSubject}>Filiere: Physique, Chimie</span>
+							<p className={style.profileSubject}>
+								Filières : {" "}
+								{
+									getTeachingUnit.length ? (
+												<span>
+													{ formatUnits(getTeachingUnit) }
+												</span>
+									) : (
+										<span className='text-white text-xs italic'>Non renseigné</span>
+									)
+								}
+							</p>
 						</div>
 
 						<div className={style.profileControl}>
@@ -168,17 +212,24 @@ const BodyRepeaterProfile = () => {
 					<div className={style.profileGeneralInfo}>
 						<article className={style.generalInfoItem}>
 							<span>Salaire Approximatif</span>
-							<span>15 000fcfa/mois</span>
+							{
+								getMinPrice ? <span>{getMinPrice}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
+							}
+							
 						</article>
 
 						<article className={style.generalInfoItem}>
 							<span>Age</span>
-							<span>20 ans</span>
+							{
+								currentUser.getAge ? <span>{currentUser.getAge}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
+							}
 						</article>
 
 						<article className={style.generalInfoItem}>
 							<span>Niveau Academique</span>
-							<span>Bac + 4 Physique</span>
+							{
+								getCurrentGradeLevel ? <span>{getCurrentGradeLevel}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
+							}
 						</article>
 					</div>
 				</div>
@@ -189,76 +240,39 @@ const BodyRepeaterProfile = () => {
 				<H3>Detail de l'offre de repetition</H3>
 
 				<div className={style.profileContentItems}>
-					<article className={style.profileContentItem}>
-						<span className={style.profileContentItemTitle}>
-							Matieres
-						</span>
+				
+					<ArticleBlock
+						title="Matières"
+						listElements={getTeachingUnit}
+					/>
 
-						<div className={style.profileContentItemBody}>
-							<ProfileItem text="Physique" />
-							<ProfileItem text="Mathematique" />
-							<ProfileItem text="Chimie" />
-							<ProfileItem text="Anglais" />
-						</div>
-					</article>
+					<ArticleBlock
+						title="Niveau Scolaire Enseignés"
+						listElements={getLevelsUnit}
+						color="#e00045"
+					/>
 
-					<article className={style.profileContentItem}>
-						<span className={style.profileContentItemTitle}>
-							Niveau Scolaire
-						</span>
-
-						<div className={style.profileContentItemBody}>
-							<ProfileItem text="Primaire" color="#e00045" />
-							<ProfileItem text="Secondaire" color="#e00045" />
-							<ProfileItem text="Universite" color="#e00045" />
-						</div>
-					</article>
-
-					<article className={style.profileContentItem}>
-						<span className={style.profileContentItemTitle}>
-							Type de cours
-						</span>
-
-						<div className={style.profileContentItemBody}>
-							<ProfileItem text="Cours individuelle" color="#04e762" />
-							<ProfileItem text="Cours en groupe" color="#04e762" />
-						</div>
-					</article>
-
-					<article className={style.profileContentItem}>
-						<span className={style.profileContentItemTitle}>
-							Lieu du cours
-						</span>
-
-						<div className={style.profileContentItemBody}>
-							<ProfileItem text="Chez eleve" color="#f77f00" />
-							<ProfileItem text="Chez enseignant" color="#f77f00" />
-							<ProfileItem text="En ligne" color="#f77f00" />
-						</div>
-					</article>
-
-					<article className={style.profileContentItem}>
-						<span className={style.profileContentItemTitle}>
-							Profession actuelle
-						</span>
-
-						<div className={style.profileContentItemBody}>
-							<ProfileItem text="Etudiant en Physique" />
-						</div>
-					</article>
-
+					<ArticleBlock
+						title="Type de cours"
+						listElements={getCoursesType}
+						color="#04e762"
+					/>
+					
+					<ArticleBlock
+						title="Lieu du cours"
+						listElements={getCoursesLocation}
+						color="#f77f00"
+					/>
 					<article className={style.profileContentItem}>
 						<span className={style.profileContentItemTitle}>
 							Description
 						</span>
 
 						<div className={style.profileContentItemBody}>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus et libero esse earum 
-							autem? Aperiam, id repellendus sed ad recusandae ab obcaecati. Eligendi, sequi? Commodi voluptatum
-							ut ea vero nesciunt?
+							{ getDescription ? getDescription : <span className="text-gray-500 text-xs font-primary italic">/*Cette partie du service n'est pas remplit*/</span> }
 						</div>
 					</article>
-
+					
 					<H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
 
 					<RecommandationCarousel />
@@ -274,5 +288,28 @@ const BodyRepeaterProfile = () => {
 		</section>
 	)
 }
+
+function ArticleBlock({ title, listElements, color  }) {
+
+	const result = listElements.length ? (
+		<div className={style.profileContentItemBody}>
+			{ listElements.map((eltText, index) => <ProfileItem text={eltText} color={color} key={index} />) }
+		</div>
+	) : (
+		<span className="text-gray-500 text-xs font-primary italic">/*Cette partie du service n'est pas remplit*/</span>
+	)
+
+	
+	return ( 
+		<article className={style.profileContentItem}>
+			<span className={style.profileContentItemTitle}>
+				{ title }
+			</span>
+
+			{ result }
+		</article>
+	 );
+}
+
 
 export default BodyRepeaterProfile

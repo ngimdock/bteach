@@ -22,7 +22,7 @@ const BodySignin = () => {
       setLoading(true)
 
       try {
-        // Try to connect the user in
+        // Try to connect the user in firebase
         const { data, error } = await firebaseUserLogin(email, password)
 
         if (data) {

@@ -191,7 +191,7 @@ const firebaseUserLogin = async (email, password) => {
       console.log(err)
     }
   } else {
-    return { error: "Fournissez un email et un password non vide" }
+    return { error: "Vous avez fourni un email et un password non vide" }
   }
 }
 
