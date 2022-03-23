@@ -16,7 +16,7 @@ const RepeaterDomains = () => {
 
 	return(
 		<Container>
-			<div className="container_sections_home">
+			<div className="container_sections_home w-full">
 
 				<H2 classe="text-center">Les domaines des répétiteurs les plus cherchés</H2>
 				<div className="mt-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:gap-x-5 md:gap-x-5">

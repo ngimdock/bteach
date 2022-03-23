@@ -13,10 +13,10 @@ const DomainCard = (props) => {
 
 	return(
 
-		<div className="DomainCard lg:mx-auto mx-2">
+		<div className="DomainCard group cursor-pointer lg:mx-auto mx-2">
 
 				<div className="">
-					<div className="domain"></div>
+					<div className="domain group-hover:hidden"></div>
 					<img src={image} alt={alt} className="img_card" />
 				</div>
 
