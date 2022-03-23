@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import RectangularLink from "./elements/RectangularLink";
 import currentUserContext from "../../../../dataManager/context/currentUserContext"
 import servicesContext from "../../../../dataManager/context/servicesContext"
+import Container from "../../../utils/Container"
 
 
 const TrainingTypes = () => {
@@ -118,16 +119,14 @@ const TrainingTypes = () => {
 
 	return(
 
-		<div className="container_sections_home">
-			<div className="grid lg:grid-cols-3 gap-4 place-content-center">
+		<Container classe="mt-20 md:mt-32 flex justify-center ">
+			<div className="w-full grid lg:grid-cols-4 md:grid-cols-2 gap-y-8">
 				<RectangularLink link="">Formation primaire</RectangularLink>
 				<RectangularLink link="">Formation secondaire</RectangularLink>
 				<RectangularLink link="">Formation université</RectangularLink>
-				<RectangularLink link="">Formation spécialisée</RectangularLink>
-
+				<RectangularLink link="" className="block mx-auto">Formation spécialisée</RectangularLink>
 			</div>
-
-		</div>
+		</Container>
 
 	);
 }
