@@ -1,15 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
 import H3 from '../../../components/elements/titles/H3'
 import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
-import { firebaseServiceChangeVisibilityOfService, firebaseServiceGetService } from '../../../api/Services'
-import { firebaseCreateFeebacks, firebaseGetFeebacks } from '../../../api/Feedbacks'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
+import { BsCameraFill } from 'react-icons/bs'
+import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
+import { firebaseUserChangeProfilePic } from '../../../api/Users'
+import { uploadImage } from '../../../api/utils'
 
-const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
-const imageIllustration = require("../../../medias/illustrations/process1.svg")
+const imageIllustration = require("../../../medias/illustrations/process1.png")
 
 const ProfileItem = ({ text, color }) => {
 	const defaultColor = color ? color : "#00a8e8"
@@ -29,51 +30,131 @@ const ProfileItem = ({ text, color }) => {
 }
 
 const BodyRepeaterProfile = () => {
-	const { currentUser } = useContext(currentUserContext)
+	// Get global state
+	const { currentUser, updateProfilePic } = useContext(currentUserContext)
 
-	useEffect(() => {
-		// getServiceFromFirebase()currentUser
-		// changeVisibilityOfAService()
-		// createFeedback()
-		firebaseGetFeebacks()
-	}, [])
+	// Set locale state
+	const [isHover, setIsHover] = useState(false)
+	const [image, setImage] = useState(null)
+	const [imagePreview, setImagePreview] = useState("")
+	const [imageURL, setImageURL] = useState("")
+	const [uploading, setUploading] = useState(false)
+	const [modalOpen, setModalOpen] = useState(false)
+	const [progress, setProgress] = useState(0)
 
-	// Unit testing
-	const getServiceFromFirebase = async () => {
-		const { data, error } = await firebaseServiceGetService("46Xlbv6AsjRKzBDISY2t")
+	// Use ref section
+	const inputRef = useRef()
 
-		console.log({data})
-	}
+	const updateProfilePicCb = useCallback(() => updateProfilePic, [updateProfilePic])
+	const updateProfilePicRef = useRef(updateProfilePicCb)
 
-	const changeVisibilityOfAService = async () => {
-		const { data, error } = await firebaseServiceChangeVisibilityOfService("1", "46Xlbv6AsjRKzBDISY2t", false)
-	
-		console.log({ visibility: data, error })
-	}
-
-	const createFeedback = async () => {
-		if (currentUser) {
-			const { data, error } = await firebaseCreateFeebacks(currentUser.getId, "Beautiful")
+	const changeProfilePhotoCb = useCallback(() => async (removeImageUrl) => {
+		try {
+			const { data } = await firebaseUserChangeProfilePic(currentUser.getId, imageURL)
 
 			if (data) {
-				console.log("Feedback Created successfully")
-			} else {
-				console.log(error)
+				updateProfilePicRef.current()(imageURL)
+				removeImageUrl("")
 			}
+		} catch (err) {
+			console.log(err)
 		}
+	}, [currentUser.getId, imageURL])
+
+	const changeProfilePhotoRef = useRef(changeProfilePhotoCb)
+
+	useEffect(() => {
+		changeProfilePhotoRef.current = changeProfilePhotoCb
+	}, [changeProfilePhotoCb])
+
+	useEffect(() => {
+		updateProfilePicRef.current = updateProfilePicCb
+	}, [updateProfilePicCb])
+
+	// Use effect section
+	useEffect(() => {
+		if (imageURL) {
+			changeProfilePhotoRef.current()(setImageURL)
+		}
+	}, [imageURL])
+
+	// Some handlers
+	const handleOpenFileSystem = () => {
+		inputRef.current.click()
+	}
+
+	const handleSelectImage = (e) => {
+		e.preventDefault()
+
+		const file = e.target.files[0]
+		const preview = URL.createObjectURL(file)
+
+		setImage(file)
+		setImagePreview(preview)
+
+		setModalOpen(true)
+	}
+
+	const handleProgressUpload = (progress) => {
+		console.log(progress)
+		setProgress(progress)
+	}
+
+	const handleGetImageUrl = (image) => {
+		setImageURL(image)
+	}
+
+	const handleUploadImage = () => {
+		setUploading(true)
+
+		uploadImage("profiles", image, handleGetImageUrl, handleProgressUpload, setUploading)
 	}
 
 	return(
 		<section className={style.profileContainer}>
+			{
+				modalOpen && <AddProfilPhotoModal 
+					image={imagePreview}
+					onHide={() => setModalOpen(false)}
+					onChangeProfil={handleOpenFileSystem}
+					onUploadProfil={handleUploadImage}
+					onCloseProgress={() =>setProgress(0)}
+					percentage={progress}
+					uploading={uploading}
+				/>
+			}
+			
+
 			<header className={style.profileHeader}>
-				<ImgCircle src={profilImage} alt="profile" classe={style.profileImage} />
+				<div 
+					className={style.profileImageContainer}
+					onMouseEnter={() => setIsHover(true)}
+					onMouseLeave={() => setIsHover(false)}
+				>
+					<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
+
+					<span 
+						className={`${style.profileImageIcon} ${isHover && style.profileImageIconAnimation}`}
+						onClick={handleOpenFileSystem}
+					>
+						<BsCameraFill size={20} color="#fff" />
+					</span>
+
+					<input 
+						ref={inputRef} 
+						hidden 
+						type="file" 
+						accept='image/*' 
+						onChange={handleSelectImage}
+					/>
+				</div>
 
 				<div className={style.profileInfoSection}>
 					<div className={style.profilePersonal}>
 						<div className={style.profilePersonalInfo}>
-							<span className={style.profileName}>Dilane Kombou</span>
+							<span className={style.profileName}>{ currentUser.getFullName}</span>
 							<span>
-								<span className={style.profileLocation}>Yaounde (Nkolbisson)</span>
+								<span className={style.profileLocation}>{ `${currentUser.getTown} ( ${currentUser.getDistrict} )` }</span>
 							</span>
 							<span className={style.profileSubject}>Filiere: Physique, Chimie</span>
 						</div>

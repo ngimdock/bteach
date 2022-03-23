@@ -12,7 +12,8 @@ import {
 } from 'firebase/firestore'
 import { 
   getCollection,
-  getCollections
+  getCollections,
+  uploadImage
 } from '../utils'
 import { 
   createUserWithEmailAndPassword, 
@@ -24,8 +25,6 @@ import {
   firebaseServiceCreateService, 
   firebaseServiceGetMyService 
 } from '../Services'
-
-import { firebaseCreateNote } from "../Notes"
 
 const defaultImageURL = "https://firebasestorage.googleapis.com/v0/b/bteach-server.appspot.com/o/images%2Fprofiles%2Fdefault.png?alt=media&token=be1bf533-7411-4904-b882-facf2cce97a1"
 
@@ -41,7 +40,10 @@ const firebaseUserGetUser = async (id) => {
     // Trying getting the document from firestore
     const user = await getDoc(userCollection)
 
-    return { data: {...user.data(), id} }
+    let userData = { ...user.data(), id: user.id }
+    userData = { ...userData, name: userData.lastName, lastName: undefined }
+
+    return { data: userData }
   } catch (err) {
     console.error(err)
 
@@ -62,13 +64,6 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
         const getUserData = async () => {
           // Get info of the current user basing on his user id
           const { data } = await firebaseUserGetUser(uid)
-
-
-          // Create note
-          // const res = await firebaseCreateNote(uid, "46Xlbv6AsjRKzBDISY2t", { message: "good", stars: 4 })
-
-          // console.log(res)
-
   
           if (data) {
             let user = null
@@ -76,22 +71,23 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
             // Get service if the user is a repeater
             console.log({ data })
             if (Number(data.role) === 1) {
-              console.log("service")
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
                 user = { ...data, name: data.lastName, lastName: undefined, service }
                 console.log({ user })
-              }
 
-              // Store the data of the currentuse inside the global state
-              globalStateLogin(user)
+                // Store the data of the currentuse inside the global state
+                globalStateLogin(user)
+              }
             } else {
               user = {...data, name: data.lastName, lastName: undefined}
 
               // Store the data of the currentuse inside the global state
               globalStateLogin(user)
             }
+
+            console.log({ user })
   
             return
           }
@@ -238,8 +234,19 @@ const firebaseUserDeleteUser = async (id) => {
  * @param {String} id 
  * @param {String} photoURL 
  */
-const firebaseUserChangeProfilePic = async (id, photoURL) => {
-  // To do
+const firebaseUserChangeProfilePic = async (id, imageURL) => {
+  // Get reference
+  const userCollectionReference = getCollection(id, "users")
+
+  try {
+    await updateDoc(userCollectionReference, { profilePic: imageURL })
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu" }
+  }
 }
 
 export {

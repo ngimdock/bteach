@@ -1,16 +1,18 @@
+import Repeater from "./Repeater"
 
 class Service{
 	id
 	isVisible
 	isCertified
 	documentToCertify
-	minPrise
+	minPrice
 	currentGradeLevel
 	teachingUnit
 	levelsUnit
 	coursesType
 	coursesLocation
 	description
+	owner
 
 	constructor(data){
 		this.initialization(data)
@@ -82,6 +84,10 @@ class Service{
 	 	return this.coursesType
 	 }
 
+	 get getOwner () {
+		 return this.owner
+	 }
+
 	 /**
 	 * @returns Array of locations of the courses
 	 */
@@ -98,25 +104,29 @@ class Service{
 
 			const{
 				id,
-				minPrise,
+				minPrice,
 				documentToCertify,
 				currentGradeLevel,
 				teachingUnit,
 				levelsUnit,
 				coursesType,
 				coursesLocation,
-				description
+				description,
+				owner
 			} = data
+
+			console.log({ t: owner })
 
 			this.id = id
 			this.documentToCertify = documentToCertify ? documentToCertify : null
-			this.minPrise = minPrise
+			this.minPrice = minPrice
 			this.currentGradeLevel = currentGradeLevel
 			this.teachingUnit = [...teachingUnit]
 			this.levelsUnit = [...levelsUnit]
 			this.coursesType = [...coursesType]
 			this.coursesLocation = [...coursesLocation]
 			this.description = description
+			this.owner = new Repeater(owner)
 		}
 		
 	}

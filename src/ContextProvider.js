@@ -46,7 +46,6 @@ const ContextProvider = ({ children }) => {
 
 	//current user dispa
 	const userLogin = (data) => {
-		console.log({ service: data })
 		dispatchUser(login(data))
 	}
 

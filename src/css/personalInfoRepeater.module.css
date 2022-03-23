@@ -21,6 +21,36 @@
 .profileImage {
   width: 250px;
   height: 250px;
+  object-fit: cover;
+}
+
+.profileImageContainer {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.profileImageIcon {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid #0f272e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e00045;
+  opacity: 0;
+  transition: transform .5s, opacity .5s;
+}
+
+.profileImageIconAnimation {
+  transform: translate(-20px, 20px) scale(1.4);
+  opacity: 1;
+  cursor: pointer;
 }
 
 .profileInfoSection {

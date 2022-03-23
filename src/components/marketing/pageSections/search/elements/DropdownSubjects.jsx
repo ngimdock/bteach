@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Dropdown from "./Dropdown";
 
 
-const DropdownSubjects = () => {
+const DropdownSubjects = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Matières' },
@@ -13,7 +13,11 @@ const DropdownSubjects = () => {
 	const [value, setValue] = useState('Matières');
 
 	const handleChange = (event) => {
-		setValue(event.target.value);
+		const value = event.target.value
+		setValue(value);
+
+		if (value !== "Matières")
+			onAddFilter("matiere", value)
 	};
 
 	return (

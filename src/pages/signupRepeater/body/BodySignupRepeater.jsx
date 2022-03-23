@@ -5,8 +5,11 @@ import { BsFillCalendarDateFill } from "react-icons/bs";
 import Radio from "../../../components/elements/inputs/Radio";
 import ALink from "../../../components/elements/a/ALink";
 import { firebaseUserCreateUser } from "../../../api/Users";
+import LoadingCircle from '../../../components/utils/loaders/LoaderCircle'
+import { Navigate } from "react-router-dom";
 
 const BodySignupRepeater = () => {
+  // Set local state
   let [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -19,21 +22,24 @@ const BodySignupRepeater = () => {
     quartier: "",
     sexe: "",
   });
+  const [loading, setLoading] = useState(false)
+  const [redirectToHome, setRedirectToHome] = useState(false)
 
   const handleChange = (event) => {
-    if (formData.anneeNaissance) {
-      console.log({date: new Date(formData.anneeNaissance).getTime()})
+    if (!loading) {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+      });
     }
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (validateForm()) {
+    if (validateForm() && !loading) {
+      setLoading(true)
+
       try {
         // Create a user and store his data in the database
         const { data, error } = await firebaseUserCreateUser({
@@ -50,12 +56,14 @@ const BodySignupRepeater = () => {
         })
 
         if (data) {
-          console.log("User created successfully")
+          setRedirectToHome(true)
         } else {
           console.log(error)
         }
       } catch (err) {
         console.log(err)
+      } finally {
+        setLoading(false)
       }
     }
   }
@@ -93,14 +101,20 @@ const BodySignupRepeater = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+    <div style={{ opacity: loading ? .4:1 }} className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+      {
+        loading && <LoadingCircle size="large" />
+      }
+      {
+        redirectToHome && <Navigate to="/" />
+      }
+      
       <H3 color="#00171f" classe="mb-10 text-center">
         Suivre les étapes pour s'inscrire en tant repétiteur qui offre des services
         
       </H3>
       <form
         className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-full"
-        onSubmit={handleSubmit}
       >
         <Input
           type="text"
@@ -164,6 +178,7 @@ const BodySignupRepeater = () => {
           name="ville"
           onChange={handleChange}
           className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
+          style={{ transition: "padding .4s" }}
         >
           <option value="">Ville*</option>
           <option value="Yaounde">Yoaunde</option>
@@ -174,6 +189,7 @@ const BodySignupRepeater = () => {
           name="quartier"
           onChange={handleChange}
           className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
+          style={{ transition: "padding .4s" }}
         >
           <option value="">
             Quartier* (choisissez le quartier le plus proche de chez vous)
@@ -195,7 +211,7 @@ const BodySignupRepeater = () => {
             />
           ))}
         </div>
-        <button className="self-end flex items-center px-4 py-1.5 mb-2 mt-6 hover:cursor-pointer hover:no-underline bg-primary text-white text-center rounded-full basis-6/12 sm:px-5">
+        <button onClick={handleSubmit} className="self-end flex items-center px-4 py-1.5 mb-2 mt-6 hover:cursor-pointer hover:no-underline bg-primary text-white text-center rounded-full basis-6/12 sm:px-5">
           <span className="text-sm tracking-wide opacity-90">Terminer</span>
         </button>
       </form>

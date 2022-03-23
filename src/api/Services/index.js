@@ -1,7 +1,6 @@
 // Service operations
 import { 
-  addDoc, 
-  doc, 
+  addDoc,
   getDoc, 
   getDocs, 
   onSnapshot, 
@@ -9,7 +8,6 @@ import {
   updateDoc, 
   where 
 } from 'firebase/firestore'
-import { db, storage } from '../../firebase'
 import { firebaseUserGetUser } from '../Users'
 import { getCollection, getCollections } from '../utils'
 
@@ -85,11 +83,14 @@ const firebaseServiceGetServices = (globalStateAddServices = (datas) => {}) => {
     // Get reference to a collection
     const servicesCollectionRef = getCollections("services")
 
+    const q = query(servicesCollectionRef, where("isVisible", "==", true))
+
     // Get services
-    onSnapshot(servicesCollectionRef, async (snapshot) => {
+    onSnapshot(q, async (snapshot) => {
       const getUser = async (id, serviceData, services) => {
         // Get the user
         const { data: owner } = await firebaseUserGetUser(id)
+        console.log({ owner })
 
         // Add the service to the list
         services.push({...serviceData, owner})
@@ -129,17 +130,14 @@ const firebaseServiceGetFilteredServices = async (filters) => {
  */
 const firebaseServiceCreateService = async (idUser) => {
   try {
-    // Get user basing on the idUser
-    const user = await firebaseUserGetUser(idUser)
-
     // Create a reference
     const serviceCollectionRef = getCollections("services")
     const userCollectionRef = getCollection(idUser, "users")
 
     // Generate a new Service data
     const serviceData = { 
-      coursesLocation: "",
-      coursesType: "",
+      coursesLocation: [],
+      coursesType: [],
       currentGradeLevel: "",
       description: "",
       isCertified: false,
@@ -165,8 +163,41 @@ const firebaseServiceCreateService = async (idUser) => {
  * @param {String} idService 
  * @param {Object} data 
  */
-const firebaseServiceUpdateService = async (idUser, idService, data) => {
-  // To do
+const firebaseServiceUpdateService = async (idService, data) => {
+  // Get reference to a service
+  const serviceCollectionRef = getCollection(idService, "services")
+
+  try {
+    const {
+      minPrice,
+			currentGradeLevel,
+			teachingUnit,
+			levelsUnit,
+			coursesType,
+			coursesLocation,
+			description,
+      isVisible
+    } = data
+
+    const credentials = {
+      minPrice: minPrice ? minPrice : 0,
+			currentGradeLevel: currentGradeLevel ? currentGradeLevel : "",
+			teachingUnit: teachingUnit ? teachingUnit : [],
+			levelsUnit: levelsUnit ? levelsUnit : [],
+			coursesType: coursesType ? coursesType : [],
+			coursesLocation: coursesLocation ? coursesLocation : [],
+			description: description ? description : "",
+      isVisible
+    }
+
+    await updateDoc(serviceCollectionRef, credentials)
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu" }
+  }
 }
 
 /**

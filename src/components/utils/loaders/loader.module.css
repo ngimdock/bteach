@@ -1,19 +1,24 @@
 /* Loader css module */
 
 .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-width: 5px;
   border-style: solid;
   border-radius: 100%;
   animation: loader-animation .6s infinite linear;
   flex-shrink: 0;
+  z-index: 10;
 }
 
 @keyframes loader-animation {
   0% {
-    transform: rotateZ(0deg);
+    transform: translate(-50%, -50%) rotateZ(0deg);
   }
 
   100% {
-    transform: rotateZ(360deg);
+    transform: translate(-50%, -50%) rotateZ(360deg);
   }
 }
