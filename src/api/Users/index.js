@@ -41,7 +41,8 @@ const firebaseUserGetUser = async (id) => {
     // Trying getting the document from firestore
     const user = await getDoc(userCollection)
 
-    const userData = { ...user.data(), id: user.id }
+    let userData = { ...user.data(), id: user.id }
+    userData = { ...userData, name: userData.lastName, lastName: undefined }
 
     return { data: userData }
   } catch (err) {

@@ -1,24 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
-import businessWoman from "../../../../../medias/photos/african-american-business-woman-by-window (1) (1).jpg"
+import serviceContext from "../../../../../dataManager/context/servicesContext";
 
 
 const AllRepeater = ({ filters }) => {
+	// Get data from the global state
+	const { services } = useContext(serviceContext)
 
 	return(
 
 		<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
-			<RepeaterCard
-				photo = {businessWoman}
-				salary = "20 000"
-				age = "23"
-				city = "Yaounde"
-				street = "Mimboman"
-				canMove = "True"
-				discipline = "Mathematique, physique, chimie"
-				courseLocation = "chez élève, chez prof, en ligne"
-			/>
+			{
+				services.map(service => {
+					console.log(service.getOwner)
+					return (
+						<RepeaterCard
+							key={service.getId}
+							data={service}
+						/>
+					)
+				})
+			}
 		</div>
 
 	);

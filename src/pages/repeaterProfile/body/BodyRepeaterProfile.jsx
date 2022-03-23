@@ -1,18 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
 import style from '../../../css/personalInfoRepeater.module.css'
 import Button from '../../../components/elements/buttons/Button'
 import H3 from '../../../components/elements/titles/H3'
 import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
-import { firebaseServiceChangeVisibilityOfService, firebaseServiceGetService } from '../../../api/Services'
-import { firebaseCreateFeebacks, firebaseGetFeebacks } from '../../../api/Feedbacks'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
 import { BsCameraFill } from 'react-icons/bs'
 import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
 import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
 
-const profilImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
 const ProfileItem = ({ text, color }) => {
@@ -48,10 +45,36 @@ const BodyRepeaterProfile = () => {
 	// Use ref section
 	const inputRef = useRef()
 
+	const updateProfilePicCb = useCallback(() => updateProfilePic, [updateProfilePic])
+	const updateProfilePicRef = useRef(updateProfilePicCb)
+
+	const changeProfilePhotoCb = useCallback(() => async (removeImageUrl) => {
+		try {
+			const { data } = await firebaseUserChangeProfilePic(currentUser.getId, imageURL)
+
+			if (data) {
+				updateProfilePicRef.current()(imageURL)
+				removeImageUrl("")
+			}
+		} catch (err) {
+			console.log(err)
+		}
+	}, [currentUser.getId, imageURL])
+
+	const changeProfilePhotoRef = useRef(changeProfilePhotoCb)
+
+	useEffect(() => {
+		changeProfilePhotoRef.current = changeProfilePhotoCb
+	}, [changeProfilePhotoCb])
+
+	useEffect(() => {
+		updateProfilePicRef.current = updateProfilePicCb
+	}, [updateProfilePicCb])
+
 	// Use effect section
 	useEffect(() => {
 		if (imageURL) {
-			changeProfilePhoto(setImageURL)
+			changeProfilePhotoRef.current()(setImageURL)
 		}
 	}, [imageURL])
 
@@ -79,19 +102,6 @@ const BodyRepeaterProfile = () => {
 
 	const handleGetImageUrl = (image) => {
 		setImageURL(image)
-	}
-
-	const changeProfilePhoto = async (removeImageUrl) => {
-		try {
-			const { data, error } = await firebaseUserChangeProfilePic(currentUser.getId, imageURL)
-
-			if (data) {
-				updateProfilePic(imageURL)
-				removeImageUrl("")
-			}
-		} catch (err) {
-			console.log(err)
-		}
 	}
 
 	const handleUploadImage = () => {

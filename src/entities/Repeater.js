@@ -2,12 +2,11 @@ import ActiveUser from './ActiveUser'
 import Service from './Service'
 
 class Repeater extends ActiveUser {
-
 	service
 
 	constructor(data){
 		super(data)
-		console.log({data})
+
 		this.role = 1
 		this.service = data.service ? new Service(data.service) : null
 	}

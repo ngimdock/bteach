@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import CurrentSearchNav from "../../../components/marketing/pageSections/search/elements/CurrentSearchNav";
-import H2 from "../../../components/elements/titles/H2";
 import SearchFilter from "../../../components/marketing/pageSections/search/repeaters/SearchFilter";
 import AllRepeater from "../../../components/marketing/pageSections/search/repeaters/AllRepeater";
 import Pagination from "../../../components/marketing/pageSections/search/elements/Pagination";

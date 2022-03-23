@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import DropdownSubjects from "../elements/DropdownSubjects";
 import DropdownCities from "../elements/DropdownCities";
@@ -44,8 +44,15 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 		ville: "#1f2421"
 	}
 
+	const onGetCurrentFilterCb = useCallback(() => onGetCurrentFilter, [onGetCurrentFilter])
+	const onGetCurrentFilterRef = useRef(onGetCurrentFilterCb)
+
 	useEffect(() => {
-		onGetCurrentFilter(filters)
+		onGetCurrentFilterRef.current = onGetCurrentFilterCb
+	}, [onGetCurrentFilterCb])
+
+	useEffect(() => {
+		onGetCurrentFilterRef.current(filters)
 	}, [filters])
 
 	const handleAddFilter = (type, value) => {
@@ -121,16 +128,30 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 			<section className="filters-section mt-3">
 				<p className="text-bold mx-4">Les Filtres:</p>
 
-				<div className="mx-2 mt-4 py-2 px-2 w-auto filters-items">
+				<div 
+					className="mx-2 mt-4 py-2 px-2 w-auto filters-items"
+					style={{
+						width: "100%",
+						backgroundColor: "#f8f8f8",
+						minHeight: 60
+					}}		
+				>
 					{
-						filters.map(filter => {
-							return <FilterItem 
-								key={filter.id} 
-								color={colors[filter.type]} 
-								data={filter} 
-								onDeleteFilter={handleDeleteFilter}
-							/>
-						})
+						filters.length > 0 ? (
+							filters.map(filter => {
+								return <FilterItem 
+									key={filter.id} 
+									color={colors[filter.type]} 
+									data={filter} 
+									onDeleteFilter={handleDeleteFilter}
+								/>
+							})
+						) : (
+							<span 
+								className="py-2 pl-2"
+								style={{ color: "#828282" }}
+							>Ajouter des filtres pour obtenir des resultats plus precis</span>
+						)
 					}
 				</div>
 			</section>
