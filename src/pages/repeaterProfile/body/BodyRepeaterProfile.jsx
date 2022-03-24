@@ -11,6 +11,11 @@ import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
 import { getByText } from '@testing-library/react'
 import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
+import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal"
+import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal"
+
+import { Dialog, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
 
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
@@ -45,6 +50,19 @@ const BodyRepeaterProfile = () => {
 	const [modalOpen, setModalOpen] = useState(false)
 	const [progress, setProgress] = useState(0)
 	const [loadingSaveImg, setLoadingSaveImg] = useState(false)
+	const [isModalAnnonceOpen, setIsModalAnnonceOpen] = useState(false)
+	const [isModalContactRepeaterOpen, setIsModalContactRepeaterOpen] = useState(false)
+
+
+	let [isOpen, setIsOpen] = useState(true)
+
+	function closeModal() {
+	  setIsOpen(false)
+	}
+  
+	function openModal() {
+	  setIsOpen(true)
+	}
 
 	// Use ref section
 	const inputRef = useRef()
@@ -215,8 +233,21 @@ const BodyRepeaterProfile = () => {
 						</div>
 
 						<div className={style.profileControl}>
-							<Button size="medium" classe={`${style.profileBtn} ${style.profileBtnFirst}`}>RECOMMANDER</Button>
-							<Button size="medium" classe={style.profileBtn}>CONTACTER</Button>
+							<Button 
+								size="medium" 
+								classe={`${style.profileBtn} 
+								${style.profileBtnFirst}`}
+								action={() => setIsModalAnnonceOpen(true) }
+								>
+									RECOMMANDER
+							</Button>
+							<Button 
+								size="medium" 
+								classe={style.profileBtn}
+								action={() => setIsModalContactRepeaterOpen(true)}
+								>
+								CONTACTER
+							</Button>
 						</div>
 					</div>
 
@@ -296,6 +327,14 @@ const BodyRepeaterProfile = () => {
 				/>
 
 			</section>
+			<CreateNoteModal
+				isOpen={isModalAnnonceOpen}
+				closeModal={() => setIsModalAnnonceOpen(false)}
+			/>
+			<ContactRepeaterModal
+				isOpen={isModalContactRepeaterOpen}
+				closeModal={() => setIsModalContactRepeaterOpen(false)}
+			/>
 		</section>
 	)
 }
