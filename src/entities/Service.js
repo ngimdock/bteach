@@ -13,6 +13,7 @@ class Service{
 	coursesLocation
 	description
 	owner
+	categories
 
 	constructor(data){
 		this.initialization(data)
@@ -112,7 +113,8 @@ class Service{
 				coursesType,
 				coursesLocation,
 				description,
-				owner
+				owner,
+				categories
 			} = data
 
 			console.log({ t: owner })
@@ -127,6 +129,7 @@ class Service{
 			this.coursesLocation = [...coursesLocation]
 			this.description = description
 			this.owner = new Repeater(owner)
+			this.categories = categories
 		}
 		
 	}

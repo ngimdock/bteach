@@ -1,7 +1,6 @@
 import Repeater from "../../../entities/Repeater"
 import Customer from "../../../entities/Customer"
 import Administrator from "../../../entities/Administrator"
-import Service from "../../../entities/Service"
 
 import {
 	LOGIN,
@@ -33,8 +32,6 @@ const currentUserReducer = (state, action) => {
 	switch(action.type){
 		case LOGIN: {
 			const { role } = action.payload
-
-			console.log({payload: action.payload})
 
 			if(role === 0) {
 				const customer = new Customer(action.payload)
@@ -278,10 +275,14 @@ const currentUserReducer = (state, action) => {
 
 		case DELETE_REPEATER: {
 			//code here
+
+			return state
 		}
 
 		case CERTIFIED_REPEATER: {
 			//code here
+
+			return state
 		}
 
 

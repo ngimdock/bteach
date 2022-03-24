@@ -21,7 +21,7 @@
 	border-top: 2px solid silver;
 	border-bottom: 2px solid silver;
 	padding: 10px;
-	width: 100vw;
+	width: calc(100vw - 200px);
 	overflow-x: auto;
 	flex-shrink: 0;
 }
@@ -134,5 +134,11 @@
 @media screen and (max-width: 767px) {
 	.CurrentSearchNav {
 		justify-content: flex-start;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.CurrentSearchNav{
+		width: 100vw;
 	}
 }

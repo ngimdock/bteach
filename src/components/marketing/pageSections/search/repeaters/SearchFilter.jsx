@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import DropdownSubjects from "../elements/DropdownSubjects";
 import DropdownCities from "../elements/DropdownCities";
@@ -6,6 +6,7 @@ import DropdownGender from "../elements/DropdownGender";
 import RadioButton from "../elements/RadioButton";
 import PricePerMonth from "../elements/PricePerMonth"
 import { BsX } from 'react-icons/bs'
+import searchContext from "../../../../../dataManager/context/searchContext";
 
 const FilterItem = ({ color, data, onDeleteFilter }) => {
 	return (
@@ -34,26 +35,42 @@ const FilterItem = ({ color, data, onDeleteFilter }) => {
 }
 
 const SearchFilter = ({ onGetCurrentFilter }) => {
-	const [filters, setFilter] = useState([])
+	const { keyword, filters: globalFilters, addFilters, addKeyword } = useContext(searchContext)
+	const [filters, setFilter] = useState(globalFilters)
 
 	const colors = {
 		matiere: "#00b4d8",
 		sexe: "#fb8500",
 		niveau: "#ef476f",
 		lieu: "#008000",
-		ville: "#1f2421"
+		ville: "#1f2421",
+		keyword: "#44456c"
 	}
 
-	const onGetCurrentFilterCb = useCallback(() => onGetCurrentFilter, [onGetCurrentFilter])
-	const onGetCurrentFilterRef = useRef(onGetCurrentFilterCb)
-
 	useEffect(() => {
-		onGetCurrentFilterRef.current = onGetCurrentFilterCb
-	}, [onGetCurrentFilterCb])
+		if (keyword) {
+			generateFilterFromKeyWord(keyword)
+		}
 
-	useEffect(() => {
-		onGetCurrentFilterRef.current(filters)
-	}, [filters])
+		addFilters([])
+		onGetCurrentFilter(filters)
+	}, [])
+
+	const generateFilterFromKeyWord = (keyword) => {
+		const index = filters.findIndex(filter => filter.type === "keyword")
+
+		if (index > -1) {
+			const filtersClone = [...filters]
+
+			filtersClone[index].value = keyword
+
+			setFilter(filtersClone)
+
+			onGetCurrentFilter(filtersClone)
+		} else {
+			handleAddFilter("keyword", keyword)
+		}
+	}
 
 	const handleAddFilter = (type, value) => {
 		const id = filters.length === 0 ? 1:filters[filters.length-1].id + 1
@@ -72,14 +89,28 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 			}
 		})
 
-		if (!exist)
+		if (!exist) {
 			setFilter([...filters, filter])
+
+			onGetCurrentFilter([...filters, filter])
+		}
 	}
 
 	const handleDeleteFilter = (id) => {
-		const newFilters = filters.filter(fil => fil.id !== id)
+		const newFilters = filters.filter(fil => {
+			if (fil.id !== id) {
+				return true
+			}
+
+			console.log({fil})
+			if (fil.type === "keyword") {
+				addKeyword("")
+			}
+		})
 
 		setFilter(newFilters)
+
+		onGetCurrentFilter(newFilters)
 	}
 
 	return(
@@ -98,7 +129,7 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 								<RadioButton 
 									onAddFilter={handleAddFilter}
 									name="lieu" 
-									items={['Chez élève', 'Chez prof', 'En ligne']}
+									items={['chez eleve', 'chez prof', 'en ligne']}
 								/>
 							</div>
 						</div>
@@ -117,7 +148,7 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 								<RadioButton 
 									onAddFilter={handleAddFilter}
 									name="niveau" 
-									items={['Primaire', 'Secondaire', 'Lycée']}
+									items={['primaire', 'secondaire', 'universite']}
 								/>
 							</div>
 						</div>
@@ -125,9 +156,7 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 				</div>
 			</div>
 
-			<section className="filters-section mt-3">
-				<p className="text-bold mx-4">Les Filtres:</p>
-
+			<section className="filters-section mt-3 mb-6">
 				<div 
 					className="mx-2 mt-4 py-2 px-2 w-auto filters-items"
 					style={{
@@ -150,7 +179,7 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 							<span 
 								className="py-2 pl-2"
 								style={{ color: "#828282" }}
-							>Ajouter des filtres pour obtenir des resultats plus precis</span>
+							>Ajouter des filtres pour obtenir des résultats plus précis</span>
 						)
 					}
 				</div>

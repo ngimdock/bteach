@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
+import searchContext from "../../../../../dataManager/context/searchContext";
 
 
 const CityCircle = (props) => {
+	// Get global state
+	const { addFilters } = useContext(searchContext)
+
+	// Set local state
+	const [redirectToSearchRepeater, setRedirectToSearchRepeater] = useState(false)
 
 	let {
 		name,
@@ -16,27 +23,36 @@ const CityCircle = (props) => {
 	else if(color === "danger"){
 		background = "bg-red-500";
 	}
-	else if(color === "red"){
-		background = "bg-red-700";
+	else if(color === "secondary"){
+		background = "bg-secondary";
 	}
 	else if(color === "primary"){
 		background = "bg-primary";
 	}
 	else{
-		background = "bg-secondary";
+		background = "bg-black";
 	}
 
+	const handleAddFilter = () => {
+		const filter = {
+			id: 1,
+			type: "ville",
+			value: name
+		}
+
+		addFilters([filter])
+
+		setRedirectToSearchRepeater(true)
+	}
 
 	return(
+		<div onClick={handleAddFilter} className={`${background} w-32 h-32 p-0 md:p-20 rounded-full flex justify-center items-center text-center hover:opacity-90 transition ease-in-out duration-300 cursor-pointer `}>
+			<p className="lg:text-xl text-base text-white font-medium">{name}</p>
 
-		<div className="DomainCard mx-auto">
-
-			<div className={`${background} lg:py-12 py-5 lg:px-10 px-6 rounded-circle`}>
-				<p className="lg:text-2xl text-xl text-white font-medium">{name}</p>
-			</div>
-			
+			{
+				redirectToSearchRepeater && <Navigate to="/search/repeaters" />
+			}
 		</div>
-
 	);
 }
 

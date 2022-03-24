@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import CurrentSearchNav from "../../../components/marketing/pageSections/search/elements/CurrentSearchNav";
 import SearchFilter from "../../../components/marketing/pageSections/search/repeaters/SearchFilter";
