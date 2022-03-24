@@ -11,7 +11,7 @@ const BodySearchRepeaters = () => {
 	const [filters, setFilters] = useState([])
 
 	const handleGetCurrentFilters = (filters) => {
-		setFilters(filters)
+		setFilters(() => filters)
 	}
 
 	return(

@@ -23,7 +23,6 @@ function App() {
         <BrowserRouter>
           <SearchProvider>
             <ToastProvider options={toastOptions}>
-
               <Router />
             </ToastProvider>
           </SearchProvider>
