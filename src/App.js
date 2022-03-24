@@ -3,25 +3,29 @@ import { BrowserRouter } from "react-router-dom";
 
 import ContextProvider from "./ContextProvider"
 
-import User from "./entities/User"
-import Administrator from "./entities/Administrator"
-
-import Customer from "./entities/Customer"
-import Annonce from "./entities/Annonce"
-import Repeater from "./entities/Repeater"
-import Service from "./entities/Service"
-
 import Router from "./Router"
 
 import "./css/App.css"
 import LoadingPage from './components/marketing/navbar/LoadingPage';
+import SearchProvider from './dataManager/providers/searchProvider';
+import { ToastProvider } from 'react-simple-toastify'
 
 function App() {
+
+  const toastOptions = {
+    position: "bottom",
+    timeout: 5000
+  }
+
   return (
     <>
       <ContextProvider>
         <BrowserRouter>
-          <Router />
+          <SearchProvider>
+            <ToastProvider options={toastOptions}>
+              <Router />
+            </ToastProvider>
+          </SearchProvider>
         </BrowserRouter>
       </ContextProvider>
 

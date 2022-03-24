@@ -6,10 +6,18 @@ const DropdownCities = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Villes' },
-		{ value: 'Yaoundé' },
+		{ value: 'Yaounde' },
 		{ value: 'Douala' },
-		{ value: 'Baffoussam' },
-		{ value: 'Maroua' },
+		{ value: 'Bafoussam' },
+		{ value: 'Ebolowa' },
+		{ value: 'Ngoundere' },
+		{ value: 'Bertoua' },
+		{ value: 'Buea' },
+		{ value: 'Bamenda' },
+		{ value: 'Kribi' },
+		{ value: 'Dschang' },
+		{ value: 'Bagangte' },
+		{ value: 'Edea' },
 	];
 
 	const [value, setValue] = useState('Villes');

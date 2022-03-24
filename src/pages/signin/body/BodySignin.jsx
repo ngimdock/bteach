@@ -5,8 +5,7 @@ import Button from "../../../components/elements/buttons/Button";
 import { firebaseUserLogin } from "../../../api/Users";
 import { Navigate } from 'react-router-dom'
 import LoadingCircle from "../../../components/utils/loaders/LoaderCircle"
-
-import currentUserContext from "../../../dataManager/context/currentUserContext"
+import { ToastContext } from 'react-simple-toastify'
 
 const BodySignin = () => {
   // Set local state
@@ -14,6 +13,9 @@ const BodySignin = () => {
   const [password, setPassword] = useState("");
   const [redirectHome, setRedirectHome] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  // Get global state
+  const { displayToast } = useContext(ToastContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -32,6 +34,8 @@ const BodySignin = () => {
         }
       } catch (err) {
         console.log(err)
+
+        displayToast("Soit votre adresse email soit votre mot de passe est incorrect")
       } finally {
         setLoading(false)
       }

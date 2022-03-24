@@ -12,7 +12,6 @@ const StudentsOpinion = () => {
 
 	function AutoRotate() {
 
-		let myele = null;
 		let allElements = document.getElementsByTagName('label');
 
 		for (let i = 0, n = allElements.length; i < n; i++) {

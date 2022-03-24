@@ -1,19 +1,12 @@
 // Users operations
-import { auth, db, storage } from '../../firebase'
+import { auth } from '../../firebase'
 import {
-  onSnapshot,
   getDoc,
-  addDoc,
   updateDoc,
-  deleteDoc,
-  query,
-  collection,
   setDoc,
 } from 'firebase/firestore'
 import { 
-  getCollection,
-  getCollections,
-  uploadImage
+  getCollection
 } from '../utils'
 import { 
   createUserWithEmailAndPassword, 
@@ -74,20 +67,18 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
-                user = { ...data, name: data.lastName, lastName: undefined, service }
-                console.log({ user })
+                user = { ...data, service }
+                console.log(user)
 
                 // Store the data of the currentuse inside the global state
                 globalStateLogin(user)
               }
             } else {
-              user = {...data, name: data.lastName, lastName: undefined}
+              user = data
 
               // Store the data of the currentuse inside the global state
               globalStateLogin(user)
             }
-
-            console.log({ user })
   
             return
           }

@@ -4,9 +4,6 @@ import currentUserContext from "../dataManager/context/currentUserContext"
 import Base from "./Base"
 
 const BaseSecured = ({ children }) => {
-  // Set local state
-  const [redirectToHome, setRedirectToHome] = useState(false)
-
   // Get global state
   const { currentUser } = useContext(currentUserContext)
 

@@ -6,8 +6,8 @@ const DropdownGenders = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Sexe' },
-		{ value: 'Masculin' },
-		{ value: 'Féminin' },
+		{ value: 'masculin' },
+		{ value: 'feminin' },
 	];
 
 	const [value, setValue] = useState('Sexe');
