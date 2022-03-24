@@ -6,14 +6,16 @@ const ALink = (props) => {
 	let {
 		children,
 		link,
-		classe
+		classe,
+		onClick
 	} = props
 
 	return(
 		<Link 
 			to={link}
 			className={`${classe} text-primary  hover:underline`}
-			>
+			onClick={onClick}
+		>
 			{ children }
 		</Link>
 	)
