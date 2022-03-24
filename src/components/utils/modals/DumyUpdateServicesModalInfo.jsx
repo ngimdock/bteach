@@ -30,4 +30,12 @@ const typeDeRepétition = ["repétiton individuel", "repétition en groupe"];
 
 const lieuDeRepetion = ["chez l'eleve", "chez le prof", "en ligne"];
 
-export { niveauScolarie, matiere, typeDeRepétition, lieuDeRepetion };
+const categories = ["Primaraire", "Secondaraire", "Universite"];
+
+export {
+  niveauScolarie,
+  matiere,
+  typeDeRepétition,
+  lieuDeRepetion,
+  categories,
+};
