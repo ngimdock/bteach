@@ -8,8 +8,6 @@ import currentUserContext from '../../../dataManager/context/currentUserContext'
 import { Navigate } from 'react-router-dom'
 import { firebaseUserLogout } from '../../../api/Users'
 
-const profileImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
-
 const NavItem = ({ text, link, onClick }) => {
   const defaultLink = link ? link : "#"
   const defaultHandler = onClick ? onClick : () => {}
@@ -72,7 +70,7 @@ const MobileMenu = ({ show, onHide }) => {
               <ImgCircle classe={style.mobileMenuHeaderImage} src={currentUser.getProfilePic} />
 
               <div className={style.mobileMenuHeaderInfo}>
-                <span className={style.mobileMenuHeaderName}>{ `${currentUser.getFirstName} ${currentUser.getName}` }</span>
+                <span className={style.mobileMenuHeaderName}>{ `${currentUser.getFullName}` }</span>
 
                 <Button action={handleNavigateToProfile} classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
               </div>

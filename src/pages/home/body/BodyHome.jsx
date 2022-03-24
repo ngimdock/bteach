@@ -7,8 +7,7 @@ import SearchRepeaterSection from "../../../components/marketing/pageSections/ho
 import SearchByCity from "../../../components/marketing/pageSections/home/SearchByCity";
 import TrainingTypes from "../../../components/marketing/pageSections/home/TrainingTypes";
 import StudentsOpinion from "../../../components/marketing/pageSections/home/StudentsOpinion";
-
-import home from "../../../css/home.css"
+import "../../../css/home.css"
 
 const BodyHome = () => {
 	return(

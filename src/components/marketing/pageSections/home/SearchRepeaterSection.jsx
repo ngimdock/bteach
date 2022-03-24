@@ -4,7 +4,6 @@ import image from "../../../../medias/photos/small-bg.png";
 import Paragraphe from "../../../elements/p/Paragraphe";
 import BigInput2 from "../../../elements/inputs/BigInput2";
 import Container from '../../../utils/Container';
-import H3 from '../../../elements/titles/H3';
 import H2 from '../../../elements/titles/H2';
 
 

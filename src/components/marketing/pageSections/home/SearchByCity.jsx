@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import H2 from "../../../elements/titles/H2";
 import Button from "../../../elements/buttons/Button";
 import CityCircle from "./elements/CityCircle";
 import Container from '../../../utils/Container';
 import Paragraphe from '../../../elements/p/Paragraphe';
+import currentUserContext from '../../../../dataManager/context/currentUserContext'
 
 
 const SearchByCity = () => {
+	const { currentUser } = useContext(currentUserContext)
 
 	return(
 		<Container classe="mt-20 md:mt-40 px-5 md:px-10">
@@ -22,9 +24,13 @@ const SearchByCity = () => {
 				<CityCircle name="Bamenda" color="primary" />
 			</div>
 
-			<div className="mt-16 flex justify-center">
-				<Button  size="big" theme="red" classe="mt-1">Inscription</Button>
-			</div>
+			{
+				!currentUser && (
+					<div className="mt-16 flex justify-center">
+						<Button  size="big" theme="red" classe="mt-1">Inscription</Button>
+					</div>
+				)
+			}
 		</Container>
 	);
 }

@@ -9,6 +9,7 @@ import { BsCameraFill } from 'react-icons/bs'
 import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
 import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
+import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
 
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
@@ -41,6 +42,7 @@ const BodyRepeaterProfile = () => {
 	const [uploading, setUploading] = useState(false)
 	const [modalOpen, setModalOpen] = useState(false)
 	const [progress, setProgress] = useState(0)
+	const [loadingSaveImg, setLoadingSaveImg] = useState(false)
 
 	// Use ref section
 	const inputRef = useRef()
@@ -49,6 +51,7 @@ const BodyRepeaterProfile = () => {
 	const updateProfilePicRef = useRef(updateProfilePicCb)
 
 	const changeProfilePhotoCb = useCallback(() => async (removeImageUrl) => {
+		setLoadingSaveImg(true)
 		try {
 			const { data } = await firebaseUserChangeProfilePic(currentUser.getId, imageURL)
 
@@ -58,6 +61,8 @@ const BodyRepeaterProfile = () => {
 			}
 		} catch (err) {
 			console.log(err)
+		} finally {
+			setLoadingSaveImg(false)
 		}
 	}, [currentUser.getId, imageURL])
 
@@ -130,7 +135,13 @@ const BodyRepeaterProfile = () => {
 					className={style.profileImageContainer}
 					onMouseEnter={() => setIsHover(true)}
 					onMouseLeave={() => setIsHover(false)}
+					style={{ opacity: loadingSaveImg ? .4:1 }}
 				>
+					{
+						loadingSaveImg && (
+							<LoaderCircle size="normal" color="#3e4bff" />
+						)
+					}
 					<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
 
 					<span 
