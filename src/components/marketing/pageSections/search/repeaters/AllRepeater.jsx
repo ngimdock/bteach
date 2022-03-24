@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
+import searchContext from "../../../../../dataManager/context/searchContext";
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
@@ -14,7 +15,8 @@ const getFilters = (filters) => {
 
 	// Fill the template
 	filters.forEach(filter => {
-		FILTERS_SCHEMA[filter.type].add(filter)
+		if (filter.type !== "keyword")
+			FILTERS_SCHEMA[filter.type].add(filter)
 	})
 
 	return [
@@ -34,9 +36,51 @@ const getSexe = (gender) => {
 	return "feminin"
 }
 
+const compareString = (key, sources) => {
+	const keywordItems = key.toLowerCase().split(/[\s']+/)
+	let exist = false
+
+	for (let source of sources) {
+		for (let keyword of keywordItems) {
+			if (keyword.length > 1) {
+				const regex = new RegExp(keyword)
+	
+				if (source.toLowerCase().match(regex)) {
+					exist = true
+		
+					break
+				}
+			}
+		}
+	}
+
+	return exist
+}
+
+const searchServicesFromKeyword = (keyword, services) => {
+	const servicesFiltered = services.filter(service => {
+		if (compareString(keyword, service.teachingUnit)) {
+			return true
+		} else if (compareString(keyword, [service.owner.town])) {
+			return true
+		} else if (compareString(keyword, [service.owner.district])) {
+			return true
+		} else if (compareString(keyword, service.levelsUnit)) {
+			return true
+		}
+
+		return false
+	})
+
+	return servicesFiltered
+}
+
 const AllRepeater = ({ filters }) => {
 	// Get data from the global state
 	const { services } = useContext(serviceContext)
+	const { keyword } = useContext(searchContext)
+
+	console.log({filters})
 
 	// Set local state
 	const [Localfilters, setLocalFilters] = useState(filters)
@@ -53,7 +97,13 @@ const AllRepeater = ({ filters }) => {
 			// Get the base template
 			const baseFilters = getFilters(Localfilters)
 
-			let servicesFiltered = [...services]
+			let servicesFiltered
+
+			if (keyword.length > 0) {
+				servicesFiltered = searchServicesFromKeyword(keyword, services)
+			} else {
+				servicesFiltered = [...services]
+			}
 
 			baseFilters.forEach(filter => {
 				servicesFiltered = getFilteredServices(filter, servicesFiltered)
@@ -101,20 +151,41 @@ const AllRepeater = ({ filters }) => {
 	}
 
 	return(
-
-		<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
-			{
-				displayServiceBasedOnFilters().map(service => {
-					console.log(service.getOwner)
-					return (
-						<RepeaterCard
-							key={service.getId}
-							data={service}
-						/>
+		<>
+			<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
+				{
+					displayServiceBasedOnFilters().length > 0 && (
+						displayServiceBasedOnFilters().map(service => {
+							return (
+								<RepeaterCard
+									key={service.getId}
+									data={service}
+								/>
+							)
+						})
 					)
-				})
+				}
+			</div>
+
+			{
+				displayServiceBasedOnFilters().length === 0 && (
+					<span
+						className="border-2 border-rounded"
+						style={{
+							width: "100%",
+							height: "auto",
+							padding: "20px 10px",
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							fontSize: 18
+						}}
+					>
+						Pas de resultats
+					</span>
+				)
 			}
-		</div>
+		</>
 
 	);
 }

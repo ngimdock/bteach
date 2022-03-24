@@ -11,13 +11,8 @@ const BodySearchRepeaters = () => {
 	const [filters, setFilters] = useState([])
 
 	const handleGetCurrentFilters = (filters) => {
-		console.log(filters)
 		setFilters(filters)
 	}
-
-	useEffect(() => {
-		console.log(filters)
-	}, [filters])
 
 	return(
 		<div className="lg:px-24 lg:py-8" style={{overflow: "hidden"}}>

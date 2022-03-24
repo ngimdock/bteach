@@ -14,6 +14,10 @@ const RepeaterCard = (props) => {
 		return service.getCoursesLocation.join(", ")
 	}
 
+	const getLevels = () => {
+		return service.getLevelsUnit.join(", ")
+	}
+
 	const getAge = () => {
 		const birthDay = Number(service.getOwner.getDate)
 		const currentDate = Date.now()
@@ -72,6 +76,11 @@ const RepeaterCard = (props) => {
 					</svg>
 					<p className="ml-3">{canMove}</p>
 				</div> */}
+
+				<div className="p-1 px-3 border border-1 border-white mt-4 w_max_content">
+					<p>{getLevels()}</p>
+				</div>
+
 				<div className="p-1 px-3 border border-1 border-white mt-4 w_max_content">
 					<p>{getCoursesLocation()}</p>
 				</div>

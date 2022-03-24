@@ -74,7 +74,7 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
                 globalStateLogin(user)
               }
             } else {
-              user = {...data, name: data.lastName, lastName: undefined}
+              user = data
 
               // Store the data of the currentuse inside the global state
               globalStateLogin(user)

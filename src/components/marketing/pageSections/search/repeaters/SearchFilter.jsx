@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import DropdownSubjects from "../elements/DropdownSubjects";
 import DropdownCities from "../elements/DropdownCities";
@@ -6,6 +6,7 @@ import DropdownGender from "../elements/DropdownGender";
 import RadioButton from "../elements/RadioButton";
 import PricePerMonth from "../elements/PricePerMonth"
 import { BsX } from 'react-icons/bs'
+import searchContext from "../../../../../dataManager/context/searchContext";
 
 const FilterItem = ({ color, data, onDeleteFilter }) => {
 	return (
@@ -34,14 +35,41 @@ const FilterItem = ({ color, data, onDeleteFilter }) => {
 }
 
 const SearchFilter = ({ onGetCurrentFilter }) => {
-	const [filters, setFilter] = useState([])
+	const { keyword, filters: globalFilters, addFilters, addKeyword } = useContext(searchContext)
+	const [filters, setFilter] = useState(globalFilters)
 
 	const colors = {
 		matiere: "#00b4d8",
 		sexe: "#fb8500",
 		niveau: "#ef476f",
 		lieu: "#008000",
-		ville: "#1f2421"
+		ville: "#1f2421",
+		keyword: "#44456c"
+	}
+
+	useEffect(() => {
+		if (keyword) {
+			generateFilterFromKeyWord(keyword)
+		}
+
+		addFilters([])
+		onGetCurrentFilter(filters)
+	}, [])
+
+	const generateFilterFromKeyWord = (keyword) => {
+		const index = filters.findIndex(filter => filter.type === "keyword")
+
+		if (index > -1) {
+			const filtersClone = [...filters]
+
+			filtersClone[index].value = keyword
+
+			setFilter(filtersClone)
+
+			onGetCurrentFilter(filtersClone)
+		} else {
+			handleAddFilter("keyword", keyword)
+		}
 	}
 
 	const handleAddFilter = (type, value) => {
@@ -69,7 +97,16 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 	}
 
 	const handleDeleteFilter = (id) => {
-		const newFilters = filters.filter(fil => fil.id !== id)
+		const newFilters = filters.filter(fil => {
+			if (fil.id !== id) {
+				return true
+			}
+
+			console.log({fil})
+			if (fil.type === "keyword") {
+				addKeyword("")
+			}
+		})
 
 		setFilter(newFilters)
 

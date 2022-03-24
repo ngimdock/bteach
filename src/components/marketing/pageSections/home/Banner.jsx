@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import H1 from "../../../elements/titles/H1";
 import BigInput1 from "../../../elements/inputs/BigInput1";
 import Container from '../../../utils/Container';
+import searchContext from "../../../../dataManager/context/searchContext";
+import { Navigate } from "react-router-dom";
 const heroTopImg = require("../../../../medias/photos/img-herotop.png")
 
 const Banner = () => {
+	// Set local state
+	const [keyword, setKeyword] = useState("")
+	const [redirectToResearch, setRedirectToResearch] = useState(false)
+
+	// Get global state
+	const { addKeyword } = useContext(searchContext)
+
+	// Some handlers
+	const handleSubmitForm = () => {
+		if (keyword.length > 0) {
+			addKeyword(keyword)
+
+			setRedirectToResearch(true)
+		}
+	}
 
 	return(
 
@@ -25,6 +42,9 @@ const Banner = () => {
 						name="searchRepeater"
 						classe="mt-10"
 						placeholder='Essayez "Prof de maths Terminale"'
+						value={keyword}
+						handleChange={(e) => setKeyword(e.target.value)}
+						onSubmit={handleSubmitForm}
 					/>
 
 				</div>
@@ -33,6 +53,10 @@ const Banner = () => {
 					 className="w-80 lg:w-96 h-auto hidden md:inline-block"
 				/>
 			</Container>
+
+			{
+				redirectToResearch && <Navigate to={`/search/repeaters?q=${keyword}`} />
+			}
 		</header>
 	)
 }
