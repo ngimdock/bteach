@@ -25,7 +25,6 @@ const NavbarProfilDropdown = ({ dropElt }) => {
   }
 
   const getUserType = () => {
-    console.log(currentUser)
     if (currentUser.getRole === 1) {
       return "repeater"
     } else if (currentUser.getRole === 0) {
@@ -55,7 +54,7 @@ const NavbarProfilDropdown = ({ dropElt }) => {
           <div className="px-1 py-1 ">
             <Menu.Item>
               {({ active }) => (
-                <Link to={`/${getUserType()}/profile/dilane`}>
+                <Link to={`/${getUserType()}/profile/${getUserType() === "repeater" ? currentUser.getService.getId:currentUser.getName}`}>
                   <button
                     className={`${
                       active ? 'bg-gray-100 text-primary' : 'text-gray-900'

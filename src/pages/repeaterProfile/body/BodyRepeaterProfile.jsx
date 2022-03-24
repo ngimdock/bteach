@@ -10,6 +10,8 @@ import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
 import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
 import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
+import { useLocation } from 'react-router-dom'
+import serviceContext from '../../../dataManager/context/servicesContext'
 
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
@@ -30,11 +32,48 @@ const ProfileItem = ({ text, color }) => {
 	)
 }
 
+/**
+ * Check if the user is the current user
+ * @param {User} user 
+ * @param {String} serviceId 
+ * @returns 
+ */
+const isCurrentUser = (user, serviceId) => {
+	if (user) {
+		if (user.getService.getId === serviceId) {
+			return true
+		}
+	}
+
+	return false
+}
+
+const getService = (services, serviceId) => services.find(service => service.getId === serviceId)
+
 const BodyRepeaterProfile = () => {
+	// Get data from URL
+	const location = useLocation()
+	const locationSplit = location.pathname.split("/")
+	const serviceId = locationSplit[locationSplit.length - 1]
+
 	// Get global state
 	const { currentUser, updateProfilePic } = useContext(currentUserContext)
+	const { services } = useContext(serviceContext)
 
 	// Set locale state
+	const [service, setService] = useState(
+		isCurrentUser(currentUser, serviceId) ? (
+			currentUser.getService 
+		) : (getService(services, serviceId))
+	)
+	const [owner, setOwner] = useState(
+		isCurrentUser(currentUser, serviceId) ? (
+			currentUser
+		) : (getService(services, serviceId).getOwner)
+	)
+
+	console.log({ service, owner })
+
 	const [isHover, setIsHover] = useState(false)
 	const [image, setImage] = useState(null)
 	const [imagePreview, setImagePreview] = useState("")
@@ -115,6 +154,9 @@ const BodyRepeaterProfile = () => {
 		uploadImage("profiles", image, handleGetImageUrl, handleProgressUpload, setUploading)
 	}
 
+	// Handler users
+	
+
 	return(
 		<section className={style.profileContainer}>
 			{
@@ -142,7 +184,7 @@ const BodyRepeaterProfile = () => {
 							<LoaderCircle size="normal" color="#3e4bff" />
 						)
 					}
-					<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
+					<ImgCircle src={owner.getProfilePic} alt="profile" classe={style.profileImage} />
 
 					<span 
 						className={`${style.profileImageIcon} ${isHover && style.profileImageIconAnimation}`}
@@ -163,9 +205,9 @@ const BodyRepeaterProfile = () => {
 				<div className={style.profileInfoSection}>
 					<div className={style.profilePersonal}>
 						<div className={style.profilePersonalInfo}>
-							<span className={style.profileName}>{ currentUser.getFullName}</span>
+							<span className={style.profileName}>{ owner.getFullName}</span>
 							<span>
-								<span className={style.profileLocation}>{ `${currentUser.getTown} ( ${currentUser.getDistrict} )` }</span>
+								<span className={style.profileLocation}>{ `${owner.getTown} ( ${owner.getDistrict} )` }</span>
 							</span>
 							<span className={style.profileSubject}>Filiere: Physique, Chimie</span>
 						</div>

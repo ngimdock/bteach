@@ -4,8 +4,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 20px 20px 0 20px;
-  margin: 0 80px;
+  padding: 20px 100px 0 100px;
 }
 
 .profileContainer img {
@@ -37,6 +36,12 @@
 .profileDescription {
   max-width: 600px;
   width: auto;
+}
+
+.profileBottomButton {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start 
 }
 
 @media screen and (max-width: 575px) {
@@ -74,11 +79,19 @@
   .profileInfo h3 {
     text-align: center;
   }
+
+  .profileBottomButton {
+    justify-content: center 
+  }
 }
 
 @media screen and (max-width: 800px) {
   .profileContainer,
   .profileBottom {
     margin: 0
+  }
+
+  .profileContainer {
+    padding: 20px 20px 0 20px;
   }
 }

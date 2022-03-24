@@ -228,12 +228,7 @@ const BodyClientProfile = () => {
               { text }
             </Paragraphe> */}
             <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center"
-              }} 
-              className="flex px-4 flex-wrap gap-2 md:gap-6 mt-6">
+              className={`flex px-4 flex-wrap gap-2 md:gap-6 mt-6 ${styles.profileBottomButton}`}>
               <Button
                 size="small"
                 theme="dark"
