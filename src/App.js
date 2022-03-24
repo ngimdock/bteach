@@ -14,7 +14,7 @@ function App() {
 
   const toastOptions = {
     position: "bottom",
-    timeout: 3000
+    timeout: 5000
   }
 
   return (
