@@ -8,7 +8,7 @@ const Signin = () => {
 	return(
 		<div>
 			<Seo
-				title="Bteach/connexion"
+				title="Connexion - Bteach"
 				description="Connectez vous sur Bteach pour vendre vos compétences en tant que repétiteur ou pour trouver un repétiteur qualifié"
 			/>
 			<Base>

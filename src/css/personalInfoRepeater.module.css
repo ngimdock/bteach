@@ -21,6 +21,36 @@
 .profileImage {
   width: 250px;
   height: 250px;
+  object-fit: cover;
+}
+
+.profileImageContainer {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.profileImageIcon {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 5px solid #0f272e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #e00045;
+  opacity: 0;
+  transition: transform .5s, opacity .5s;
+}
+
+.profileImageIconAnimation {
+  transform: translate(-20px, 20px) scale(1.4);
+  opacity: 1;
+  cursor: pointer;
 }
 
 .profileInfoSection {
@@ -66,7 +96,7 @@
 }
 
 .profileControl {
-  align-self: flex-end;
+  /* align-self: flex-end; */
   padding-bottom: 10px;
   margin-left: auto;
   display: flex;
@@ -99,13 +129,14 @@
 
 .generalInfoItem {
   width: auto;
-  height: 80px;
+  min-height: 80px;
+  height: auto;
   border-radius: 10px;
   padding: 10px 20px;
   background-color: #001e25;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -136,7 +167,7 @@
 }
 
 .profileContentItems {
-  margin-top: 80px;
+  margin-top: 40px;
   width: 500px;
 }
 
@@ -356,7 +387,7 @@
   }
 }
 
-@media screen and (max-width: 404px) {
+@media screen and (max-width: 445px) {
   .profileHeader {
     height: 380px;
   }
@@ -375,7 +406,7 @@
   }
 
   .generalInfoItem {
-    margin-top: 10px;
+    margin-top: 0px;
   }
 }
 

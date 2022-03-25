@@ -2,19 +2,10 @@
 .home_banner1{
 	background-image: url(../medias/background/bg-herotop.jpg);
 	background-size: cover;
-	height: 400px;
 }
 
 .home_banner2{
 	background-color: rgba(0, 29, 37, .9);
-}
-
-.home_banner3{
-	background-image: url(../medias/photos/img-herotop.png);
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: right;
-	height: 400px;
 }
 
 @media screen and (min-width: 640px){
@@ -25,8 +16,6 @@
 
 
 .container_sections_home{
-	padding-top: 60px;
-	padding-bottom: 60px;
 	display: grid;
 	justify-content: center;
 }
@@ -91,10 +80,10 @@
 	transition: .2s ease-in-out;
 }
 
-.domain:hover{
+/* .domain:hover{
 	background: rgba(50, 100, 150, .2);
 	transition: .2s ease-in-out;
-}
+} */
 
 .DomainCard_text{
 	position: absolute;
@@ -126,7 +115,6 @@
 .testimonial_slider_2 #slide_2_4:checked ~ .boo_inner { margin-left:-300%; }
 .testimonial_slider_2 .boo_inner {
 	width:400%;
-	-webkit-transform: translateZ(0);
 	-webkit-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
 	-moz-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 
     -ms-transition: all 800ms cubic-bezier(0.770, 0.000, 0.175, 1.000); 

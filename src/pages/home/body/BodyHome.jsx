@@ -7,15 +7,11 @@ import SearchRepeaterSection from "../../../components/marketing/pageSections/ho
 import SearchByCity from "../../../components/marketing/pageSections/home/SearchByCity";
 import TrainingTypes from "../../../components/marketing/pageSections/home/TrainingTypes";
 import StudentsOpinion from "../../../components/marketing/pageSections/home/StudentsOpinion";
-import Button from "../../../components/elements/buttons/Button";
-import Container from "../../../components/utils/Container";
-
-import home from "../../../css/home.css"
-import ProcessArea from '../../../components/marketing/pageSections/home/ProcessArea';
+import "../../../css/home.css"
 
 const BodyHome = () => {
 	return(
-		<Container className="mb-5">
+		<>
 			<Banner />
 			<StudentsSteps />
 			<RepeaterDomains />
@@ -23,8 +19,7 @@ const BodyHome = () => {
 			<SearchByCity />
 			<TrainingTypes />
 			<StudentsOpinion />
-			<ProcessArea />
-		</Container>
+		</>
 	)
 }
 

@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
+import searchContext from "../../../../../dataManager/context/searchContext";
 
 
 const CityCircle = (props) => {
+	// Get global state
+	const { addFilters } = useContext(searchContext)
+
+	// Set local state
+	const [redirectToSearchRepeater, setRedirectToSearchRepeater] = useState(false)
 
 	let {
 		name,
@@ -26,10 +33,25 @@ const CityCircle = (props) => {
 		background = "bg-black";
 	}
 
+	const handleAddFilter = () => {
+		const filter = {
+			id: 1,
+			type: "ville",
+			value: name
+		}
+
+		addFilters([filter])
+
+		setRedirectToSearchRepeater(true)
+	}
 
 	return(
-		<div className={`${background} w-32 h-32 p-0 md:p-20 rounded-full flex justify-center items-center text-center hover:opacity-90 transition ease-in-out duration-300 cursor-pointer `}>
+		<div onClick={handleAddFilter} className={`${background} w-32 h-32 p-0 md:p-20 rounded-full flex justify-center items-center text-center hover:opacity-90 transition ease-in-out duration-300 cursor-pointer `}>
 			<p className="lg:text-xl text-base text-white font-medium">{name}</p>
+
+			{
+				redirectToSearchRepeater && <Navigate to="/search/repeaters" />
+			}
 		</div>
 	);
 }

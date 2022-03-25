@@ -1,15 +1,12 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BsPerson, BsBoxArrowRight } from "react-icons/bs"
-import { Navigate } from 'react-router-dom'
 import { firebaseUserLogout } from '../../../api/Users'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
+import { Link } from 'react-router-dom'
 
 
 const NavbarProfilDropdown = ({ dropElt }) => {
-  // Set Local state
-  const [redirectToProfile, setRedirectToProfile] = useState(false)
-
   // Get data from global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
 
@@ -27,19 +24,18 @@ const NavbarProfilDropdown = ({ dropElt }) => {
     }
   }
 
-  const handleNavigateToProfile = () => {
+  const getUserType = () => {
     if (currentUser.getRole === 1) {
-      setRedirectToProfile(true)
+      return "repeater"
+    } else if (currentUser.getRole === 0) {
+      return "client"
     }
+
+    return "admin"
   }
 
 	return(
 		<Menu as="div" className="relative inline-block text-left font-primary">
-      {
-        redirectToProfile && <Navigate to={`/repeater/profile/${currentUser.getId}`} />
-      }
-
-
       <div>
         <Menu.Button>
           { dropElt }
@@ -58,16 +54,17 @@ const NavbarProfilDropdown = ({ dropElt }) => {
           <div className="px-1 py-1 ">
             <Menu.Item>
               {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-gray-100 text-primary' : 'text-gray-900'
-                  } group flex items-center space-x-2 w-full px-2 py-2 text-sm`}
-                  onClick={handleNavigateToProfile}
-                >
-                  <BsPerson size="25" className="icon" />
-                    
-                  <span>Profil</span>
-                </button>
+                <Link to={`/${getUserType()}/profile/${getUserType() === "repeater" ? currentUser.getService.getId:currentUser.getName}`}>
+                  <button
+                    className={`${
+                      active ? 'bg-gray-100 text-primary' : 'text-gray-900'
+                    } group flex items-center space-x-2 w-full px-2 py-2 text-sm`}
+                  >
+                    <BsPerson size="25" className="icon" />
+                      
+                    <span>Profil</span>
+                  </button>
+                </Link>
               )}
             </Menu.Item>
           </div>

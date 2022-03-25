@@ -172,18 +172,18 @@ const BodySignupClient = () => {
 					style={{ transition: "padding .4s" }}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option value="">Ville*</option>
+					<option>Ville*</option>
 					<option>Yaounde</option>
 					<option>Douala</option>
 					<option>Bamenda</option>
 				</select>
 				<select
 					name="quartier"
-					onChange={changeSelectOptionHandler}
+					onChange={handleChange}
 					style={{ transition: "padding .4s" }}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option value="">Quartier*</option>
+					<option>Quartier*</option>
 		            {
 		              	options
 		            }

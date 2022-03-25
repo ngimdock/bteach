@@ -2,18 +2,28 @@ import React, {useState} from "react";
 import Dropdown from "./Dropdown";
 
 
-const DropdownSubjects = () => {
+const DropdownSubjects = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Matières' },
-		{ value: 'Informatique' },
-		{ value: 'Mathématique' },
+		{ value: 'informatique' },
+		{ value: 'mathematiques' },
+		{ value: 'chimie' },
+		{ value: 'physique' },
+		{ value: 'anglais' },
+		{ value: 'français' },
+		{ value: 'allemand' },
+		{ value: 'espagnol' },
 	];
 
 	const [value, setValue] = useState('Matières');
 
 	const handleChange = (event) => {
-		setValue(event.target.value);
+		const value = event.target.value
+		setValue(value);
+
+		if (value !== "Matières")
+			onAddFilter("matiere", value)
 	};
 
 	return (

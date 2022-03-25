@@ -5,6 +5,8 @@ import { BsFillCalendarDateFill } from "react-icons/bs";
 import Radio from "../../../components/elements/inputs/Radio";
 import ALink from "../../../components/elements/a/ALink";
 import { firebaseUserCreateUser } from "../../../api/Users";
+import LoadingCircle from '../../../components/utils/loaders/LoaderCircle'
+import { Navigate } from "react-router-dom";
 
 const BodySignupRepeater = () => {
 	let [formData, setFormData] = useState({
@@ -23,9 +25,9 @@ const BodySignupRepeater = () => {
 	const [selected, setSelected] = React.useState("");
 
 	const townSelect = [
-	    "Yaounde",
-	    "Douala",
-	    "Bamenda",
+			"Yaounde",
+			"Douala",
+			"Bamenda",
 	];
 
 	const town1Select = ["Essos", "Cité U", "Etoudi", "Mimboman"];
@@ -36,21 +38,21 @@ const BodySignupRepeater = () => {
 	let options = null;
 
 	if (selected === "Yaounde") {
-	    type = town1Select;
+			type = town1Select;
 	} else if (selected === "Douala") {
-	    type = town2Select;
+			type = town2Select;
 	} else if (selected === "Bamenda") {
-	    type = town3Select;
+			type = town3Select;
 	}
 
 	if (type) {
-	    options = type.map((el) => <option key={el}>{el}</option>);
+			options = type.map((el) => <option key={el}>{el}</option>);
 	}
 
 	
 
 	const changeSelectOptionHandler = (event) => {
-	    setSelected(event.target.value);
+			setSelected(event.target.value);
 	};
 
 	const handleChange = (event) => {
@@ -197,7 +199,7 @@ const BodySignupRepeater = () => {
 					onChange={changeSelectOptionHandler}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option value="">Ville*</option>
+					<option>Ville*</option>
 					<option>Yaounde</option>
 					<option>Douala</option>
 					<option>Bamenda</option>
@@ -207,12 +209,12 @@ const BodySignupRepeater = () => {
 					onChange={changeSelectOptionHandler}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option value="">
+					<option>
 						Quartier* (choisissez le quartier le plus proche de chez vous)
 					</option>
 					{
-		              	options
-		            }
+						options
+					}
 				</select>
 
 				<div className="flex text-gray-400 mb-3">

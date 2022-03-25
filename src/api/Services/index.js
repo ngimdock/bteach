@@ -1,7 +1,6 @@
 // Service operations
 import { 
-  addDoc, 
-  doc, 
+  addDoc,
   getDoc, 
   getDocs, 
   onSnapshot, 
@@ -9,7 +8,6 @@ import {
   updateDoc, 
   where 
 } from 'firebase/firestore'
-import { db, storage } from '../../firebase'
 import { firebaseUserGetUser } from '../Users'
 import { getCollection, getCollections } from '../utils'
 
@@ -29,13 +27,12 @@ const firebaseServiceGetMyService = async (idUser) => {
     // Get a service
     const querySnapShot = await getDocs(q)
 
-    const services = []
+    
+    const doc = querySnapShot.docs[0]
 
-    querySnapShot.forEach(doc => {
-      services.push({ ...doc.data(), id: doc.id })
-    })
+    const service = {...doc.data(), id: doc.id}
 
-    return { data: services[0] }
+    return { data: service }
   } catch (err) {
     console.log(err)
 
@@ -85,8 +82,10 @@ const firebaseServiceGetServices = (globalStateAddServices = (datas) => {}) => {
     // Get reference to a collection
     const servicesCollectionRef = getCollections("services")
 
+    const q = query(servicesCollectionRef, where("isVisible", "==", true))
+
     // Get services
-    onSnapshot(servicesCollectionRef, async (snapshot) => {
+    onSnapshot(q, async (snapshot) => {
       const getUser = async (id, serviceData, services) => {
         // Get the user
         const { data: owner } = await firebaseUserGetUser(id)
@@ -104,8 +103,6 @@ const firebaseServiceGetServices = (globalStateAddServices = (datas) => {}) => {
 
         await getUser(userReference.id, serviceData, services)
       }
-
-      console.log(services)
 
       globalStateAddServices(services)
     })
@@ -129,16 +126,14 @@ const firebaseServiceGetFilteredServices = async (filters) => {
  */
 const firebaseServiceCreateService = async (idUser) => {
   try {
-    // Get user basing on the idUser
-    const user = await firebaseUserGetUser(idUser)
-
     // Create a reference
     const serviceCollectionRef = getCollections("services")
+    const userCollectionRef = getCollection(idUser, "users")
 
-    // Add a new service
-    await addDoc(serviceCollectionRef, { 
-      coursesLocation: "",
-      coursesType: "",
+    // Generate a new Service data
+    const serviceData = { 
+      coursesLocation: [],
+      coursesType: [],
       currentGradeLevel: "",
       description: "",
       isCertified: false,
@@ -148,8 +143,11 @@ const firebaseServiceCreateService = async (idUser) => {
       teachingUnit: [],
       categories: [],
       degrees: [],
-      owner: doc(db, `users/${idUser}`) 
-    })
+      owner: userCollectionRef
+    }
+
+    // Add a new service
+    await addDoc(serviceCollectionRef, serviceData)
   } catch (err) {
     console.log(err)
   }
@@ -161,8 +159,41 @@ const firebaseServiceCreateService = async (idUser) => {
  * @param {String} idService 
  * @param {Object} data 
  */
-const firebaseServiceUpdateService = async (idUser, idService, data) => {
-  // To do
+const firebaseServiceUpdateService = async (idService, data) => {
+  // Get reference to a service
+  const serviceCollectionRef = getCollection(idService, "services")
+
+  try {
+    const {
+      minPrice,
+			currentGradeLevel,
+			teachingUnit,
+			levelsUnit,
+			coursesType,
+			coursesLocation,
+			description,
+      isVisible
+    } = data
+
+    const credentials = {
+      minPrice: minPrice ? minPrice : 0,
+			currentGradeLevel: currentGradeLevel ? currentGradeLevel : "",
+			teachingUnit: teachingUnit ? teachingUnit : [],
+			levelsUnit: levelsUnit ? levelsUnit : [],
+			coursesType: coursesType ? coursesType : [],
+			coursesLocation: coursesLocation ? coursesLocation : [],
+			description: description ? description : "",
+      isVisible
+    }
+
+    await updateDoc(serviceCollectionRef, credentials)
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu" }
+  }
 }
 
 /**

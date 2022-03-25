@@ -11,14 +11,13 @@ const H1 = (props) => {
 
   let sizeH1, colorH1
 
-  if(size==="big") sizeH1 ="text-3xl md:text-4xl lg:text-5xl "
+  if(size==="big") sizeH1 ="text-3xl md:text-4xl lg:text-5xl traking md:leading-tight lg:leading-tight"
   else sizeH1="text-2xl md:text-3xl lg:text-4xl"
 
   colorH1 = color ? color : "text-white"
 
   return (
     <h1 className={`
-      h1
       ${ sizeH1 }
       ${ colorH1 }
       ${classe}

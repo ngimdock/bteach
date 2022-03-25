@@ -5,10 +5,7 @@ import ImgCircle from '../../elements/imgCircle/ImgCircle'
 import Button from '../../elements/buttons/Button'
 import ALink from '../../elements/a/ALink'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
-import { Navigate } from 'react-router-dom'
 import { firebaseUserLogout } from '../../../api/Users'
-
-const profileImage = require("../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg")
 
 const NavItem = ({ text, link, onClick }) => {
   const defaultLink = link ? link : "#"
@@ -22,18 +19,17 @@ const NavItem = ({ text, link, onClick }) => {
 }
 
 const MobileMenu = ({ show, onHide }) => {
-  // Set local state
-  const [redirectToProfile, setRedirectToProfile] = useState(false)
-
   // Get data from the global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
 
   // Logout function
   const logout = async () => {
     try {
+      // Try to log out the current user
       const { data } = await firebaseUserLogout()
 
       if (data) {
+        // Delete the currentuse from the global state
         userLogout()
       } else {
         console.log("error while logout")
@@ -43,19 +39,18 @@ const MobileMenu = ({ show, onHide }) => {
     }
   }
 
-  // Function that handle the navigation to the profile page
-  const handleNavigateToProfile = () => {
+  const getUserType = () => {
     if (currentUser.getRole === 1) {
-      setRedirectToProfile(true)
+      return "repeater"
+    } else if (currentUser.getRole === 0) {
+      return "client"
     }
+
+    return "admin"
   }
 
   return (
     <article className={`${style.mobileMenuContainer} ${!show ? style.mobileMenuTransition : ""}`}>
-      {
-        redirectToProfile && <Navigate to={`/repeater/profile/${currentUser.getId}`} />
-      }
-      
       <div 
 				className={style.navbarIconMenuClose}
 				onClick={onHide}	
@@ -67,12 +62,15 @@ const MobileMenu = ({ show, onHide }) => {
         {
           currentUser ? (
             <>
-              <ImgCircle classe={style.mobileMenuHeaderImage} src={profileImage} />
+              <ImgCircle classe={style.mobileMenuHeaderImage} src={currentUser.getProfilePic} />
 
               <div className={style.mobileMenuHeaderInfo}>
-                <span className={style.mobileMenuHeaderName}>{ `${currentUser.getFirstName} ${currentUser.getName}` }</span>
+                <span className={style.mobileMenuHeaderName}>{ `${currentUser.getFullName}` }</span>
 
-                <Button onClick={handleNavigateToProfile} classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
+                <Button 
+                  link={`/${getUserType()}/profile/${getUserType() === "repeater" ? currentUser.getService.getId:currentUser.getName}`}
+                  classe={style.mobileMenuHeaderInfoBtn}
+                >Editer le profil</Button>
               </div>
             </>
           ):(
