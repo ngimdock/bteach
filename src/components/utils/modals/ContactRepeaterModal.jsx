@@ -1,9 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import Paragraphe from '../../elements/p/Paragraphe';
 import H4 from '../../elements/titles/H4';
 import Button from '../../elements/buttons/Button';
-import InputText from '../../elements/inputs/Input';
 
 function ContactRepeaterModal({ isOpen, closeModal, data }) {
   

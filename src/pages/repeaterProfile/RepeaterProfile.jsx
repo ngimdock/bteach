@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import Body from './body/BodyRepeaterProfile'
 import Seo from '../../components/utils/seo/Seo'
-import currentUserContext from '../../dataManager/context/currentUserContext'
 import Base from '../Base'
 import { useLocation } from 'react-router-dom'
 import serviceContext from '../../dataManager/context/servicesContext'

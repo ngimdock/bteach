@@ -9,15 +9,11 @@ import { BsCameraFill } from 'react-icons/bs'
 import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
 import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
-import { getByText } from '@testing-library/react'
 import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
 import { useLocation } from 'react-router-dom'
 import serviceContext from '../../../dataManager/context/servicesContext'
 import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal"
 import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal"
-
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
 import LoadingPage from '../../../components/marketing/navbar/LoadingPage'
 import AskToSigninModal from '../../../components/utils/modals/AskToSigninModal'
 
@@ -170,7 +166,7 @@ const BodyRepeaterProfile = () => {
 
 			setServiceExist(true)
 		}
-	}, [serviceId, services])
+	}, [serviceId, services, currentUser])
 
 	// Some handlers
 	const handleOpenFileSystem = () => {
@@ -381,7 +377,13 @@ const BodyRepeaterProfile = () => {
 									</span>
 
 									<div className={style.profileContentItemBody}>
-										{ service.getDescription ? service.getDescription : <span className="text-gray-500 text-xs font-primary italic">/*Cette partie du service n'est pas remplit*/</span> }
+										{ service.getDescription ? 
+											service.getDescription : (
+												<span className="text-gray-500 text-xs font-primary italic">
+													Cette partie du service n'est pas remplit
+												</span>
+											) 
+										}
 									</div>
 								</article>
 								
@@ -424,7 +426,9 @@ function ArticleBlock({ title, listElements, color  }) {
 			{ listElements.map((eltText, index) => <ProfileItem text={eltText} color={color} key={index} />) }
 		</div>
 	) : (
-		<span className="text-gray-500 text-xs font-primary italic">/*Cette partie du service n'est pas remplit*/</span>
+		<span className="text-gray-500 text-xs font-primary italic">
+			Cette partie du service n'est pas remplit
+		</span>
 	)
 
 	

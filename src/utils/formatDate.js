@@ -1,8 +1,5 @@
 // This function display the relative date
 const getRelativeDate = (date) => {
-	const currentDate = new Date().getTime()
-	let diffDate = Math.floor((currentDate - Number(date))/1000)
-
 	const months = [
 		"janvier",
 		"fevrier",
