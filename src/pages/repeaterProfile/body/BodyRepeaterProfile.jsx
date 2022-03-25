@@ -47,8 +47,7 @@ const ProfileItem = ({ text, color }) => {
  * @returns 
  */
 const isCurrentUser = (user, serviceId) => {
-	console.log({user})
-	if (user) {
+	if (user && user.getRole === 1) {
 		if (user.getService.getId === serviceId) {
 			return true
 		}
@@ -58,9 +57,7 @@ const isCurrentUser = (user, serviceId) => {
 }
 
 const getService = (services, serviceId, setServiceExist = (val) => {}) => {
-	console.log({ services })
 	const service = services.find(serv => {
-		console.log({ id: serv.getId, serviceId })
 		return serv.getId === serviceId
 	})
 
@@ -84,8 +81,6 @@ const BodyRepeaterProfile = () => {
 	const location = useLocation()
 	const locationSplit = location.pathname.split("/")
 	const serviceId = locationSplit[locationSplit.length - 1]
-
-	console.log(serviceId)
 
 	// Get global state
 	const { currentUser, updateProfilePic } = useContext(currentUserContext)
@@ -195,7 +190,6 @@ const BodyRepeaterProfile = () => {
 	}
 
 	const handleProgressUpload = (progress) => {
-		console.log(progress)
 		setProgress(progress)
 	}
 

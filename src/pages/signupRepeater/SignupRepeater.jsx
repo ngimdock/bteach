@@ -8,7 +8,7 @@ const SignupRepeater = () => {
 	return(
 		<div>
 			<Seo
-				title="Bteach/inscription/repétiteur"
+				title="Inscription Répétiteur - Bteach"
 				description="créer votre compte sur Bteach pour vendre vos compétences de repétiteur"
 			/>
 			<Base>

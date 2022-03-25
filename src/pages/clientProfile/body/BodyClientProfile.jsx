@@ -1,13 +1,9 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { RiAlertFill } from "react-icons/ri";
-import { IoCloseSharp } from "react-icons/io5";
 import { GrMapLocation } from "react-icons/gr";
-import { BsCameraFill, BsEyeSlash } from "react-icons/bs";
+import { BsCalendarEvent, BsCameraFill } from "react-icons/bs";
 import H3 from "../../../components/elements/titles/H3";
 import Button from "../../../components/elements/buttons/Button";
 import Paragraphe from "../../../components/elements/p/Paragraphe";
-import image from "../../../medias/photos/pexels-rfstudio-3061415 (1).jpg";
 import styles from '../../../css/clientProfile.module.css'
 import repeaterProfileStyle from '../../../css/personalInfoRepeater.module.css'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
@@ -15,12 +11,8 @@ import { firebaseUserChangeProfilePic } from "../../../api/Users";
 import { uploadImage } from "../../../api/utils";
 import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
 import AddProfilPhotoModal from "../../../components/utils/modals/addPhotoModal";
-
-const text =
-  "Je suis gaelle kengne, éleve de premiere C en physique je cherche un repetiteur en physique pour mieux comprendre les notions enseignes en cours afin de passer mon probatoire avec une bonne mention.";
-const text1 =
-  "Je suis tres travailleuse et je progresse rapidement, vous pouvez contez sur moi pour respecter votre professionalisme et effectuer les exercices que vous allez me donner.";
-const text2 = "N'hesitez pas à me contacter pour plus de detail...";
+import { BiMailSend } from "react-icons/bi";
+import { getRelativeDate } from "../../../utils/formatDate";
 
 const BodyClientProfile = () => {
   // Get global state
@@ -181,7 +173,7 @@ const BodyClientProfile = () => {
             </div>
             <div className={styles.profileInfo}>
               <div>
-                <H3 classe={`mt-1 mb-4 ${styles.profileName}`}>{ currentUser.getFullName }</H3>
+                <H3 classe={`mt-1 mb-2 ${styles.profileName}`}>{ currentUser.getFullName }</H3>
                 {/* <Paragraphe 
                   children="Filieres: Svt, Physique, Chimie" 
                   classe="my-1"
@@ -191,11 +183,29 @@ const BodyClientProfile = () => {
                   classe="my-1"
                 /> */}
                 <Paragraphe
-                  classe="text-white flex items-center"
+                  classe="text-white flex items-center mb-1"
                   children={
                     <>
                       <GrMapLocation className="text-gray-600" />
-                      <span className="ml-1">{ currentUser.getTown } ({ currentUser.getDistrict })</span>
+                      <span className="ml-2">{ currentUser.getTown } ({ currentUser.getDistrict })</span>
+                    </>
+                  }
+                />
+                <Paragraphe
+                  classe="text-white flex items-center mb-1"
+                  children={
+                    <>
+                      <BiMailSend className="text-gray-600" />
+                      <span className="ml-2">{ currentUser.getEmail }</span>
+                    </>
+                  }
+                />
+                <Paragraphe
+                  classe="text-white flex items-center mb-1"
+                  children={
+                    <>
+                      <BsCalendarEvent className="text-gray-600" />
+                      <span className="ml-2">{ getRelativeDate(currentUser.getDate) }</span>
                     </>
                   }
                 />
