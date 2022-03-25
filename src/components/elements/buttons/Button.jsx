@@ -5,6 +5,7 @@ const Button = (props) => {
 
 	let {
 		children,
+		action,
 		link,
 		size,
 		color,
@@ -12,7 +13,6 @@ const Button = (props) => {
 		classe,
 		target,
 		rounded,
-		action,
 		style
 	} = props
 
@@ -67,6 +67,7 @@ const Button = (props) => {
 
   if(!link) link = "#/"
 	return(
+
 		<Link 
 			to={link} 
 			target={target}
@@ -74,7 +75,9 @@ const Button = (props) => {
 			className={`${classe} ${radius} ${padding} ${textSize} ${background} ${backgroundHover} ${textColor} inline-block uppercase md:tracking-wider text-white animate-moyen font-primary`}
 			style={style}
 		>
-			{ children }
+			<button onClick={action}>
+				{ children }
+			</button>
 		</Link>
 	)
 }
