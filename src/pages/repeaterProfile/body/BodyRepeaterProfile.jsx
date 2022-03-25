@@ -103,7 +103,7 @@ const BodyRepeaterProfile = () => {
 		} finally {
 			setLoadingSaveImg(false)
 		}
-	}, [currentUser.getId, imageURL])
+	}, [currentUser, imageURL])
 
 	const changeProfilePhotoRef = useRef(changeProfilePhotoCb)
 
