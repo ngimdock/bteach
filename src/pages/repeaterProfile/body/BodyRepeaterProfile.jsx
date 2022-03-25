@@ -150,14 +150,18 @@ const BodyRepeaterProfile = () => {
 	// }, []);
 
 	useEffect(() => {
+		const serviceTmp = getService(services, serviceId)
+
 		// Update service and owner when the current user change
 		const service = isCurrentUser(currentUser, serviceId) ? (
 			currentUser.getService 
-		) : (getService(services, serviceId))
+		) : (serviceTmp)
+
+		console.log({ serviceTmp })
 
 		const owner = isCurrentUser(currentUser, serviceId) ? (
 			currentUser
-		) : (getService(services, serviceId)?.getOwner)
+		) : (serviceTmp && serviceTmp.getOwner)
 
 		if (service && owner) {
 			setService(service)

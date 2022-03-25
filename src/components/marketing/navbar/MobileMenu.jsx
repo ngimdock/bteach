@@ -6,6 +6,7 @@ import Button from '../../elements/buttons/Button'
 import ALink from '../../elements/a/ALink'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
 import { firebaseUserLogout } from '../../../api/Users'
+import { Navigate } from 'react-router-dom'
 
 const NavItem = ({ text, link, onClick }) => {
   const defaultLink = link ? link : "#"
@@ -21,6 +22,9 @@ const NavItem = ({ text, link, onClick }) => {
 const MobileMenu = ({ show, onHide }) => {
   // Get data from the global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
+  
+  // Set local state
+  const [redirect, setRedirect] = useState(false)
 
   // Logout function
   const logout = async () => {
@@ -31,6 +35,8 @@ const MobileMenu = ({ show, onHide }) => {
       if (data) {
         // Delete the currentuse from the global state
         userLogout()
+
+        setRedirect(true)
       } else {
         console.log("error while logout")
       }
@@ -51,6 +57,10 @@ const MobileMenu = ({ show, onHide }) => {
 
   return (
     <article className={`${style.mobileMenuContainer} ${!show ? style.mobileMenuTransition : ""}`}>
+      {
+        redirect && <Navigate to="/" />
+      }
+      
       <div 
 				className={style.navbarIconMenuClose}
 				onClick={onHide}	
@@ -90,7 +100,10 @@ const MobileMenu = ({ show, onHide }) => {
         <div>
           <NavItem text="Accueil" link="/" />
           <NavItem text="Les repetiteurs" link="/search/repeaters" />
-          <NavItem text="Deconnexion" onClick={logout} />
+
+          {
+            currentUser && <NavItem text="Deconnexion" onClick={logout} />
+          }
         </div>
       </div>
     </article>
