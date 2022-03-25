@@ -63,10 +63,11 @@ function CreateNoteModal({ isOpen, closeModal }) {
                       max={5}
                       placeholder="combien d'étoiles sur 5 ?"
                     />
-                    <InputText
-                      type="text"
-                      placeholder="votre message"
-                    />
+                    <textarea
+                    placeholder='votre message'
+                    className='h-32 p-2 text-sm text-gray-600 bg-gray-100 border-2 border-gray-200 focus:outline-none focus:border-gray-200'>
+                      
+                    </textarea>
                   </div>
 
                 </div>
