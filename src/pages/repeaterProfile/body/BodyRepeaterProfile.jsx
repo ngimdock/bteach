@@ -153,9 +153,7 @@ const BodyRepeaterProfile = () => {
       )}
 
       {activeServicesModal && (
-        <UpdateServicesModal
-          stop={() => setActiveServicesModal(!activeServicesModal)}
-        />
+        <UpdateServicesModal stop={() => setActiveServicesModal(false)} />
       )}
 
       <header className={style.profileHeader}>
