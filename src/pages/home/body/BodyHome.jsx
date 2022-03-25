@@ -8,23 +8,23 @@ import SearchByCity from "../../../components/marketing/pageSections/home/Search
 import TrainingTypes from "../../../components/marketing/pageSections/home/TrainingTypes";
 import StudentsOpinion from "../../../components/marketing/pageSections/home/StudentsOpinion";
 import Button from "../../../components/elements/buttons/Button";
+import Container from "../../../components/utils/Container";
 
 import home from "../../../css/home.css"
+import ProcessArea from '../../../components/marketing/pageSections/home/ProcessArea';
 
 const BodyHome = () => {
 	return(
-		<div className="mb-5">
+		<Container className="mb-5">
 			<Banner />
 			<StudentsSteps />
 			<RepeaterDomains />
-			<div className="flex justify-center">
-				<Button  size="small" theme="info" classe="mt-1">Inscription</Button>
-			</div>
 			<SearchRepeaterSection />
 			<SearchByCity />
 			<TrainingTypes />
 			<StudentsOpinion />
-		</div>
+			<ProcessArea />
+		</Container>
 	)
 }
 

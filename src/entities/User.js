@@ -3,12 +3,12 @@ import Note from "./Note"
 class User{
 
 	id;
+	role;
 	name;
 	firstName;
 	email;
 	password;
-	phone1;
-	phone2;
+	phone;
 	date;
 	sex;
 	town;
@@ -23,6 +23,13 @@ class User{
 	get getId(){
 		return this.id
 	}
+
+	/**
+	 * @returns 0 | 1 | 2
+	 */
+	 get getRole(){
+	 	return this.role
+	 }
 
 	/**
 	 * @returns string
@@ -55,15 +62,8 @@ class User{
 	 /**
 	 * @returns number
 	 */
-	 get getPhone1(){
-	 	return this.phone1
-	 }
-
-	 /**
-	 * @returns number
-	 */
-	 get getPhone2(){
-	 	return this.phone2
+	 get getPhone(){
+	 	return this.phone
 	 }
 
 	 /**
@@ -116,8 +116,7 @@ class User{
 				firstName,
 				email,
 				password,
-				phone1,
-				phone2,
+				phone,
 				date,
 				sex,
 				town,
@@ -133,8 +132,7 @@ class User{
 			this.firstName = firstName
 			this.email = email
 			this.password = password
-			this.phone1 = phone1
-			this.phone2 = phone2
+			this.phone = phone
 			this.date = date
 			this.sex = sex
 			this.town = town
@@ -149,14 +147,13 @@ class User{
 		this.profilePic = newPic
 	}
 
-	updateUser(data){
+	updateInfo(data){
 		const {
 			name,
 			firstName,
 			email,
 			password,
-			phone1,
-			phone2,
+			phone,
 			date,
 			sex,
 			town,
@@ -167,21 +164,32 @@ class User{
 		this.firstName = firstName
 		this.email = email
 		this.password = password
-		this.phone1 = phone1
-		this.phone2 = phone2
+		this.phone = phone
 		this.date = date
 		this.sex = sex
 		this.town = town
 		this.district = district
 	}
 
-	giveNote(note){
-		this.notes.push(note)
+	changeNoteVisibility(id, info){
+		const index = this.notes.findIndex(note => note.id === id)
+		this.notes[index].setIsVisible(info)
+	}
+
+	createNote(note){
+		this.notes.push(new Note(note))
 	}
 
 	deleteNote(id){
 		let notesTmp = this.notes.filter(note => note.getId !== id)
 		this.notes = notesTmp
+	}
+
+	updateNote(id, data){
+		const index = this.notes.findIndex(note => note.getId === id)
+		if(index > -1){
+			this.notes[index].updateNote(data)
+		}
 	}
 }
 

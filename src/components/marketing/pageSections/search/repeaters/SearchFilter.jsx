@@ -16,7 +16,7 @@ const SearchFilter = () => {
 			
 			<div className="grid lg:grid-cols-2">
 				<div>
-					<div className="grid lg:grid-cols-3 grid-cols-2 lg:mt-2 mt-7 md:grid-cols-3">
+					<div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:mt-2 mt-7">
 						<DropdownSubjects />
 						<DropdownCities />
 						<DropdownGender />
@@ -46,9 +46,8 @@ const SearchFilter = () => {
 			</div>
 
 			<div className="flex justify-center lg:mt-5">
-				<Button  size="medium" theme="primary" classe="mt-1">Inscription</Button>
+				<Button  size="medium" theme="primary" classe="mt-5">Inscription</Button>
 			</div>
-
 		</div>
 
 	);
