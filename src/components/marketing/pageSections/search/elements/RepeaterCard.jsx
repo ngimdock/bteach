@@ -7,6 +7,8 @@ const RepeaterCard = (props) => {
 		data: service
 	} = props
 
+	console.log(service.getOwner.getFullName)
+
 	const getDiscipline = () => {
 		return service.getTeachingUnit.join(", ")
 	}

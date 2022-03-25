@@ -109,8 +109,7 @@ class User{
 	 }
 
 	get getFullName () {
-		return "danilix"
-		// return `${this.firstName[0].toUpperCase() + this.firstName.substr(1)} ${this.name[0].toUpperCase() + this.name.substr(1)}`
+		return `${this.firstName[0].toUpperCase() + this.firstName.substr(1)} ${this.name[0].toUpperCase() + this.name.substr(1)}`
 	}
 
 	initialization(data){
