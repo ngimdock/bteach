@@ -9,8 +9,6 @@ import ImgCircle from "../../elements/imgCircle/ImgCircle"
 import NavbarProfilDropdown from "../../utils/dropdowns/NavbarProfileDropdown"
 import MobileMenu from "./MobileMenu"
 
-const profilImage = require('../../../medias/photos/gabriel-matula-Qhd1tEZo1ew-unsplash (1).jpg')
-
 const Navbar = () => {
 	// Set local state
 	const [mobileMenuDisplayed, setMobileMenuDisplayed] = useState(false)
@@ -70,7 +68,7 @@ const Navbar = () => {
 			</Link>
 
 			<div className={style.navbarNavigation}>
-				<nav className={style.navbarNav}>
+				<nav className={`${style.navbarNav}`} style={{marginRight: 30}}>
 					<ALink classe={style.navbarNavLink} link="/search/repeaters">Les repetiteurs</ALink>
 				</nav>
 
@@ -84,11 +82,11 @@ const Navbar = () => {
 						<NavbarProfilDropdown
 							dropElt={
 								<div className={style.navbarProfile}>
-									<span className={style.navbarProfileName}>{ `${currentUser.getFirstName} ${currentUser.getName}` }</span>
+									<span className={`${style.navbarProfileName} text-bold`}>{ `${currentUser.getFullName}` }</span>
 									<ImgCircle 
 										classe={style.navbarProfileImage} 
 										src={currentUser.getProfilePic} 
-										alt="dilane kombou" 
+										alt={currentUser.getFullName} 
 									/>
 								</div>
 							}

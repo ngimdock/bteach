@@ -1,20 +1,38 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import style from '../../../css/base.module.css'
 import ALink from "../../elements/a/ALink"
 import { BsFacebook, BsLinkedin, BsTwitter } from 'react-icons/bs'
+import searchContext from "../../../dataManager/context/searchContext"
+import { Navigate } from "react-router-dom"
 
 const Footer = () => {
+	// Get global state
+	const { addFilters } = useContext(searchContext)
+
+	// Set local state
+	const [redirectToSearch, setRedirectToSearch] = useState(false)
+
+	const handleAddFilter = (value) => {
+		const filter = {
+			id: 1,
+			type: "niveau",
+			value
+		}
+
+		addFilters([filter])
+		setRedirectToSearch(true)
+	}
 
 	return(
-		<footer className={style.footer}>
+		<footer className={`${style.footer} mt-20 md:mt-32` }>
 			<div className={style.footerOne}>
 				<div className={style.footerTwo}>
-					<span className={style.footerTitle}>Type repetiteurs</span>
+					<span className={style.footerTitle}>Type répétiteurs</span>
 
 					<nav className={style.footerNav}>
-						<ALink classe={style.footerNavLink} link="#">Repetiteurs Primaire</ALink>
-						<ALink classe={style.footerNavLink} link="#">Repetiteurs Secondaire</ALink>
-						<ALink classe={style.footerNavLink} link="#">Repetiteurs Universite</ALink>
+						<ALink onClick={() => handleAddFilter("primaire")} classe={style.footerNavLink} link="#">Repetiteurs Primaire</ALink>
+						<ALink onClick={() => handleAddFilter("secondaire")} classe={style.footerNavLink} link="#">Repetiteurs Secondaire</ALink>
+						<ALink onClick={() => handleAddFilter("université")} classe={style.footerNavLink} link="#">Repetiteurs Universite</ALink>
 					</nav>
 				</div>
 				<div className={style.footerTwo}>
@@ -54,6 +72,10 @@ const Footer = () => {
 					</nav>
 				</div>
 			</div>
+
+			{
+				redirectToSearch && <Navigate to="/search/repeaters" />
+			}
 		</footer>
 	)
 }

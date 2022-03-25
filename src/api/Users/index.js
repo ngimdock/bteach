@@ -1,18 +1,12 @@
 // Users operations
-import { auth, db, storage } from '../../firebase'
+import { auth } from '../../firebase'
 import {
-  onSnapshot,
   getDoc,
-  addDoc,
   updateDoc,
-  deleteDoc,
-  query,
-  collection,
   setDoc,
 } from 'firebase/firestore'
 import { 
-  getCollection,
-  getCollections
+  getCollection
 } from '../utils'
 import { 
   createUserWithEmailAndPassword, 
@@ -39,7 +33,10 @@ const firebaseUserGetUser = async (id) => {
     // Trying getting the document from firestore
     const user = await getDoc(userCollection)
 
-    return { data: {...user.data(), id} }
+    let userData = { ...user.data(), id: user.id }
+    userData = { ...userData, name: userData.lastName, lastName: undefined }
+
+    return { data: userData }
   } catch (err) {
     console.error(err)
 
@@ -63,23 +60,23 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
   
           if (data) {
             let user = null
-            // await firebaseServiceCreateService(uid)
 
             // Get service if the user is a repeater
-            if (data.role === 1) {
+            if (Number(data.role) === 1) {
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
-                user = { ...data, name: data.lastName, lastName: undefined, service }
-                console.log({ user })
+                user = { ...data, service }
+
+                // Store the data of the currentuse inside the global state
+                globalStateLogin(user)
               }
+            } else {
+              user = data
+
+              // Store the data of the currentuse inside the global state
+              globalStateLogin(user)
             }
-
-            user = {...data, name: data.lastName, lastName: undefined}
-            console.log({ user })
-
-            // Store the data of the currentuse inside the global state
-            globalStateLogin(user)
   
             return
           }
@@ -131,7 +128,7 @@ const firebaseUserCreateUser = async (datas) => {
     const uid = credentials.user.auth.currentUser.uid
 
 
-    // Get a user collection
+    // Get a user collection reference
     const userCollection = getCollection(uid, "users")
 
     // Insertion of the user in firestore
@@ -149,7 +146,13 @@ const firebaseUserCreateUser = async (datas) => {
       role
     })
 
-    return { data: true }
+    if (role === 1) {
+      await firebaseServiceCreateService(uid)
+
+      return { data: true }
+    } else {
+      return { data: true }
+    }
   } catch (err) {
     console.error(err)
 
@@ -177,7 +180,7 @@ const firebaseUserLogin = async (email, password) => {
       console.log(err)
     }
   } else {
-    return { error: "Fournissez un email et un password non vide" }
+    return { error: "Vous avez fourni un email et un password non vide" }
   }
 }
 
@@ -220,8 +223,19 @@ const firebaseUserDeleteUser = async (id) => {
  * @param {String} id 
  * @param {String} photoURL 
  */
-const firebaseUserChangeProfilPic = async (id, photoURL) => {
-  // To do
+const firebaseUserChangeProfilePic = async (id, imageURL) => {
+  // Get reference
+  const userCollectionReference = getCollection(id, "users")
+
+  try {
+    await updateDoc(userCollectionReference, { profilePic: imageURL })
+
+    return { data: true }
+  } catch (err) {
+    console.log(err)
+
+    return { error: "Une erreur est survenu" }
+  }
 }
 
 export {
@@ -231,6 +245,6 @@ export {
   firebaseUserLogout,
   firebaseUserLogin,
   firebaseUserUpdateUser,
-  firebaseUserChangeProfilPic,
+  firebaseUserChangeProfilePic,
   firebaseUserDeleteUser
 }

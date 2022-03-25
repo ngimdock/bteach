@@ -4,8 +4,11 @@ import Input from "../../../components/elements/inputs/Input";
 import Radio from "../../../components/elements/inputs/Radio";
 import ALink from '../../../components/elements/a/ALink'
 import { firebaseUserCreateUser } from '../../../api/Users'
+import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
+import { Navigate } from "react-router-dom";
 
 const BodySignupClient = () => {
+  // Set local state
   let [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -17,18 +20,24 @@ const BodySignupClient = () => {
     sexe: "",
     profilePicture: "",
   });
+  const [loading, setLoading] = useState(false)
+  const [redirectToHome, setRedirectToHome] = useState(false)
 
   const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+    if (!loading) {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (validateForm()) {
+    if (validateForm() && !loading) {
+      setLoading(true)
+
       try {
         // Create a user and store his data in the database
         const { data, error } = await firebaseUserCreateUser({
@@ -45,12 +54,14 @@ const BodySignupClient = () => {
         })
 
         if (data) {
-          console.log("User created successfully")
+          setRedirectToHome(true)
         } else {
           console.log(error)
         }
       } catch (err) {
         console.log(err)
+      } finally {
+        setLoading(false)
       }
     }
   }
@@ -84,14 +95,21 @@ const BodySignupClient = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+    <div style={{ opacity: loading ? .4:1 }} className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+      {
+        loading && <LoaderCircle size="large" />
+      }
+      {
+        redirectToHome && <Navigate to="/" />
+      }
+      
+      
       <H3 color="#00171f" classe="mb-10 text-center">
         Suivre les étapes pour s'inscrire en tant apprenant qui cherche un
         repétiteur
       </H3>
       <form
         className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-full"
-        onSubmit={handleSubmit}
       >
         <Input
           type="text"
@@ -184,7 +202,7 @@ const BodySignupClient = () => {
             />
           ))}
         </div>
-        <button className=" self-end flex items-center px-4 py-1.5 mb-2 mt-6 hover:cursor-pointer hover:no-underline bg-primary text-white text-center rounded-full basis-6/12 sm:px-5">
+        <button onClick={handleSubmit} className=" self-end flex items-center px-4 py-1.5 mb-2 mt-6 hover:cursor-pointer hover:no-underline bg-primary text-white text-center rounded-full basis-6/12 sm:px-5">
           <span className="text-sm tracking-wide opacity-90">Terminer</span>
         </button>
       </form>

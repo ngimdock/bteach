@@ -1,0 +1,97 @@
+.profileContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px 100px 0 100px;
+}
+
+.profileContainer img {
+  height: 250px;
+  width: 250px;
+}
+
+.profileInfo {
+  height: 100%;
+  margin-left: 40px;
+  margin-top: 100px;
+}
+
+.profileCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  background-color: #0f272e;
+  /* display: none; */
+  z-index: 0;
+}
+
+.profileBottom {
+  margin: 0 80px;
+}
+
+.profileDescription {
+  max-width: 600px;
+  width: auto;
+}
+
+.profileBottomButton {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start 
+}
+
+@media screen and (max-width: 575px) {
+  .profileContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileImageContainer {
+    position: absolute;
+    top: 40px;
+    /* left: 20px; */
+  }
+
+  .profileImageContainer img {
+    width: 180px;
+    height: 180px
+  }
+
+  .profileCover {
+    display: block;
+    height: 130px;
+  }
+
+  .profileInfo {
+    margin-top: 60px;
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileInfo p,
+  .profileInfo h3 {
+    text-align: center;
+  }
+
+  .profileBottomButton {
+    justify-content: center 
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .profileContainer,
+  .profileBottom {
+    margin: 0
+  }
+
+  .profileContainer {
+    padding: 20px 20px 0 20px;
+  }
+}

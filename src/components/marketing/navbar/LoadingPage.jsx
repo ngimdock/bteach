@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import style from '../../../css/base.module.css'
 
-const LoadingPage = () => {
+const LoadingPage = ({ loading }) => {
+	const defaultLoading = loading ? loading:true
+
   // Set Local state
-	const [loaderVisible, setLoaderVisible] = useState(true)
+	const [loaderPage, setLoaderPage] = useState(true)
 
 	// Ref section
 	const loadingPageRef = useRef()
@@ -17,7 +19,7 @@ const LoadingPage = () => {
 
 	// Some Handlers
 	const handleLoadingPage = () => {
-		setLoaderVisible(false)
+		setLoaderPage(false)
 
 		let timer = setTimeout(() => {
 			loadingPageRef.current.style.display = "none"
@@ -26,10 +28,14 @@ const LoadingPage = () => {
 		}, 1000)
 	}
 
+	const hideLoaderPage = () => {
+		return !loaderPage && defaultLoading
+	}
+
   return (
     <section 
 			ref={loadingPageRef} 
-			className={`${style.loadingPage} ${!loaderVisible ? style.loadingPageAnimation:""}`}>
+			className={`${style.loadingPage} ${hideLoaderPage() ? style.loadingPageAnimation:""}`}>
 			<span className={style.loadingPageLogo}>Bteach</span>
 			<div className={style.loaderSection}>
 				<div className={style.loaderSectionIn} />

@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 const InputText = (props) => {
   const [colorIcone, setColorIcone] = useState("text-gray2");
-  const inputREf = useRef();
   const btnIconRef = useRef();
 
-  const { type, name, value, id, placeholder, classe, handleChange, icone } =
+  const { type, name, value, id, placeholder, classe, handleChange, icone, max } =
     props;
 
   return (
@@ -21,6 +20,7 @@ const InputText = (props) => {
         onFocus={() => setColorIcone("text-primary")}
         onBlur={() => setColorIcone("text-gray2")}
         style={{ transition: "padding .4s" }}
+        max={ typeof type === Number ? max : null }
       />
       <button
         ref={btnIconRef}
