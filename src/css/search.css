@@ -99,11 +99,16 @@
   margin-right: 5px;
   color: black;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 14px;
   padding: 10px 18px;
 	border-radius: 100%;
   user-select: none;
   cursor: pointer;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #page-numbers > li:hover{
 	color: #fff;

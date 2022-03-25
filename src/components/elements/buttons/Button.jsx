@@ -8,7 +8,6 @@ const Button = (props) => {
 		action,
 		link,
 		size,
-		color,
 		theme,
 		classe,
 		target,

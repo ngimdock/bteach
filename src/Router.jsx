@@ -24,7 +24,7 @@ const Router = () => {
 
 				<Route path="repeater">
 					<Route  path="sign_up" element={<SignupRepeater />} />
-					<Route  path="profile/:repeaterName" element={<RepeaterProfile />} />
+					<Route  path="profile/:serviceId" element={<RepeaterProfile />} />
 				</Route>
 
 				<Route path="client">

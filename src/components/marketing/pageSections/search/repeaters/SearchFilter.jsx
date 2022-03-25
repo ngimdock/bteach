@@ -107,6 +107,8 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 			if (fil.type === "keyword") {
 				addKeyword("")
 			}
+
+			return false
 		})
 
 		setFilter(newFilters)

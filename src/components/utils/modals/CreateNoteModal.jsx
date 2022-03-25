@@ -1,11 +1,26 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import Paragraphe from '../../elements/p/Paragraphe';
-import H4 from '../../elements/titles/H4';
 import Button from '../../elements/buttons/Button';
 import InputText from '../../elements/inputs/Input';
+import { BsStar, BsStarFill } from 'react-icons/bs';
 
 function CreateNoteModal({ isOpen, closeModal }) {
+  const [stars, setStars] = useState(0)
+
+  const handleGiveStar = (value) => {
+    setStars(value)
+  }
+
+  const handleClose = () => {
+    setStars(0)
+
+    closeModal()
+  }
+
+	const formatStars = (stars) => {
+		return stars > 1 ? `${stars} étoiles` : `${stars} étoile`
+	}
   
   return (
     <>
@@ -14,7 +29,7 @@ function CreateNoteModal({ isOpen, closeModal }) {
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModal}
+          onClose={handleClose}
         >
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
@@ -58,16 +73,36 @@ function CreateNoteModal({ isOpen, closeModal }) {
                   </Paragraphe>
 
                   <div className='flex flex-col splace-y-4 my-6'>
+                    <div className='flex flex-col justify-start sm:flex-row sm:justify-between mb-6'>
+                      <div className='flex flex-row gap-4 mb-4'>
+                        {
+                          [1, 2, 3, 4, 5].map(val => {
+                            if (val <= stars) {
+                              return <BsStarFill 
+                                key={val}
+                                size={25} 
+                                color="#ffd60a" 
+                                onClick={() => handleGiveStar(val)}
+                              />
+                            }
+
+                            return <BsStar 
+                              size={25} 
+                              color="#555" 
+                              onClick={() => handleGiveStar(val)}  
+                            />
+                          })
+                        }
+                      </div>
+
+                      <span style={{ color: "#555" }}>{ formatStars(stars) }</span>
+                    </div>
+
                     <InputText
-                      type="number"
-                      max={5}
-                      placeholder="combien d'étoiles sur 5 ?"
+                      type="text"
+                      placeholder="votre message"
+                      handleChange={() => {}}
                     />
-                    <textarea
-                    placeholder='votre message'
-                    className='h-32 p-2 text-sm text-gray-600 bg-gray-100 border-2 border-gray-200 focus:outline-none focus:border-gray-200'>
-                      
-                    </textarea>
                   </div>
 
                 </div>
@@ -77,14 +112,14 @@ function CreateNoteModal({ isOpen, closeModal }) {
                     type="button"
                     size="small"
                     theme="danger"
-                    action={closeModal}
+                    action={handleClose}
                   >
                     annuler
                   </Button>
                   <Button
                     type="button"
                     size="small"
-                    action={closeModal}
+                    action={handleClose}
                   >
                     récommander
                   </Button>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 const InputText = (props) => {
   const [colorIcone, setColorIcone] = useState("text-gray2");
-  const inputREf = useRef();
   const btnIconRef = useRef();
 
   const { type, name, value, id, placeholder, classe, handleChange, icone, max } =

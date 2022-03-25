@@ -8,7 +8,7 @@ const Home = () => {
 	return(
 		<div>
 			<Seo
-				title="Bteact/accueil"
+				title="Accueil - Bteach"
 				description="Vous voullez vendre vos compétences en tant que repétiteur ou vous avez besoin d'un repétiteur qualifié en mathématique, physique, chimie, anglais et autre ? Bteach est la meilleur solution de repétition au cameroun"
 			/>
 			<Base>

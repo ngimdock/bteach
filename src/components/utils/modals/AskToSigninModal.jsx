@@ -1,10 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import Paragraphe from '../../elements/p/Paragraphe';
-import H4 from '../../elements/titles/H4';
+import H3 from '../../elements/titles/H3';
 import Button from '../../elements/buttons/Button';
 
-function ContactRepeaterModal({ isOpen, closeModal, data }) {
+function AskToSigninModal({ isOpen, closeModal }) {
   
   return (
     <>
@@ -45,30 +45,22 @@ function ContactRepeaterModal({ isOpen, closeModal, data }) {
               leaveTo="opacity-0 scale-95"
             >
               <div className="inline-block space-y-3 w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <div>
-                    <H4>
-                        Adresse email
-                    </H4>
-                    <Paragraphe size="small">
-                      { data.getEmail }
-                    </Paragraphe>
+                <div className='flex flex-col'>
+                  <H3>Vous n'êtes pas connecté</H3>
+
+                  <Paragraphe classe="mt-3">
+                    Veillez vous connecter avant d'effectuer cette action
+                  </Paragraphe>
                 </div>
-                <div>
-                    <H4>
-                        Téléphone
-                    </H4>
-                    <Paragraphe size="small">
-                       { data.getPhone }
-                    </Paragraphe>
-                </div>
+
                 <div className="flex space-x-3 justify-end mt-6">
                   <Button
                     type="button"
                     size="small"
                     theme="danger"
-                    action={closeModal}
+                    link="/sign_in"
                   >
-                    fermer
+                    Connexion
                   </Button>
                 </div>
               </div>
@@ -81,4 +73,4 @@ function ContactRepeaterModal({ isOpen, closeModal, data }) {
 }
 
 
-export default ContactRepeaterModal
+export default AskToSigninModal

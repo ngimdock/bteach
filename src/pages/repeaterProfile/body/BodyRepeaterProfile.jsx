@@ -9,13 +9,13 @@ import { BsCameraFill } from 'react-icons/bs'
 import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
 import { firebaseUserChangeProfilePic } from '../../../api/Users'
 import { uploadImage } from '../../../api/utils'
-import { getByText } from '@testing-library/react'
 import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
+import { useLocation } from 'react-router-dom'
+import serviceContext from '../../../dataManager/context/servicesContext'
 import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal"
 import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal"
-
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import LoadingPage from '../../../components/marketing/navbar/LoadingPage'
+import AskToSigninModal from '../../../components/utils/modals/AskToSigninModal'
 
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
@@ -36,12 +36,59 @@ const ProfileItem = ({ text, color }) => {
 	)
 }
 
+/**
+ * Check if the user is the current user
+ * @param {User} user 
+ * @param {String} serviceId 
+ * @returns 
+ */
+const isCurrentUser = (user, serviceId) => {
+	if (user && user.getRole === 1) {
+		if (user.getService.getId === serviceId) {
+			return true
+		}
+	}
+
+	return false
+}
+
+const getService = (services, serviceId, setServiceExist = (val) => {}) => {
+	const service = services.find(serv => {
+		return serv.getId === serviceId
+	})
+
+	if (service) {
+		setServiceExist(true)
+	}
+
+	return service
+}
+
+const getAge = (date) => {
+	const birthDay = Number(date)
+	const currentDate = Date.now()
+	const diffDate = Math.floor((currentDate - birthDay)/1000)
+
+	return Math.floor(diffDate / 31536000)
+}
+
 const BodyRepeaterProfile = () => {
+	// Get data from URL
+	const location = useLocation()
+	const locationSplit = location.pathname.split("/")
+	const serviceId = locationSplit[locationSplit.length - 1]
+
 	// Get global state
 	const { currentUser, updateProfilePic } = useContext(currentUserContext)
+	const { services } = useContext(serviceContext)
 
 
 	// Set locale state
+	const [service, setService] = useState(null)
+	const [owner, setOwner] = useState(null)
+	const [serviceExist, setServiceExist] = useState(false)
+
+	// Set local state
 	const [isHover, setIsHover] = useState(false)
 	const [image, setImage] = useState(null)
 	const [imagePreview, setImagePreview] = useState("")
@@ -52,17 +99,7 @@ const BodyRepeaterProfile = () => {
 	const [loadingSaveImg, setLoadingSaveImg] = useState(false)
 	const [isModalAnnonceOpen, setIsModalAnnonceOpen] = useState(false)
 	const [isModalContactRepeaterOpen, setIsModalContactRepeaterOpen] = useState(false)
-
-
-	let [isOpen, setIsOpen] = useState(true)
-
-	function closeModal() {
-	  setIsOpen(false)
-	}
-  
-	function openModal() {
-	  setIsOpen(true)
-	}
+	const [isModalAskToSigninOpen, setIsModalAskToSigninOpen] = useState(false)
 
 	// Use ref section
 	const inputRef = useRef()
@@ -84,7 +121,7 @@ const BodyRepeaterProfile = () => {
 		} finally {
 			setLoadingSaveImg(false)
 		}
-	}, [currentUser.getId, imageURL])
+	}, [currentUser, imageURL])
 
 	const changeProfilePhotoRef = useRef(changeProfilePhotoCb)
 
@@ -103,14 +140,37 @@ const BodyRepeaterProfile = () => {
 		}
 	}, [imageURL])
 
-	useEffect(() => {
-		if (currentUser.getRole === 1){
-			console.log("repeater")
-			const {
+	// useEffect(() => {
+	// 	if (currentUser.getRole === 1){
+	// 		console.log("repeater")
+	// 		const {
 
-			} = currentUser.getService
+	// 		} = currentUser.getService
+	// 	}
+	// }, []);
+
+	useEffect(() => {
+		const serviceTmp = getService(services, serviceId)
+
+		// Update service and owner when the current user change
+		const service = isCurrentUser(currentUser, serviceId) ? (
+			currentUser.getService 
+		) : (serviceTmp)
+
+		console.log({ serviceTmp })
+
+		const owner = isCurrentUser(currentUser, serviceId) ? (
+			currentUser
+		) : (serviceTmp && serviceTmp.getOwner)
+
+		if (service && owner) {
+			setService(service)
+	
+			setOwner(owner)
+
+			setServiceExist(true)
 		}
-	}, []);
+	}, [serviceId, services, currentUser])
 
 	// Some handlers
 	const handleOpenFileSystem = () => {
@@ -130,7 +190,6 @@ const BodyRepeaterProfile = () => {
 	}
 
 	const handleProgressUpload = (progress) => {
-		console.log(progress)
 		setProgress(progress)
 	}
 
@@ -144,198 +203,223 @@ const BodyRepeaterProfile = () => {
 		uploadImage("profiles", image, handleGetImageUrl, handleProgressUpload, setUploading)
 	}
 
-	const formatUnits = (unitToFormated) => {
-		const initialFormat = ""
-
-		const unitFormated = unitToFormated.reduce((prevValue, currentValue) => {
-			return `${ prevValue + ", " + currentValue }`
-		}, initialFormat)
-
-		return unitFormated
+	const handleOpenModal = (modalType) => {
+		if (currentUser) {
+			if (modalType === "recommandation") {
+				setIsModalAnnonceOpen(true)
+			} else if (modalType === "contact") {
+				setIsModalContactRepeaterOpen(true)
+			}
+		} else {
+			setIsModalAskToSigninOpen(true)
+		}
 	}
 
-	//extract data from current use
-	const {
-		getMinPrice,
-		getCurrentGradeLevel,
-		getTeachingUnit,
-		getLevelsUnit,
-		getCoursesType,
-		getCoursesLocation,
-		getDescription
-	} = currentUser.getService
-
+	const formatUnits = (unitToFormated) => {
+		return unitToFormated.join(", ")
+	}
 
 	return(
-		<section className={style.profileContainer}>
+		<>
 			{
-				modalOpen && <AddProfilPhotoModal 
-					image={imagePreview}
-					onHide={() => setModalOpen(false)}
-					onChangeProfil={handleOpenFileSystem}
-					onUploadProfil={handleUploadImage}
-					onCloseProgress={() =>setProgress(0)}
-					percentage={progress}
-					uploading={uploading}
-				/>
-			}
-			
+				serviceExist ? (
 
-			<header className={style.profileHeader}>
-				<div 
-					className={style.profileImageContainer}
-					onMouseEnter={() => setIsHover(true)}
-					onMouseLeave={() => setIsHover(false)}
-					style={{ opacity: loadingSaveImg ? .4:1 }}
-				>
-					{
-						loadingSaveImg && (
-							<LoaderCircle size="normal" color="#3e4bff" />
-						)
-					}
-					<ImgCircle src={currentUser.getProfilePic} alt="profile" classe={style.profileImage} />
+					<section className={style.profileContainer}>
+						{
+							modalOpen && <AddProfilPhotoModal 
+								image={imagePreview}
+								onHide={() => setModalOpen(false)}
+								onChangeProfil={handleOpenFileSystem}
+								onUploadProfil={handleUploadImage}
+								onCloseProgress={() =>setProgress(0)}
+								percentage={progress}
+								uploading={uploading}
+							/>
+						}
+						
 
-					<span 
-						className={`${style.profileImageIcon} ${isHover && style.profileImageIconAnimation}`}
-						onClick={handleOpenFileSystem}
-					>
-						<BsCameraFill size={20} color="#fff" />
-					</span>
-
-					<input 
-						ref={inputRef} 
-						hidden 
-						type="file" 
-						accept='image/*' 
-						onChange={handleSelectImage}
-					/>
-				</div>
-
-				<div className={style.profileInfoSection}>
-					<div className={style.profilePersonal}>
-						<div className={style.profilePersonalInfo}>
-							<span className={style.profileName}>{ currentUser.getFullName}</span>
-							<span>
-								<span className={style.profileLocation}>{ `${currentUser.getTown} ( ${currentUser.getDistrict} )` }</span>
-							</span>
-							<p className={style.profileSubject}>
-								Filières : {" "}
+						<header className={style.profileHeader}>
+							<div 
+								className={style.profileImageContainer}
+								onMouseEnter={() => setIsHover(true)}
+								onMouseLeave={() => setIsHover(false)}
+								style={{ opacity: loadingSaveImg ? .4:1 }}
+							>
 								{
-									getTeachingUnit.length ? (
-												<span>
-													{ formatUnits(getTeachingUnit) }
-												</span>
-									) : (
-										<span className='text-white text-xs italic'>Non renseigné</span>
+									loadingSaveImg && (
+										<LoaderCircle size="normal" color="#3e4bff" />
 									)
 								}
-							</p>
-						</div>
+								<ImgCircle src={owner.getProfilePic} alt="profile" classe={style.profileImage} />
 
-						<div className={style.profileControl}>
-							<Button 
-								size="medium" 
-								classe={`${style.profileBtn} 
-								${style.profileBtnFirst}`}
-								action={() => setIsModalAnnonceOpen(true) }
+								<span 
+									className={`${style.profileImageIcon} ${isHover && style.profileImageIconAnimation}`}
+									onClick={handleOpenFileSystem}
 								>
-									RECOMMANDER
-							</Button>
-							<Button 
-								size="medium" 
-								classe={style.profileBtn}
-								action={() => setIsModalContactRepeaterOpen(true)}
-								>
-								CONTACTER
-							</Button>
-						</div>
-					</div>
+									<BsCameraFill size={20} color="#fff" />
+								</span>
 
-					<div className={style.profileGeneralInfo}>
-						<article className={style.generalInfoItem}>
-							<span>Salaire Approximatif</span>
-							{
-								getMinPrice ? <span>{getMinPrice}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
-							}
+								<input 
+									ref={inputRef} 
+									hidden 
+									type="file" 
+									accept='image/*' 
+									onChange={handleSelectImage}
+								/>
+							</div>
+
+							<div className={style.profileInfoSection}>
+								<div className={style.profilePersonal}>
+									<div className={style.profilePersonalInfo}>
+										<span className={style.profileName}>{ owner.getFullName}</span>
+										<span>
+											<span className={style.profileLocation}>{ `${owner.getTown} ( ${owner.getDistrict} )` }</span>
+										</span>
+										<p className={style.profileSubject}>
+											Filières : {" "}
+											{
+												service.getTeachingUnit.length ? (
+															<span>
+																{ formatUnits(service.getTeachingUnit) }
+															</span>
+												) : (
+													<span className='text-white text-xs italic'>Non renseigné</span>
+												)
+											}
+										</p>
+									</div>
+
+									<div className={style.profileControl}>
+										{
+											isCurrentUser(currentUser, serviceId) ? (
+												<Button 
+													style={{ marginTop: 20 }}
+													size="medium"
+													>
+														Editer votre profil
+												</Button>
+											):(
+												<>
+													<Button 
+														size="medium" 
+														classe={`${style.profileBtn} 
+														${style.profileBtnFirst}`}
+														action={() => handleOpenModal("recommandation") }
+														>
+															RECOMMANDER
+													</Button>
+													<Button 
+														size="medium" 
+														classe={style.profileBtn}
+														action={() => handleOpenModal("contact")}
+														>
+														CONTACTER
+													</Button>
+												</>
+											)
+										}
+									</div>
+								</div>
+
+								<div className={style.profileGeneralInfo}>
+									<article className={style.generalInfoItem}>
+										<span>Salaire Approximatif</span>
+										{
+											service.getMinPrice ? <span>{service.getMinPrice} fcfa/mois</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
+										}
+										
+									</article>
+
+									<article className={style.generalInfoItem}>
+										<span>Age</span>
+										{
+											owner.getDate ? <span>{getAge(owner.getDate)} ans</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
+										}
+									</article>
+
+									<article className={style.generalInfoItem}>
+										<span>Niveau Académique</span>
+										{
+											service.getCurrentGradeLevel ? <span>{service.getCurrentGradeLevel}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
+										}
+									</article>
+								</div>
+							</div>
+						</header>
+
+						<section className={style.profileContent}>
 							
-						</article>
+							<H3>Détail de l'offre de répétition</H3>
 
-						<article className={style.generalInfoItem}>
-							<span>Age</span>
-							{
-								currentUser.getAge ? <span>{currentUser.getAge}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
-							}
-						</article>
+							<div className={style.profileContentItems}>
+							
+								<ArticleBlock
+									title="Matières"
+									listElements={service.getTeachingUnit}
+								/>
 
-						<article className={style.generalInfoItem}>
-							<span>Niveau Academique</span>
-							{
-								getCurrentGradeLevel ? <span>{getCurrentGradeLevel}</span> : <p className='text-gray-500 text-xs font-primary italic'>Non renseigné</p>
-							}
-						</article>
-					</div>
-				</div>
-			</header>
+								<ArticleBlock
+									title="Niveau Scolaire Enseignés"
+									listElements={service.getLevelsUnit}
+									color="#e00045"
+								/>
 
-			<section className={style.profileContent}>
-				
-				<H3>Detail de l'offre de repetition</H3>
+								<ArticleBlock
+									title="Type de cours"
+									listElements={service.getCoursesType}
+									color="#04e762"
+								/>
+								
+								<ArticleBlock
+									title="Lieu du cours"
+									listElements={service.getCoursesLocation}
+									color="#f77f00"
+								/>
+								<article className={style.profileContentItem}>
+									<span className={style.profileContentItemTitle}>
+										Description
+									</span>
 
-				<div className={style.profileContentItems}>
-				
-					<ArticleBlock
-						title="Matières"
-						listElements={getTeachingUnit}
-					/>
+									<div className={style.profileContentItemBody}>
+										{ service.getDescription ? 
+											service.getDescription : (
+												<span className="text-gray-500 text-xs font-primary italic">
+													Cette partie du service n'est pas remplit
+												</span>
+											) 
+										}
+									</div>
+								</article>
+								
+								<H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
 
-					<ArticleBlock
-						title="Niveau Scolaire Enseignés"
-						listElements={getLevelsUnit}
-						color="#e00045"
-					/>
+								<RecommandationCarousel />
+							</div>
 
-					<ArticleBlock
-						title="Type de cours"
-						listElements={getCoursesType}
-						color="#04e762"
-					/>
-					
-					<ArticleBlock
-						title="Lieu du cours"
-						listElements={getCoursesLocation}
-						color="#f77f00"
-					/>
-					<article className={style.profileContentItem}>
-						<span className={style.profileContentItemTitle}>
-							Description
-						</span>
+							<ImgCircle 
+								classe={style.profileContentIllustration} 
+								src={imageIllustration} 
+								alt="illustration"
+							/>
 
-						<div className={style.profileContentItemBody}>
-							{ getDescription ? getDescription : <span className="text-gray-500 text-xs font-primary italic">/*Cette partie du service n'est pas remplit*/</span> }
-						</div>
-					</article>
-					
-					<H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
-
-					<RecommandationCarousel />
-				</div>
-
-				<ImgCircle 
-					classe={style.profileContentIllustration} 
-					src={imageIllustration} 
-					alt="illustration"
-				/>
-
-			</section>
-			<CreateNoteModal
-				isOpen={isModalAnnonceOpen}
-				closeModal={() => setIsModalAnnonceOpen(false)}
-			/>
-			<ContactRepeaterModal
-				isOpen={isModalContactRepeaterOpen}
-				closeModal={() => setIsModalContactRepeaterOpen(false)}
-			/>
-		</section>
+						</section>
+						<CreateNoteModal
+							isOpen={isModalAnnonceOpen}
+							closeModal={() => setIsModalAnnonceOpen(false)}
+						/>
+						<ContactRepeaterModal
+							data={owner}
+							isOpen={isModalContactRepeaterOpen}
+							closeModal={() => setIsModalContactRepeaterOpen(false)}
+						/>
+						<AskToSigninModal
+							isOpen={isModalAskToSigninOpen}
+							closeModal={() => setIsModalAskToSigninOpen(false)}
+						/>
+					</section>
+				):( <LoadingPage loading={serviceExist} /> )
+			}
+		</>
 	)
 }
 
@@ -346,7 +430,9 @@ function ArticleBlock({ title, listElements, color  }) {
 			{ listElements.map((eltText, index) => <ProfileItem text={eltText} color={color} key={index} />) }
 		</div>
 	) : (
-		<span className="text-gray-500 text-xs font-primary italic">/*Cette partie du service n'est pas remplit*/</span>
+		<span className="text-gray-500 text-xs font-primary italic">
+			Cette partie du service n'est pas remplit
+		</span>
 	)
 
 	

@@ -8,7 +8,7 @@ const SignupClient = () => {
 	return(
 		<div>
 			<Seo
-				title="Bteach/inscription/client"
+				title="Inscription Client - Bteach"
 				description="créer votre compte sur Bteach pour trouver un repétiteur qualifié"
 			/>
 			<Base>

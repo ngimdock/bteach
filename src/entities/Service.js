@@ -117,8 +117,6 @@ class Service{
 				categories
 			} = data
 
-			console.log({ t: owner })
-
 			this.id = id
 			this.documentToCertify = documentToCertify ? documentToCertify : null
 			this.minPrice = minPrice

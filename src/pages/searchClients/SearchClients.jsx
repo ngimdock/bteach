@@ -8,7 +8,7 @@ const SearchClients = () => {
 	return(
 		<div>
 			<Seo
-				title="Résultats de recherche des clients"
+				title="Résultats de recherche - Bteach"
 				description="Résultats de recherche des clients"
 			/>
 			<Base>

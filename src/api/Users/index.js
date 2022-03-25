@@ -62,13 +62,11 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
             let user = null
 
             // Get service if the user is a repeater
-            console.log({ data })
             if (Number(data.role) === 1) {
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
                 user = { ...data, service }
-                console.log(user)
 
                 // Store the data of the currentuse inside the global state
                 globalStateLogin(user)

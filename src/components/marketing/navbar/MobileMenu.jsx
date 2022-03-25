@@ -5,8 +5,8 @@ import ImgCircle from '../../elements/imgCircle/ImgCircle'
 import Button from '../../elements/buttons/Button'
 import ALink from '../../elements/a/ALink'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
-import { Navigate } from 'react-router-dom'
 import { firebaseUserLogout } from '../../../api/Users'
+import { Navigate } from 'react-router-dom'
 
 const NavItem = ({ text, link, onClick }) => {
   const defaultLink = link ? link : "#"
@@ -20,11 +20,11 @@ const NavItem = ({ text, link, onClick }) => {
 }
 
 const MobileMenu = ({ show, onHide }) => {
-  // Set local state
-  const [redirectToProfile, setRedirectToProfile] = useState(false)
-
   // Get data from the global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
+  
+  // Set local state
+  const [redirect, setRedirect] = useState(false)
 
   // Logout function
   const logout = async () => {
@@ -35,6 +35,8 @@ const MobileMenu = ({ show, onHide }) => {
       if (data) {
         // Delete the currentuse from the global state
         userLogout()
+
+        setRedirect(true)
       } else {
         console.log("error while logout")
       }
@@ -43,17 +45,20 @@ const MobileMenu = ({ show, onHide }) => {
     }
   }
 
-  // Function that handle the navigation to the profile page
-  const handleNavigateToProfile = () => {
+  const getUserType = () => {
     if (currentUser.getRole === 1) {
-      setRedirectToProfile(true)
+      return "repeater"
+    } else if (currentUser.getRole === 0) {
+      return "client"
     }
+
+    return "admin"
   }
 
   return (
     <article className={`${style.mobileMenuContainer} ${!show ? style.mobileMenuTransition : ""}`}>
       {
-        redirectToProfile && <Navigate to={`/repeater/profile/${currentUser.getId}`} />
+        redirect && <Navigate to="/" />
       }
       
       <div 
@@ -72,7 +77,10 @@ const MobileMenu = ({ show, onHide }) => {
               <div className={style.mobileMenuHeaderInfo}>
                 <span className={style.mobileMenuHeaderName}>{ `${currentUser.getFullName}` }</span>
 
-                <Button action={handleNavigateToProfile} classe={style.mobileMenuHeaderInfoBtn}>Editer le profil</Button>
+                <Button 
+                  link={`/${getUserType()}/profile/${getUserType() === "repeater" ? currentUser.getService.getId:currentUser.getName}`}
+                  classe={style.mobileMenuHeaderInfoBtn}
+                >Editer le profil</Button>
               </div>
             </>
           ):(
@@ -92,7 +100,10 @@ const MobileMenu = ({ show, onHide }) => {
         <div>
           <NavItem text="Accueil" link="/" />
           <NavItem text="Les repetiteurs" link="/search/repeaters" />
-          <NavItem text="Deconnexion" onClick={logout} />
+
+          {
+            currentUser && <NavItem text="Deconnexion" onClick={logout} />
+          }
         </div>
       </div>
     </article>

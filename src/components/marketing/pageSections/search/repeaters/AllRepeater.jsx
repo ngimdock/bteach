@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
-import searchContext from "../../../../../dataManager/context/searchContext";
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
