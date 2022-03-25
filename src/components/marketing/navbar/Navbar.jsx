@@ -86,7 +86,7 @@ const Navbar = () => {
 									<ImgCircle 
 										classe={style.navbarProfileImage} 
 										src={currentUser.getProfilePic} 
-										alt="dilane kombou" 
+										alt={currentUser.getFullName} 
 									/>
 								</div>
 							}

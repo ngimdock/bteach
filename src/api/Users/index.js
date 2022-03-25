@@ -62,13 +62,11 @@ const firebaseUserGetCurrentUser = (globalStateLogin = (data) => {}) => {
             let user = null
 
             // Get service if the user is a repeater
-            console.log({ data })
             if (Number(data.role) === 1) {
               const { data: service } = await firebaseServiceGetMyService(uid)
   
               if (service) {
                 user = { ...data, service }
-                console.log(user)
 
                 // Store the data of the currentuse inside the global state
                 globalStateLogin(user)
@@ -182,7 +180,7 @@ const firebaseUserLogin = async (email, password) => {
       console.log(err)
     }
   } else {
-    return { error: "Fournissez un email et un password non vide" }
+    return { error: "Vous avez fourni un email et un password non vide" }
   }
 }
 

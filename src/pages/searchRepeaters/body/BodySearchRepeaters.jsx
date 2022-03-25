@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import CurrentSearchNav from "../../../components/marketing/pageSections/search/elements/CurrentSearchNav";
 import SearchFilter from "../../../components/marketing/pageSections/search/repeaters/SearchFilter";
@@ -11,7 +11,7 @@ const BodySearchRepeaters = () => {
 	const [filters, setFilters] = useState([])
 
 	const handleGetCurrentFilters = (filters) => {
-		setFilters(filters)
+		setFilters(() => filters)
 	}
 
 	return(

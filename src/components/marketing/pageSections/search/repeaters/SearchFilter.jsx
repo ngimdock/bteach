@@ -52,8 +52,10 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 			generateFilterFromKeyWord(keyword)
 		}
 
+		if (globalFilters.length > 0)
+			onGetCurrentFilter(globalFilters)
+
 		addFilters([])
-		onGetCurrentFilter(filters)
 	}, [])
 
 	const generateFilterFromKeyWord = (keyword) => {
@@ -102,10 +104,11 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 				return true
 			}
 
-			console.log({fil})
 			if (fil.type === "keyword") {
 				addKeyword("")
 			}
+
+			return false
 		})
 
 		setFilter(newFilters)

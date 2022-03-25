@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
-import searchContext from "../../../../../dataManager/context/searchContext";
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
@@ -10,13 +9,14 @@ const getFilters = (filters) => {
 		sexe: new Set(),
 		niveau: new Set(),
 		lieu: new Set(),
-		ville: new Set()
+		ville: new Set(),
+		keyword: new Set()
 	}
 
 	// Fill the template
 	filters.forEach(filter => {
-		if (filter.type !== "keyword")
-			FILTERS_SCHEMA[filter.type].add(filter)
+		// if (filter.type !== "keyword")
+		FILTERS_SCHEMA[filter.type].add(filter)
 	})
 
 	return [
@@ -25,6 +25,7 @@ const getFilters = (filters) => {
 		[...FILTERS_SCHEMA.niveau],
 		[...FILTERS_SCHEMA.lieu],
 		[...FILTERS_SCHEMA.ville],
+		[...FILTERS_SCHEMA.keyword]
 	]
 }
 
@@ -58,6 +59,7 @@ const compareString = (key, sources) => {
 }
 
 const searchServicesFromKeyword = (keyword, services) => {
+
 	const servicesFiltered = services.filter(service => {
 		if (compareString(keyword, service.teachingUnit)) {
 			return true
@@ -78,9 +80,6 @@ const searchServicesFromKeyword = (keyword, services) => {
 const AllRepeater = ({ filters }) => {
 	// Get data from the global state
 	const { services } = useContext(serviceContext)
-	const { keyword } = useContext(searchContext)
-
-	console.log({filters})
 
 	// Set local state
 	const [Localfilters, setLocalFilters] = useState(filters)
@@ -99,11 +98,7 @@ const AllRepeater = ({ filters }) => {
 
 			let servicesFiltered
 
-			if (keyword.length > 0) {
-				servicesFiltered = searchServicesFromKeyword(keyword, services)
-			} else {
-				servicesFiltered = [...services]
-			}
+			servicesFiltered = [...services]
 
 			baseFilters.forEach(filter => {
 				servicesFiltered = getFilteredServices(filter, servicesFiltered)
@@ -115,12 +110,7 @@ const AllRepeater = ({ filters }) => {
 
 	const getFilteredServices = (filter, services) => {
 		if (filter.length > 0) {
-			const getFiltersValues = (filters) => {
-				const d =	filters.map(f => f.value)
-				
-				console.log(d)
-				return d
-			}
+			const getFiltersValues = (filters) => filters.map(f => f.value)
 
 			switch (filter[0].type) {
 				case "matiere": {
@@ -141,6 +131,10 @@ const AllRepeater = ({ filters }) => {
 	
 				case "ville": {
 					return services.filter(service => getFiltersValues(filter).includes(service.owner.town))
+				}
+
+				case "keyword": {
+					return searchServicesFromKeyword(getFiltersValues(filter)[0], services)
 				}
 	
 				default: return services

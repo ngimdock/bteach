@@ -1,27 +1,121 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { RiAlertFill } from "react-icons/ri";
-import { IoCloseSharp } from "react-icons/io5";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { GrMapLocation } from "react-icons/gr";
-import { BsEyeSlash } from "react-icons/bs";
+import { BsCalendarEvent, BsCameraFill } from "react-icons/bs";
 import H3 from "../../../components/elements/titles/H3";
 import Button from "../../../components/elements/buttons/Button";
 import Paragraphe from "../../../components/elements/p/Paragraphe";
-import image from "../../../medias/photos/pexels-rfstudio-3061415 (1).jpg";
-
-const text =
-  "Je suis gaelle kengne, éleve de premiere C en physique je cherche un repetiteur en physique pour mieux comprendre les notions enseignes en cours afin de passer mon probatoire avec une bonne mention.";
-const text1 =
-  "Je suis tres travailleuse et je progresse rapidement, vous pouvez contez sur moi pour respecter votre professionalisme et effectuer les exercices que vous allez me donner.";
-const text2 = "N'hesitez pas à me contacter pour plus de detail...";
+import styles from '../../../css/clientProfile.module.css'
+import repeaterProfileStyle from '../../../css/personalInfoRepeater.module.css'
+import currentUserContext from '../../../dataManager/context/currentUserContext'
+import { firebaseUserChangeProfilePic } from "../../../api/Users";
+import { uploadImage } from "../../../api/utils";
+import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
+import AddProfilPhotoModal from "../../../components/utils/modals/addPhotoModal";
+import { BiMailSend } from "react-icons/bi";
+import { getRelativeDate } from "../../../utils/formatDate";
 
 const BodyClientProfile = () => {
+  // Get global state
+  const { currentUser, updateProfilePic } = useContext(currentUserContext)
+
+  // Set local state
+  const [isHover, setIsHover] = useState(false)
+  const [image, setImage] = useState(null)
+	const [imagePreview, setImagePreview] = useState("")
+	const [imageURL, setImageURL] = useState("")
+	const [uploading, setUploading] = useState(false)
+	const [modalOpen, setModalOpen] = useState(false)
+	const [progress, setProgress] = useState(0)
+	const [loadingSaveImg, setLoadingSaveImg] = useState(false)
+
+  // Use ref section
+	const inputRef = useRef()
+
+	const updateProfilePicCb = useCallback(() => updateProfilePic, [updateProfilePic])
+	const updateProfilePicRef = useRef(updateProfilePicCb)
+
+	const changeProfilePhotoCb = useCallback(() => async (removeImageUrl) => {
+		setLoadingSaveImg(true)
+		try {
+			const { data } = await firebaseUserChangeProfilePic(currentUser.getId, imageURL)
+
+			if (data) {
+				updateProfilePicRef.current()(imageURL)
+				removeImageUrl("")
+			}
+		} catch (err) {
+			console.log(err)
+		} finally {
+			setLoadingSaveImg(false)
+		}
+	}, [currentUser.getId, imageURL])
+
+	const changeProfilePhotoRef = useRef(changeProfilePhotoCb)
+
+	useEffect(() => {
+		changeProfilePhotoRef.current = changeProfilePhotoCb
+	}, [changeProfilePhotoCb])
+
+	useEffect(() => {
+		updateProfilePicRef.current = updateProfilePicCb
+	}, [updateProfilePicCb])
+
+	// Use effect section
+	useEffect(() => {
+		if (imageURL) {
+			changeProfilePhotoRef.current()(setImageURL)
+		}
+	}, [imageURL])
+
+	// Some handlers
+	const handleOpenFileSystem = () => {
+		inputRef.current.click()
+	}
+
+	const handleSelectImage = (e) => {
+		e.preventDefault()
+
+		const file = e.target.files[0]
+		const preview = URL.createObjectURL(file)
+
+		setImage(file)
+		setImagePreview(preview)
+
+		setModalOpen(true)
+	}
+
+	const handleProgressUpload = (progress) => {
+		console.log(progress)
+		setProgress(progress)
+	}
+
+	const handleGetImageUrl = (image) => {
+		setImageURL(image)
+	}
+
+	const handleUploadImage = () => {
+		setUploading(true)
+
+		uploadImage("profiles", image, handleGetImageUrl, handleProgressUpload, setUploading)
+	}
+
   return (
-    <div className="bg-[#00000069] w-full h-full flex flex-col items-center justify-center py-20">
-      <div className="w-11/12 h-full md:max-h-full md:max-w-3xl flex flex-col items-center justify-center">
-        <IoCloseSharp className="text-secondary w-8 h-8 md:w-16 md:h-16 self-end cursor-pointer" />
-        <div className="rounded-md bg-white grid grid-cols-1 grid-flow-row gap-4 max-w-3xl p-4 md:px-10 md:py-8 md:gap-6">
-          <div className="text-secondary flex items-center">
+    <div className="w-full h-full flex flex-col items-center justify-center">
+      {
+				modalOpen && <AddProfilPhotoModal 
+					image={imagePreview}
+					onHide={() => setModalOpen(false)}
+					onChangeProfil={handleOpenFileSystem}
+					onUploadProfil={handleUploadImage}
+					onCloseProgress={() =>setProgress(0)}
+					percentage={progress}
+					uploading={uploading}
+				/>
+			}
+
+      <div className="w-full flex flex-col items-center justify-center">
+        <div className="rounded-md bg-white grid grid-cols-1 grid-flow-row gap-4 w-full">
+          {/* <div className="text-secondary flex items-center">
             <RiAlertFill />
             <span className="ml-2 items-center text-xs md:text-base">
               Pour voir les contacts de Gaelle vous devez{" "}
@@ -36,44 +130,87 @@ const BodyClientProfile = () => {
                 créer un compte
               </Link>
             </span>
-          </div>
-          <div className="grid grid-cols-1 grid-flow-row xs:grid-rows-1 xs:grid-flow-col gap-3 md:gap-6">
-            <img
-              className="rounded-md max-h-52 w-48 object-cover object-center"
-              src={image}
-              alt="client thumbnail"
-            />
-            <div className="grid grid-col-1 grid-flow-row gap-3">
-              <div className="flex flex-col md:flex-row gap-3 md:gap-0">
-                <div className="flex flex-col gap-1 md:gap-3 basis-7/12">
-                  <H3>Gaelle kengne tamho</H3>
-                  <Paragraphe children="Filieres: Svt, Physique, Chimie" />
-                  <Paragraphe children="Classe: Premiere D" />
-                  <Paragraphe
-                    classe="text-white flex items-center"
-                    children={
-                      <>
-                        <GrMapLocation className="text-gray-600" />
-                        <span className="ml-1">Yaounde (nkolbison)</span>
-                      </>
-                    }
-                  />
-                </div>
-                <Button
-                  classe="w-fit md:basis-5/12 md:mb-7 md:self-end flex items-center"
-                  size="small"
-                  theme="blue"
+          </div> */}
+          <div className={styles.profileContainer}>
+            <span className={styles.profileCover} />
+            <div 
+              className={styles.profileImageContainer}
+              style={{
+                position: "relative",
+                widht: "auto",
+                height: "auto",
+                opacity: loadingSaveImg ? .4:1
+              }}
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}
+            >
+              {
+                loadingSaveImg && (
+                  <LoaderCircle size="normal" color="#3e4bff" />
+                )
+              }
+
+              <img
+                className="rounded-md object-cover object-center"
+                src={currentUser.getProfilePic}
+                alt="client thumbnail"
+              />
+
+              <input 
+                ref={inputRef} 
+                hidden 
+                type="file" 
+                accept='image/*' 
+                onChange={handleSelectImage}
+              />
+
+              <span 
+                className={`${repeaterProfileStyle.profileImageIcon} ${isHover && repeaterProfileStyle.profileImageIconAnimation}`}
+                onClick={handleOpenFileSystem}
+              >
+                <BsCameraFill size={20} color="#fff" />
+              </span>
+            </div>
+            <div className={styles.profileInfo}>
+              <div>
+                <H3 classe={`mt-1 mb-2 ${styles.profileName}`}>{ currentUser.getFullName }</H3>
+                {/* <Paragraphe 
+                  children="Filieres: Svt, Physique, Chimie" 
+                  classe="my-1"
+                /> */}
+                {/* <Paragraphe 
+                  children="Classe: Premiere D" 
+                  classe="my-1"
+                /> */}
+                <Paragraphe
+                  classe="text-white flex items-center mb-1"
                   children={
                     <>
-                      <BsEyeSlash className="mr-2 h-4 w-4 md:h-5 md:w-5" />
-                      <span className="text-xs normal-case">
-                        Masquer votre offre
-                      </span>
+                      <GrMapLocation className="text-gray-600" />
+                      <span className="ml-2">{ currentUser.getTown } ({ currentUser.getDistrict })</span>
+                    </>
+                  }
+                />
+                <Paragraphe
+                  classe="text-white flex items-center mb-1"
+                  children={
+                    <>
+                      <BiMailSend className="text-gray-600" />
+                      <span className="ml-2">{ currentUser.getEmail }</span>
+                    </>
+                  }
+                />
+                <Paragraphe
+                  classe="text-white flex items-center mb-1"
+                  children={
+                    <>
+                      <BsCalendarEvent className="text-gray-600" />
+                      <span className="ml-2">{ getRelativeDate(currentUser.getDate) }</span>
                     </>
                   }
                 />
               </div>
-              <div className="flex gap-1 md:gap-5">
+              <div className="flex gap-1 mt-6">
                 <Button
                   classe="font-bold normal-case"
                   size="small"
@@ -87,48 +224,34 @@ const BodyClientProfile = () => {
                   rounded="rounded"
                   children={
                     <>
-                      <span className="uppercase">Tel1:</span>
-                      <span className="font-bold"> 6 55 95 14 94</span>
-                    </>
-                  }
-                />
-                <Button
-                  size="small"
-                  theme="dark"
-                  rounded="rounded"
-                  children={
-                    <>
-                      <span className="uppercase">Tel1:</span>
-                      <span className="font-bold"> 6 55 95 14 94</span>
+                      <span className="uppercase">Tel: </span>
+                      <span className="font-bold">{ currentUser.getPhone }</span>
                     </>
                   }
                 />
               </div>
             </div>
           </div>
-          <Paragraphe
-            classe="text-gray-800 opacity-60 text-xs md:text-sm"
-            children={
-              <>
-                <span>{text}</span>
-                {text1}
-                {text2}
-              </>
-            }
-          />
-          <div className="flex flex-wrap gap-2 md:gap-6">
-            <Button
-              size="small"
-              theme="dark"
-              classe="bg-gray-900 text-white normal-case"
-              children="Modifier vos informations personnelles"
-            />
-            <Button
-              size="small"
-              theme="dark"
-              classe="bg-gray-900 text-white normal-case"
-              children="Modifier votre offre de repétition"
-            />
+
+          <div className={styles.profileBottom}>
+            {/* <Paragraphe classe={`px-4 text-gray-800 opacity-60 text-xs md:text-sm ${styles.profileDescription}`}>
+              { text }
+            </Paragraphe> */}
+            <div
+              className={`flex px-4 flex-wrap gap-2 md:gap-6 mt-6 ${styles.profileBottomButton}`}>
+              <Button
+                size="small"
+                theme="dark"
+                classe="bg-gray-900 text-white normal-case"
+                children="Modifier vos informations personnelles"
+              />
+              {/* <Button
+                size="small"
+                theme="dark"
+                classe="bg-gray-900 text-white normal-case"
+                children="Modifier votre offre de repétition"
+              /> */}
+            </div>
           </div>
         </div>
       </div>

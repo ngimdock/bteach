@@ -1,14 +1,15 @@
-import React, { Fragment, useContext } from 'react'
+import React, { Fragment, useContext, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { BsPerson, BsBoxArrowRight } from "react-icons/bs"
 import { firebaseUserLogout } from '../../../api/Users'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 
 const NavbarProfilDropdown = ({ dropElt }) => {
   // Get data from global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
+  const [redirectToHome, setRedirectToHome] = useState(false)
 
   const logout = async () => {
     try {
@@ -16,6 +17,8 @@ const NavbarProfilDropdown = ({ dropElt }) => {
 
       if (data) {
         userLogout()
+
+        setRedirectToHome(true)
       } else {
         console.log("error while logout")
       }
@@ -25,7 +28,6 @@ const NavbarProfilDropdown = ({ dropElt }) => {
   }
 
   const getUserType = () => {
-    console.log(currentUser)
     if (currentUser.getRole === 1) {
       return "repeater"
     } else if (currentUser.getRole === 0) {
@@ -37,6 +39,9 @@ const NavbarProfilDropdown = ({ dropElt }) => {
 
 	return(
 		<Menu as="div" className="relative inline-block text-left font-primary">
+      {
+        redirectToHome && <Navigate to="/" />
+      }
       <div>
         <Menu.Button>
           { dropElt }
@@ -55,7 +60,7 @@ const NavbarProfilDropdown = ({ dropElt }) => {
           <div className="px-1 py-1 ">
             <Menu.Item>
               {({ active }) => (
-                <Link to={`/${getUserType()}/profile/dilane`}>
+                <Link to={`/${getUserType()}/profile/${getUserType() === "repeater" ? currentUser.getService.getId:currentUser.getName}`}>
                   <button
                     className={`${
                       active ? 'bg-gray-100 text-primary' : 'text-gray-900'

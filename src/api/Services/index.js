@@ -29,7 +29,6 @@ const firebaseServiceGetMyService = async (idUser) => {
 
     
     const doc = querySnapShot.docs[0]
-    console.log(doc.data())
 
     const service = {...doc.data(), id: doc.id}
 
@@ -90,7 +89,6 @@ const firebaseServiceGetServices = (globalStateAddServices = (datas) => {}) => {
       const getUser = async (id, serviceData, services) => {
         // Get the user
         const { data: owner } = await firebaseUserGetUser(id)
-        console.log({ owner })
 
         // Add the service to the list
         services.push({...serviceData, owner})
@@ -105,8 +103,6 @@ const firebaseServiceGetServices = (globalStateAddServices = (datas) => {}) => {
 
         await getUser(userReference.id, serviceData, services)
       }
-
-      console.log(services)
 
       globalStateAddServices(services)
     })

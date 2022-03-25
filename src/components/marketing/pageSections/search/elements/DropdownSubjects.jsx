@@ -8,6 +8,12 @@ const DropdownSubjects = ({ onAddFilter }) => {
 		{ value: 'Matières' },
 		{ value: 'informatique' },
 		{ value: 'mathematiques' },
+		{ value: 'chimie' },
+		{ value: 'physique' },
+		{ value: 'anglais' },
+		{ value: 'français' },
+		{ value: 'allemand' },
+		{ value: 'espagnol' },
 	];
 
 	const [value, setValue] = useState('Matières');

@@ -8,7 +8,7 @@ const SearchRepeaters = () => {
 	return(
 		<div>
 			<Seo
-				title="Résultats de recherche des repétiteurs"
+				title="Résultats de recherche des repétiteurs - Bteach"
 				description="Résultats de recherche des repétiteurs"
 			/>
 			<Base>

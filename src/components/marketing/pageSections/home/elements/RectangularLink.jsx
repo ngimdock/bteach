@@ -6,7 +6,8 @@ const RectangularLink = (props) => {
 	let {
 		children,
 		link,
-		classe
+		classe,
+		onClick
 	} = props
 
 	return(
@@ -14,6 +15,7 @@ const RectangularLink = (props) => {
 			<Link 
 				to={link}
 				className={`${classe} px-8 py-3 text-white bg-gray-300  hover:bg-dark transition ease-in-out duration-300`}
+				onClick={onClick}
 				>
 				{ children }
 			</Link>

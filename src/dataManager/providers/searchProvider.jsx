@@ -8,7 +8,7 @@ const SearchProvider = ({ children }) => {
   // Some actions
   const addKeyword = (key) => {
     setFilters([])
-    
+    console.log({key})
     setKeyword(key)
   }
 
