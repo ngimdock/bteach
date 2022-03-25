@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
+import Pagination from "../elements/Pagination";
+
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
 
