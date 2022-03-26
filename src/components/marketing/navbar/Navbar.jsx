@@ -7,7 +7,6 @@ import ALink from "../../elements/a/ALink"
 import Button from "../../elements/buttons/Button"
 import ImgCircle from "../../elements/imgCircle/ImgCircle"
 import NavbarProfilDropdown from "../../utils/dropdowns/NavbarProfileDropdown"
-import ChooseTypeOfSignupForm from "../../utils/modals/ChooseTypeOfSignupForm"
 import MobileMenu from "./MobileMenu"
 
 const Navbar = ({ onOpenModal }) => {
@@ -52,14 +51,11 @@ const Navbar = ({ onOpenModal }) => {
 	}
 
 	// Handle mobile menu display
-	const handleShowMobileMenu = () => {
-		setMobileMenuDisplayed(prev => {
-			if (!prev) {
-				setBackgroundMenuBlackVisible(true)
-			}
+	const handleShowMobileMenu = (val) => {
+		setMobileMenuDisplayed(val)
+		setBackgroundMenuBlackVisible(val)
 
-			return !prev
-		})
+		console.log("hide")
 	}
 
 	return(
@@ -98,14 +94,15 @@ const Navbar = ({ onOpenModal }) => {
 
 			<div 
 				className={style.navbarIconMenu}
-				onClick={handleShowMobileMenu}	
+				onClick={() => handleShowMobileMenu(true)}	
 			>
 				<FaBars />
 			</div>
 
 			<MobileMenu 
 				show={mobileMenuDisplayed}
-				onHide={handleShowMobileMenu}	
+				onHide={handleShowMobileMenu}
+				onOpenModal={onOpenModal}	
 			/>
 
 			{

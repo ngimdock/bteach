@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import CurrentSearchNav from "../../../components/marketing/pageSections/search/elements/CurrentSearchNav";
 import SearchFilter from "../../../components/marketing/pageSections/search/repeaters/SearchFilter";
 import AllRepeater from "../../../components/marketing/pageSections/search/repeaters/AllRepeater";
-import Pagination from "../../../components/marketing/pageSections/search/elements/Pagination";
-import DropdownSortby from "../../../components/marketing/pageSections/search/elements/DropdownSortby";
 import "../../../css/search.css";
 
 const BodySearchRepeaters = () => {
@@ -23,9 +21,9 @@ const BodySearchRepeaters = () => {
 
 			<SearchFilter onGetCurrentFilter={handleGetCurrentFilters} othersFilters={filters} />
 
-			<div className="mt-2">
+			{/* <div className="mt-2">
 				<DropdownSortby />
-			</div>
+			</div> */}
 
 			<AllRepeater filters={filters} />
 
