@@ -12,7 +12,8 @@ const getFilters = (filters) => {
 		niveau: new Set(),
 		lieu: new Set(),
 		ville: new Set(),
-		keyword: new Set()
+		keyword: new Set(),
+		prix: new Set()
 	}
 
 	// Fill the template
@@ -27,7 +28,8 @@ const getFilters = (filters) => {
 		[...FILTERS_SCHEMA.niveau],
 		[...FILTERS_SCHEMA.lieu],
 		[...FILTERS_SCHEMA.ville],
-		[...FILTERS_SCHEMA.keyword]
+		[...FILTERS_SCHEMA.keyword],
+		[...FILTERS_SCHEMA.prix]
 	]
 }
 
@@ -91,8 +93,6 @@ const AllRepeater = ({ filters }) => {
 
 	useEffect(() => {
 		setLocalFilters(filters)
-
-		console.log(filters)
 	}, [filters])
 
 	const displayServiceBasedOnFilters = () => {
@@ -109,8 +109,6 @@ const AllRepeater = ({ filters }) => {
 			baseFilters.forEach(filter => {
 				servicesFiltered = getFilteredServices(filter, servicesFiltered)
 			})
-
-			console.log(servicesFiltered)
 
 			return servicesFiltered
 		}
@@ -143,6 +141,11 @@ const AllRepeater = ({ filters }) => {
 
 				case "keyword": {
 					return searchServicesFromKeyword(getFiltersValues(filter)[0], services)
+				}
+
+				case "prix": {
+					const filterValue = getFiltersValues(filter)[0]
+					return services.filter(service => (filterValue.min <= service.getMinPrice) && (filterValue.max >= service.getMinPrice))
 				}
 	
 				default: return services

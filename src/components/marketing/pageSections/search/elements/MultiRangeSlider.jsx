@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import "../../../../../css/multiRangeSlider.css";
 
-const MultiRangeSlider = ({ min, max, onChange }) => {
+const MultiRangeSlider = ({ min, max, onGetFilter }) => {
 	const [minVal, setMinVal] = useState(min);
 	const [maxVal, setMaxVal] = useState(max);
 	const minValRef = useRef(null);
@@ -39,11 +39,26 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
 		}
 	}, [maxVal, getPercent]);
 
-	// Get min and max values when their state changes
-	useEffect(() => {
-		onChange({ min: minVal, max: maxVal });
-	}, [minVal, maxVal, onChange]);
+	const handleChange = (type, value) => {
+		if (type === "min") {
+			setMinVal(value)
+		} else {
+			setMaxVal(value)
+		}
 
+		handleGetFilter()
+	}
+
+	const handleGetFilter = () => {
+		const	value = {
+			min: minVal,
+			max: maxVal
+		}
+
+		console.log(value)
+
+		onGetFilter("prix", value)
+	}
 
 	return (
 		<div className="my-3 multiRangeSlider">
@@ -55,12 +70,7 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
 				step="1000"
 				ref={minValRef}
 				id="slider1"
-				onChange={(event) => {
-					const value = Math.min(+event.target.value, maxVal - 1);
-					setMinVal(value);
-					event.target.value = value.toString();
-				}}
-
+				onChange={(event) => handleChange("min", event.target.value)}
 				className="thumb thumb--zindex-4"
 			/>
 			<input
@@ -70,13 +80,8 @@ const MultiRangeSlider = ({ min, max, onChange }) => {
 				value={maxVal}
 				step="1000"
 				ref={maxValRef}
-				className="slider2"
-				onChange={(event) => {
-					const value = Math.max(+event.target.value, minVal + 1);
-					setMaxVal(value);
-					event.target.value = value.toString();
-				}}
-
+				id="slider2"
+				onChange={(event) => handleChange("max", event.target.value)}
 				className="thumb thumb--zindex-4"
 			/>
 
