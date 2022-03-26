@@ -39,8 +39,6 @@ const BodySearchClients = () => {
 
 			<AllClients />
 
-			<Pagination />
-
 		</div>
 	)
 }

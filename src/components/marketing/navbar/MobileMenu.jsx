@@ -19,7 +19,7 @@ const NavItem = ({ text, link, onClick }) => {
   )
 }
 
-const MobileMenu = ({ show, onHide }) => {
+const MobileMenu = ({ show, onHide, onOpenModal }) => {
   // Get data from the global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
   
@@ -53,6 +53,12 @@ const MobileMenu = ({ show, onHide }) => {
     }
 
     return "admin"
+  }
+
+  const handleOpenSignupModal = () => {
+    onHide(false)
+
+    onOpenModal()
   }
 
   return (
@@ -89,7 +95,7 @@ const MobileMenu = ({ show, onHide }) => {
 
               <div className={style.mobileMenuControl}>
                 <Button size="small" link="/sign_in" classe={style.mobileMenuLoginBtn}>CONNEXION</Button>
-                <Button size="small" link="/client/sign_up" theme="red" classe={style.mobileMenuLoginBtn}>INSCRIPTION</Button>
+                <Button size="small" action={handleOpenSignupModal} theme="red" classe={style.mobileMenuLoginBtn}>INSCRIPTION</Button>
               </div>
             </div>
           )
