@@ -17,8 +17,6 @@ class Service{
 
 	constructor(data){
 		this.initialization(data)
-		this.isVisible = 1
-		this.isCertified = 0
 	}
 
 	get getServiceData(){
@@ -100,6 +98,10 @@ class Service{
 	 	return this.description
 	 }
 
+	get getCategories () {
+		return this.categories
+	}
+
 	initialization(data){
 		if(data){
 
@@ -114,7 +116,9 @@ class Service{
 				coursesLocation,
 				description,
 				owner,
-				categories
+				categories,
+				isVisible,
+				isCertified
 			} = data
 
 			this.id = id
@@ -128,6 +132,8 @@ class Service{
 			this.description = description
 			this.owner = new Repeater(owner)
 			this.categories = categories
+			this.isVisible = isVisible
+			this.isCertified = isCertified
 		}
 		
 	}

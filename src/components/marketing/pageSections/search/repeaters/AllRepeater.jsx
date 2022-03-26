@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
+import H4 from "../../../../elements/titles/H4";
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
@@ -157,20 +158,25 @@ const AllRepeater = ({ filters }) => {
 
 	return(
 		<>
-			<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
-				{
-					displayServiceBasedOnFilters().length > 0 && (
-						displayServiceBasedOnFilters().map(service => {
-							return (
-								<RepeaterCard
-									key={service.getId}
-									data={service}
-								/>
-							)
-						})
-					)
-				}
-			</div>
+			{
+				displayServiceBasedOnFilters().length > 0 && (
+					<>
+						<H4 classe="ml-2">{displayServiceBasedOnFilters().length} Résultats</H4>
+						<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
+							{
+								displayServiceBasedOnFilters().map(service => {
+									return (
+										<RepeaterCard
+											key={service.getId}
+											data={service}
+										/>
+									)
+								})
+							}
+						</div>
+					</>
+				)
+			}
 
 			{
 				displayServiceBasedOnFilters().length === 0 && (

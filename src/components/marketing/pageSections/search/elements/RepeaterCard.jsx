@@ -78,11 +78,11 @@ const RepeaterCard = (props) => {
 						<p className="ml-3">{canMove}</p>
 					</div> */}
 
-					<div className="p-1 px-3 border border-1 border-white mt-4 w_max_content">
+					<div style={{ flexWrap: "wrap" }} className="flex p-1 px-3 border border-1 border-white mt-4 w_max_content">
 						<p>{getLevels()}</p>
 					</div>
 
-					<div className="p-1 px-3 border border-1 border-white mt-4 w_max_content">
+					<div style={{ flexWrap: "wrap" }} className="flex p-1 px-3 border border-1 border-white mt-4 w_max_content">
 						<p>{getCoursesLocation()}</p>
 					</div>
 				</div>
