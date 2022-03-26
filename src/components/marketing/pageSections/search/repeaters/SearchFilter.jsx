@@ -34,9 +34,9 @@ const FilterItem = ({ color, data, onDeleteFilter }) => {
 	)
 }
 
-const SearchFilter = ({ onGetCurrentFilter }) => {
+const SearchFilter = ({ onGetCurrentFilter, othersFilters }) => {
 	const { keyword, filters: globalFilters, addFilters, addKeyword } = useContext(searchContext)
-	const [filters, setFilter] = useState(globalFilters)
+	const [filters, setFilter] = useState([...globalFilters, ...othersFilters])
 
 	const colors = {
 		matiere: "#00b4d8",
@@ -48,12 +48,21 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 	}
 
 	useEffect(() => {
+		if (othersFilters.length > 0) {
+			setFilter(prev => othersFilters)
+			// onGetCurrentFilter([], "other")
+		}
+
+	}, [othersFilters])
+
+	useEffect(() => {
 		if (keyword) {
 			generateFilterFromKeyWord(keyword)
 		}
 
-		if (globalFilters.length > 0)
+		if (globalFilters.length > 0) {
 			onGetCurrentFilter(globalFilters)
+		}
 
 		addFilters([])
 	}, [])

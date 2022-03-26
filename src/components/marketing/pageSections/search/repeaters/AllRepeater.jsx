@@ -71,6 +71,8 @@ const searchServicesFromKeyword = (keyword, services) => {
 			return true
 		} else if (compareString(keyword, service.levelsUnit)) {
 			return true
+		} else if (compareString(keyword, service.categories)) {
+			return true
 		}
 
 		return false
@@ -89,6 +91,8 @@ const AllRepeater = ({ filters }) => {
 
 	useEffect(() => {
 		setLocalFilters(filters)
+
+		console.log(filters)
 	}, [filters])
 
 	const displayServiceBasedOnFilters = () => {
@@ -105,6 +109,8 @@ const AllRepeater = ({ filters }) => {
 			baseFilters.forEach(filter => {
 				servicesFiltered = getFilteredServices(filter, servicesFiltered)
 			})
+
+			console.log(servicesFiltered)
 
 			return servicesFiltered
 		}

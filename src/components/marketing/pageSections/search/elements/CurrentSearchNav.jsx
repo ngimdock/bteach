@@ -1,28 +1,82 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { Navigate } from "react-router-dom";
+import searchContext from "../../../../../dataManager/context/searchContext";
+
+const DISCIPLINES = [
+	{
+		id: 1,
+		value: "Prof de physique-chimie",
+		filters: [
+			{
+				id: 1,
+				type: "matiere",
+				value: "physique"
+			},
+			{
+				id: 2,
+				type: "matiere",
+				value: "chimie"
+			}
+		]
+	},
+	{
+		id: 2,
+		value: "Prof d'anglais",
+		filters: [
+			{
+				id: 1,
+				type: "matiere",
+				value: "anglais"
+			}
+		]
+	},
+	{
+		id: 3,
+		value: "Prof d'informatique",
+		filters: [
+			{
+				id: 1,
+				type: "matiere",
+				value: "informatique"
+			}
+		]
+	},
+	{
+		id: 4,
+		value: "Prof de sciences",
+		filters: [
+			{
+				id: 1,
+				type: "matiere",
+				value: "sciences"
+			}
+		]
+	}
+]
 
 
-const CurrentSearchNav = (props) => {
+const CurrentSearchNav = ({ onGetCurrentFilter }) => {
 
-	let {
-		discipline1,
-		discipline2,
-		discipline3,
-		discipline4,
-		discipline5,
-	} = props
+	const handleSelectFilter = (filters) => {
+		onGetCurrentFilter(filters)
+	}
 
 	return(
-
 		<div className="CurrentSearchNav">
-			
-			<p>{discipline1}</p>
-			<p>{discipline2}</p>
-			<p>{discipline3}</p>
-			<p>{discipline4}</p>
-			<p>{discipline5}</p>
-
+			{
+				DISCIPLINES.map(disc => {
+					return (
+						<p 
+							style={{ cursor: "pointer" }}
+							key={disc.id}
+							onClick={() => handleSelectFilter(disc.filters)}
+						>
+							{ disc.value }
+						</p>
+					)
+				})
+			}
 		</div>
-
 	);
 }
 

@@ -17,17 +17,11 @@ const BodySearchRepeaters = () => {
 	return(
 		<div className="lg:px-24 lg:py-8" style={{overflow: "hidden"}}>
 
-			<CurrentSearchNav 
-				discipline1="Prof de maths"
-				discipline2="Prof de physique-chimie"
-				discipline3="Prof d'anglais"
-				discipline4="Prof d'informatique"
-				discipline5="Prof de sciences"
-			/>
+			<CurrentSearchNav onGetCurrentFilter={handleGetCurrentFilters} />
 
 			<p className="mt-10 mb-5 lg:ml-0 ml-4 text-2xl font-medium text-gray-500">Filtre de recherche</p>
 
-			<SearchFilter onGetCurrentFilter={handleGetCurrentFilters} />
+			<SearchFilter onGetCurrentFilter={handleGetCurrentFilters} othersFilters={filters} />
 
 			<div className="mt-2">
 				<DropdownSortby />
