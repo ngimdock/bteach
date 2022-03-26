@@ -7,9 +7,10 @@ import ALink from "../../elements/a/ALink"
 import Button from "../../elements/buttons/Button"
 import ImgCircle from "../../elements/imgCircle/ImgCircle"
 import NavbarProfilDropdown from "../../utils/dropdowns/NavbarProfileDropdown"
+import ChooseTypeOfSignupForm from "../../utils/modals/ChooseTypeOfSignupForm"
 import MobileMenu from "./MobileMenu"
 
-const Navbar = () => {
+const Navbar = ({ onOpenModal }) => {
 	// Set local state
 	const [mobileMenuDisplayed, setMobileMenuDisplayed] = useState(false)
 	const [backgroundMenuBlackVisible, setBackgroundMenuBlackVisible] = useState(false)
@@ -76,7 +77,7 @@ const Navbar = () => {
 					!currentUser ? (
 						<>
 							<Button size="medium" link="/sign_in" classe={style.navbarBtnSignin}>CONNEXION</Button>
-							<Button size="medium" link="/client/sign_up" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
+							<Button size="medium" action={onOpenModal} classe={style.navbarBtnSignup}>INSCRIPTION</Button>
 						</>
 					):(
 						<NavbarProfilDropdown
