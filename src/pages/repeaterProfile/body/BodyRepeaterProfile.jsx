@@ -16,13 +16,15 @@ import AddProfilPhotoModal from "../../../components/utils/modals/addPhotoModal"
 import { firebaseUserChangeProfilePic } from "../../../api/Users";
 import { uploadImage } from "../../../api/utils";
 import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
-import UpdateServicesModal from "../../../components/utils/modals/UpdateServicesModal";
 import { useLocation } from "react-router-dom";
 import serviceContext from "../../../dataManager/context/servicesContext";
 import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal";
 import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal";
 import LoadingPage from "../../../components/marketing/navbar/LoadingPage";
 import AskToSigninModal from "../../../components/utils/modals/AskToSigninModal";
+import { firebaseServiceChangeVisibilityOfService } from "../../../api/Services";
+import { ToastContext } from "react-simple-toastify";
+import UpdateServicesModal from "../../../components/utils/modals/UpdateServicesModal";
 
 const imageIllustration = require("../../../medias/illustrations/process1.png");
 
@@ -86,8 +88,14 @@ const BodyRepeaterProfile = () => {
   const serviceId = locationSplit[locationSplit.length - 1];
 
   // Get global state
-  const { currentUser, updateProfilePic, updateService } = useContext(currentUserContext);
+  const {
+    currentUser,
+    updateProfilePic,
+    changeServiceVisibility,
+    updateService,
+  } = useContext(currentUserContext);
   const { services } = useContext(serviceContext);
+  const { displayToast } = useContext(ToastContext);
 
   // Set locale state
   const [service, setService] = useState(null);
@@ -107,6 +115,7 @@ const BodyRepeaterProfile = () => {
   const [isModalContactRepeaterOpen, setIsModalContactRepeaterOpen] =
     useState(false);
   const [isModalAskToSigninOpen, setIsModalAskToSigninOpen] = useState(false);
+  const [changeVisibilityLoading, setChangeVisibilityLoading] = useState(false);
   const [activeServicesModal, setActiveServicesModal] = useState(false);
 
   // Use ref section
@@ -238,8 +247,80 @@ const BodyRepeaterProfile = () => {
     }
   };
 
+  const handleChangeVisibility = async () => {
+    const currentVisibility = service.getIsVisible;
+    let isOk = false;
+
+    if (!currentVisibility) {
+      if (verifyService()) {
+        isOk = true;
+      }
+    } else {
+      isOk = true;
+    }
+
+    if (isOk) {
+      setChangeVisibilityLoading(true);
+
+      const { data } = await firebaseServiceChangeVisibilityOfService(
+        serviceId,
+        !currentVisibility
+      );
+
+      if (data) {
+        changeServiceVisibility(!currentVisibility);
+
+        if (!currentVisibility) {
+          displayToast("Votre service est actuellement visible de tous");
+        } else {
+          displayToast(
+            "Votre service est actuellement masquer et ne peux etre vu. Pensez à le publier"
+          );
+        }
+      } else {
+        displayToast("Une erreur s'est produite, veillez reessayer");
+      }
+
+      setChangeVisibilityLoading(false);
+    } else {
+      displayToast(
+        "Votre service n'est pas prêt à être publier, pensez à completer les informations de votre service"
+      );
+    }
+  };
+
   const formatUnits = (unitToFormated) => {
     return unitToFormated.join(", ");
+  };
+
+  const verifyService = () => {
+    const {
+      minPrice,
+      currentGradeLevel,
+      teachingUnit,
+      levelsUnit,
+      coursesType,
+      coursesLocation,
+      description,
+      categories,
+    } = service;
+
+    console.log({ service });
+
+    if (
+      minPrice &&
+      currentGradeLevel &&
+      teachingUnit.length > 0 &&
+      levelsUnit.length > 0 &&
+      coursesType.length > 0 &&
+      coursesLocation.length > 0 &&
+      description &&
+      categories.length > 0
+    ) {
+      return true;
+    }
+
+    return false;
   };
 
   return (
@@ -280,14 +361,16 @@ const BodyRepeaterProfile = () => {
                 classe={style.profileImage}
               />
 
-              <span
-                className={`${style.profileImageIcon} ${
-                  isHover && style.profileImageIconAnimation
-                }`}
-                onClick={handleOpenFileSystem}
-              >
-                <BsCameraFill size={20} color="#fff" />
-              </span>
+              {isCurrentUser(currentUser, serviceId) && (
+                <span
+                  className={`${style.profileImageIcon} ${
+                    isHover && style.profileImageIconAnimation
+                  }`}
+                  onClick={handleOpenFileSystem}
+                >
+                  <BsCameraFill size={20} color="#fff" />
+                </span>
+              )}
 
               <input
                 ref={inputRef}
@@ -321,15 +404,36 @@ const BodyRepeaterProfile = () => {
 
                 <div className={style.profileControl}>
                   {isCurrentUser(currentUser, serviceId) ? (
-                    <Button
-                      style={{ marginTop: 20 }}
-                      size="medium"
-                      action={() =>
-                        setActiveServicesModal(!activeServicesModal)
-                      }
-                    >
-                      Editer votre profil
-                    </Button>
+                    <>
+                      <Button
+                        style={{
+                          position: "relative",
+                          marginTop: 20,
+                          marginRight: 10,
+                          textAlign: "center",
+                          opacity: changeVisibilityLoading ? 0.6 : 1,
+                        }}
+                        classe={`${style.profileBtnFirst2}`}
+                        size="medium"
+                        theme="danger"
+                        action={() => handleChangeVisibility()}
+                      >
+                        {service.getIsVisible
+                          ? "Masquer le service"
+                          : "Publier le service"}
+
+                        {changeVisibilityLoading && (
+                          <LoaderCircle size="small" />
+                        )}
+                      </Button>
+                      <Button
+                        style={{ marginTop: 20, textAlign: "center" }}
+                        classe={style.profileBtn}
+                        size="medium"
+                      >
+                        Editer votre profil
+                      </Button>
+                    </>
                   ) : (
                     <>
                       <Button
@@ -396,6 +500,12 @@ const BodyRepeaterProfile = () => {
               <ArticleBlock
                 title="Matières"
                 listElements={service.getTeachingUnit}
+              />
+
+              <ArticleBlock
+                title="Catégories"
+                listElements={service.getCategories}
+                color="violet"
               />
 
               <ArticleBlock

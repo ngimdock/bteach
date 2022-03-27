@@ -28,7 +28,6 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
     minPrice: "",
     levelsUnit: [],
     teachingUnit: [],
-    isVisible: false,
   });
   const [loading, setLoading] = useState(false);
   let [triggerServer, activateTriggerServer] = useState("not triggered");
@@ -41,10 +40,6 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
         const { data } = await firebaseServiceUpdateService(
           serviceId,
           formData
-        );
-        await firebaseServiceChangeVisibilityOfService(
-          serviceId,
-          formData.isVisible
         );
 
         if (data) {

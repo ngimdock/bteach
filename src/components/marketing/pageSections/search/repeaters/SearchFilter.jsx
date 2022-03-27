@@ -9,6 +9,8 @@ import { BsX } from 'react-icons/bs'
 import searchContext from "../../../../../dataManager/context/searchContext";
 
 const FilterItem = ({ color, data, onDeleteFilter }) => {
+	console.log(data)
+
 	return (
 		<div
 			className='px-2 py-1 mx-1 my-1'
@@ -22,7 +24,7 @@ const FilterItem = ({ color, data, onDeleteFilter }) => {
 				alignItems: "center",
 			}}
 		>
-			<span className='ml-2' style={{ color: "#fff" }}>{ data.value }</span>
+			<span className='ml-2' style={{ color: "#fff" }}>{ data.type === "prix" ? `${data.value.min} - ${data.value.max}`:data.value }</span>
 			<span 
 				className='mx-1' 
 				style={{ fontSize: 14, cursor: "pointer" }}
@@ -34,9 +36,9 @@ const FilterItem = ({ color, data, onDeleteFilter }) => {
 	)
 }
 
-const SearchFilter = ({ onGetCurrentFilter }) => {
+const SearchFilter = ({ onGetCurrentFilter, othersFilters }) => {
 	const { keyword, filters: globalFilters, addFilters, addKeyword } = useContext(searchContext)
-	const [filters, setFilter] = useState(globalFilters)
+	const [filters, setFilter] = useState([...globalFilters, ...othersFilters])
 
 	const colors = {
 		matiere: "#00b4d8",
@@ -44,16 +46,26 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 		niveau: "#ef476f",
 		lieu: "#008000",
 		ville: "#1f2421",
-		keyword: "#44456c"
+		keyword: "#44456c",
+		prix: "violet"
 	}
+
+	useEffect(() => {
+		if (othersFilters.length > 0) {
+			setFilter(prev => othersFilters)
+			// onGetCurrentFilter([], "other")
+		}
+
+	}, [othersFilters])
 
 	useEffect(() => {
 		if (keyword) {
 			generateFilterFromKeyWord(keyword)
 		}
 
-		if (globalFilters.length > 0)
+		if (globalFilters.length > 0) {
 			onGetCurrentFilter(globalFilters)
+		}
 
 		addFilters([])
 	}, [])
@@ -86,8 +98,14 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 		let exist = false
 
 		filters.forEach(filter => {
-			if (filter.type === type && filter.value === value) {
-				exist = true
+			if (type !== "prix") {
+				if (filter.type === type && filter.value === value) {
+					exist = true
+				}
+			} else {
+				if (filter.type === type) {
+					exist = true
+				}
 			}
 		})
 
@@ -95,6 +113,19 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 			setFilter([...filters, filter])
 
 			onGetCurrentFilter([...filters, filter])
+		} else {
+			if (type === "prix") {
+				const index = filters.findIndex(fil => fil.type === type)
+
+				if (index > -1) {
+					const filtersClone = [...filters]
+
+					filtersClone[index].value = value
+
+					setFilter(filtersClone)
+					onGetCurrentFilter(filtersClone)
+				}
+			}
 		}
 	}
 
@@ -142,7 +173,7 @@ const SearchFilter = ({ onGetCurrentFilter }) => {
 						<div className="mt-3 flex">
 							<p className="text-bold mx-4 text-gray-500">Tarif/mois</p>
 							<div>
-								<PricePerMonth />
+								<PricePerMonth onGetFilter={handleAddFilter} />
 							</div>
 						</div>
 						<div className="mt-9 flex">

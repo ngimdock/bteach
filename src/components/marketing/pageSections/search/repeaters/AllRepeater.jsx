@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 
+// import Pagination from "../elements/Pagination";
+
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
+import H4 from "../../../../elements/titles/H4";
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
@@ -10,7 +13,8 @@ const getFilters = (filters) => {
 		niveau: new Set(),
 		lieu: new Set(),
 		ville: new Set(),
-		keyword: new Set()
+		keyword: new Set(),
+		prix: new Set()
 	}
 
 	// Fill the template
@@ -25,7 +29,8 @@ const getFilters = (filters) => {
 		[...FILTERS_SCHEMA.niveau],
 		[...FILTERS_SCHEMA.lieu],
 		[...FILTERS_SCHEMA.ville],
-		[...FILTERS_SCHEMA.keyword]
+		[...FILTERS_SCHEMA.keyword],
+		[...FILTERS_SCHEMA.prix]
 	]
 }
 
@@ -68,6 +73,8 @@ const searchServicesFromKeyword = (keyword, services) => {
 		} else if (compareString(keyword, [service.owner.district])) {
 			return true
 		} else if (compareString(keyword, service.levelsUnit)) {
+			return true
+		} else if (compareString(keyword, service.categories)) {
 			return true
 		}
 
@@ -136,6 +143,11 @@ const AllRepeater = ({ filters }) => {
 				case "keyword": {
 					return searchServicesFromKeyword(getFiltersValues(filter)[0], services)
 				}
+
+				case "prix": {
+					const filterValue = getFiltersValues(filter)[0]
+					return services.filter(service => (filterValue.min <= service.getMinPrice) && (filterValue.max >= service.getMinPrice))
+				}
 	
 				default: return services
 			}
@@ -146,20 +158,25 @@ const AllRepeater = ({ filters }) => {
 
 	return(
 		<>
-			<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
-				{
-					displayServiceBasedOnFilters().length > 0 && (
-						displayServiceBasedOnFilters().map(service => {
-							return (
-								<RepeaterCard
-									key={service.getId}
-									data={service}
-								/>
-							)
-						})
-					)
-				}
-			</div>
+			{
+				displayServiceBasedOnFilters().length > 0 && (
+					<>
+						<H4 classe="ml-2">{displayServiceBasedOnFilters().length} Résultats</H4>
+						<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
+							{
+								displayServiceBasedOnFilters().map(service => {
+									return (
+										<RepeaterCard
+											key={service.getId}
+											data={service}
+										/>
+									)
+								})
+							}
+						</div>
+					</>
+				)
+			}
 
 			{
 				displayServiceBasedOnFilters().length === 0 && (
