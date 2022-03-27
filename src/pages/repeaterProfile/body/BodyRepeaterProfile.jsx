@@ -430,6 +430,7 @@ const BodyRepeaterProfile = () => {
                         style={{ marginTop: 20, textAlign: "center" }}
                         classe={style.profileBtn}
                         size="medium"
+                        action={() => setActiveServicesModal(true)}
                       >
                         Editer votre profil
                       </Button>

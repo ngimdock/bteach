@@ -28,6 +28,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
     minPrice: "",
     levelsUnit: [],
     teachingUnit: [],
+    isVisible: false,
   });
   const [loading, setLoading] = useState(false);
   let [triggerServer, activateTriggerServer] = useState("not triggered");
@@ -226,6 +227,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
         <div className="md:flex  flex-wrap">
           {matiere.map((matiere) => (
             <Checkbox
+              key={matiere}
               text={matiere}
               htmlFor={matiere}
               name="teachingUnit"
@@ -242,6 +244,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
         <div className="md:flex  flex-wrap">
           {niveauScolarie.map((niveau) => (
             <Checkbox
+              key={niveau}
               text={niveau}
               htmlFor={niveau}
               name="levelsUnit"
@@ -258,6 +261,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
         <div className="md:flex  flex-wrap">
           {typeDeRepétition.map((type) => (
             <Checkbox
+              key={type}
               text={type}
               htmlFor={type}
               name="coursesType"
@@ -274,6 +278,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
         <div className="md:flex  flex-wrap">
           {lieuDeRepetion.map((lieu) => (
             <Checkbox
+              key={lieu}
               text={lieu}
               htmlFor={lieu}
               name="coursesLocation"
@@ -287,6 +292,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
         <div className="md:flex  flex-wrap">
           {categories.map((categorie) => (
             <Checkbox
+              key={categorie}
               text={categorie}
               htmlFor={categorie}
               name="categories"
