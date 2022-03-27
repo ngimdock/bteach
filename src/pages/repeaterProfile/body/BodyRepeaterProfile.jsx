@@ -86,7 +86,7 @@ const BodyRepeaterProfile = () => {
   const serviceId = locationSplit[locationSplit.length - 1];
 
   // Get global state
-  const { currentUser, updateProfilePic } = useContext(currentUserContext);
+  const { currentUser, updateProfilePic, updateService } = useContext(currentUserContext);
   const { services } = useContext(serviceContext);
 
   // Set locale state
@@ -259,7 +259,11 @@ const BodyRepeaterProfile = () => {
           )}
 
           {activeServicesModal && (
-            <UpdateServicesModal stop={() => setActiveServicesModal(false)} />
+            <UpdateServicesModal
+              serviceId={serviceId}
+              updateService={updateService}
+              stop={() => setActiveServicesModal(false)}
+            />
           )}
 
           <header className={style.profileHeader}>
@@ -303,10 +307,7 @@ const BodyRepeaterProfile = () => {
                       className={style.profileLocation}
                     >{`${owner.getTown} ( ${owner.getDistrict} )`}</span>
                   </span>
-                  <p
-                    className={style.profileSubject}
-                    onClick={() => setActiveServicesModal(!activeServicesModal)}
-                  >
+                  <p className={style.profileSubject}>
                     Filières :{" "}
                     {service.getTeachingUnit.length ? (
                       <span>{formatUnits(service.getTeachingUnit)}</span>
@@ -320,7 +321,13 @@ const BodyRepeaterProfile = () => {
 
                 <div className={style.profileControl}>
                   {isCurrentUser(currentUser, serviceId) ? (
-                    <Button style={{ marginTop: 20 }} size="medium">
+                    <Button
+                      style={{ marginTop: 20 }}
+                      size="medium"
+                      action={() =>
+                        setActiveServicesModal(!activeServicesModal)
+                      }
+                    >
                       Editer votre profil
                     </Button>
                   ) : (

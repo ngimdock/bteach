@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import {
+  firebaseServiceUpdateService,
+  firebaseServiceChangeVisibilityOfService,
+} from "../../../api/Services";
 import Checkbox from "../../elements/inputs/Checkbox";
 import Input from "../../elements/inputs/Input";
 import H3 from "../../elements/titles/H3";
@@ -11,8 +15,10 @@ import {
   lieuDeRepetion,
   categories,
 } from "./DumyUpdateServicesModalInfo";
+import currentUserContext from "../../../dataManager/context/currentUserContext";
+import LoadingCircle from "../../../components/utils/loaders/LoaderCircle";
 
-const UpdateServicesModal = ({ stop }) => {
+const UpdateServicesModal = ({ stop, serviceId, updateService }) => {
   const [formData, setFormData] = useState({
     categories: [],
     coursesLocation: [],
@@ -25,22 +31,45 @@ const UpdateServicesModal = ({ stop }) => {
     isVisible: false,
   });
   const [loading, setLoading] = useState(false);
+  let [triggerServer, activateTriggerServer] = useState("not triggered");
+
+  useEffect(() => {
+    if (triggerServer === "triggered" && validateForm() && !loading) {
+      setLoading(true);
+      const serverResponse = async () => {
+        const { data } = await firebaseServiceUpdateService(
+          serviceId,
+          formData
+        );
+        await firebaseServiceChangeVisibilityOfService(
+          serviceId,
+          formData.isVisible
+        );
+
+        if (data) {
+          updateService(formData);
+          setLoading(false);
+          stop();
+        }
+      };
+      serverResponse();
+    }
+  }, [triggerServer]);
 
   const handleChange = (event) => {
+    activateTriggerServer("not triggered");
     const isChecked = event.target.checked;
     if (!loading) {
       if (event.target.type === "checkbox") {
         if (isChecked) {
           switch (event.target.name) {
             case "categories":
-              console.log("State before removal ", formData);
               setFormData({
                 ...formData,
                 categories: [...formData.categories, event.target.value],
               });
               break;
             case "coursesLocation":
-              console.log("State before removal ", formData);
               setFormData({
                 ...formData,
                 coursesLocation: [
@@ -50,7 +79,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "coursesType":
-              console.log("State before removal ", formData);
               setFormData({
                 ...formData,
                 [event.target.name]: [
@@ -60,7 +88,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "levelsUnit":
-              console.log("State before removal ", formData);
               setFormData({
                 ...formData,
                 [event.target.name]: [
@@ -70,7 +97,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "teachingUnit":
-              console.log("State before removal ", formData);
               setFormData({
                 ...formData,
                 [event.target.name]: [
@@ -85,7 +111,6 @@ const UpdateServicesModal = ({ stop }) => {
         } else {
           switch (event.target.name) {
             case "categories":
-              console.log("State before removal ", formData);
               const index = formData.categories.indexOf(event.target.name);
               setFormData({
                 ...formData,
@@ -93,7 +118,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "coursesLocation":
-              console.log("State before removal ", formData);
               const indexCoursesLocation = formData.coursesLocation.indexOf(
                 event.target.name
               );
@@ -106,7 +130,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "coursesType":
-              console.log("State before removal ", formData);
               const indexCoursesType = formData.coursesType.indexOf(
                 event.target.name
               );
@@ -116,7 +139,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "levelsUnit":
-              console.log("State before removal ", formData);
               const indexLevelsUnit = formData.coursesType.indexOf(
                 event.target.name
               );
@@ -129,7 +151,6 @@ const UpdateServicesModal = ({ stop }) => {
               });
               break;
             case "teachingUnit":
-              console.log("State before removal ", formData);
               const indexTeachingUnit = formData.coursesType.indexOf(
                 event.target.name
               );
@@ -153,11 +174,47 @@ const UpdateServicesModal = ({ stop }) => {
       }
     }
   };
-  console.log("State after modification of state", formData);
+
+  const handleFormSubmission = (event) => {
+    event.preventDefault();
+    activateTriggerServer("triggered");
+    if (!validateForm()) {
+      alert("Remplissez tous le formulaire");
+    }
+  };
+
+  const validateForm = () => {
+    const {
+      categories,
+      coursesLocation,
+      coursesType,
+      currentGradeLevel,
+      description,
+      minPrice,
+      levelsUnit,
+      teachingUnit,
+    } = formData;
+
+    if (
+      categories &&
+      coursesLocation &&
+      coursesType &&
+      currentGradeLevel &&
+      description &&
+      minPrice &&
+      levelsUnit &&
+      teachingUnit
+    ) {
+      return true;
+    }
+
+    return false;
+  };
 
   const { minPrice, description, currentGradeLevel } = formData;
   return (
-    <div className="w-screen h-full bg-white fixed z-50 py-8 overflow-y-scroll">
+    <div className="w-screen h-full bg-white absolute z-50 py-8">
+      {loading && <LoadingCircle size="large" />}
       <H3
         color="rgb(255, 255, 255)"
         classe="mb-10 text-center mx-auto w-11/12 max-w-xl"
@@ -283,10 +340,11 @@ const UpdateServicesModal = ({ stop }) => {
             <span className="tracking-wide opacity-90 ">Annulé</span>
           </Button>
           <Button
-            onClick={() => {}}
+            action={handleFormSubmission}
             classe="flex items-center justify-center mb-2 mt-6 hover:cursor-pointer text-white basis-3/12 absolute right-0"
             theme=""
             size="small"
+            link=""
           >
             <span className="tracking-wide opacity-90">Terminer</span>
           </Button>
