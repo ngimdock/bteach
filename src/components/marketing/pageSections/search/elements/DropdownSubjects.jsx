@@ -1,19 +1,25 @@
 import React, {useState} from "react";
 import Dropdown from "./Dropdown";
 
-
 const DropdownSubjects = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Matières' },
-		{ value: 'informatique' },
-		{ value: 'mathematiques' },
-		{ value: 'chimie' },
-		{ value: 'physique' },
-		{ value: 'anglais' },
-		{ value: 'français' },
-		{ value: 'allemand' },
-		{ value: 'espagnol' },
+		{ value: 'Informatique' },
+		{ value: 'Mathématiques' },
+		{ value: 'Chimie' },
+		{ value: 'Physique' },
+		{ value: 'Anglais' },
+		{ value: 'Français' },
+		{ value: 'Allemand' },
+		{ value: 'Espagnol' },
+		{ value: 'Philosophie' },
+		{ value: 'Arabe' },
+		{ value: 'Sport' },
+		{ value: 'Histoire-géographie' },
+		{ value: 'Entreprenariat' },
+		{ value: 'Marketing' },
+		{ value: 'Economie' },
 	];
 
 	const [value, setValue] = useState('Matières');

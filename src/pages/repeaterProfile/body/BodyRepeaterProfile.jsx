@@ -290,7 +290,12 @@ const BodyRepeaterProfile = () => {
   };
 
   const formatUnits = (unitToFormated) => {
-    return unitToFormated.join(", ");
+    const length = unitToFormated.length
+
+    if (length <= 2)
+      return unitToFormated.join(", ");
+
+    return (unitToFormated.slice(0, 2).join(", ")) + ", autres ..."
   };
 
   const verifyService = () => {
@@ -433,7 +438,7 @@ const BodyRepeaterProfile = () => {
                         size="medium"
                         action={() => setActiveServicesModal(true)}
                       >
-                        Editer votre profil
+                        Editer votre service
                       </Button>
                     </>
                   ) : (

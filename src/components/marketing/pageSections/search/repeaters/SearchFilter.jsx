@@ -163,7 +163,7 @@ const SearchFilter = ({ onGetCurrentFilter, othersFilters }) => {
 								<RadioButton 
 									onAddFilter={handleAddFilter}
 									name="lieu" 
-									items={['chez eleve', 'chez prof', 'en ligne']}
+									items={["chez l'élève", "chez le professeur", "en ligne"]}
 								/>
 							</div>
 						</div>
@@ -182,7 +182,7 @@ const SearchFilter = ({ onGetCurrentFilter, othersFilters }) => {
 								<RadioButton 
 									onAddFilter={handleAddFilter}
 									name="niveau" 
-									items={['primaire', 'secondaire', 'universite']}
+									items={["Primaire", "Secondaire", "Université"]}
 								/>
 							</div>
 						</div>

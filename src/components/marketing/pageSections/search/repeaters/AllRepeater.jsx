@@ -117,11 +117,16 @@ const AllRepeater = ({ filters }) => {
 
 	const getFilteredServices = (filter, services) => {
 		if (filter.length > 0) {
-			const getFiltersValues = (filters) => filters.map(f => f.value)
+			const getFiltersValues = (filters) => filters.map(f => {
+				if (typeof f.value === "string")
+					return f.value.toLowerCase()
+
+				return f.value
+			})
 
 			switch (filter[0].type) {
 				case "matiere": {
-					return services.filter(service => service.teachingUnit.some(unit => getFiltersValues(filter).includes(unit)))
+					return services.filter(service => service.teachingUnit.some(unit => getFiltersValues(filter).includes(unit.toLowerCase())))
 				}
 	
 				case "sexe": {
@@ -129,15 +134,15 @@ const AllRepeater = ({ filters }) => {
 				}
 	
 				case "niveau": {
-					return services.filter(service => service.categories.some(cat => getFiltersValues(filter).includes(cat)))
+					return services.filter(service => service.categories.some(cat => getFiltersValues(filter).includes(cat.toLowerCase())))
 				}
 	
 				case "lieu": {
-					return services.filter(service => service.coursesLocation.some(location => getFiltersValues(filter).includes(location)))
+					return services.filter(service => service.coursesLocation.some(location => getFiltersValues(filter).includes(location.toLowerCase())))
 				}
 	
 				case "ville": {
-					return services.filter(service => getFiltersValues(filter).includes(service.owner.town))
+					return services.filter(service => getFiltersValues(filter).includes(service.owner.town.toLowerCase()))
 				}
 
 				case "keyword": {

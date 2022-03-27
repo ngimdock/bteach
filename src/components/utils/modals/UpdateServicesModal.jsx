@@ -226,7 +226,7 @@ const UpdateServicesModal = ({ stop, serviceId, service }) => {
         color="#fff"
         classe="mb-10 text-center mx-auto w-11/12 max-w-xl"
       >
-        Ci-Dessus est le formulaire pour modifier les informations sur votre
+        Ci-Dessous le formulaire pour modifier les informations de votre
         service
       </H3>
       <form style={{ opacity: loading ? .6:1 }} className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-11/12 max-w-xl text-gray-600 bg-white mx-auto">
