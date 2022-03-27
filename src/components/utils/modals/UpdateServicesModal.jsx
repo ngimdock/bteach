@@ -18,7 +18,7 @@ import {
 import currentUserContext from "../../../dataManager/context/currentUserContext";
 import LoadingCircle from "../../../components/utils/loaders/LoaderCircle";
 
-const UpdateServicesModal = ({ stop, serviceId, updateService }) => {
+const UpdateServicesModal = ({ stop, serviceId }) => {
   const [formData, setFormData] = useState({
     categories: [],
     coursesLocation: [],
@@ -32,6 +32,7 @@ const UpdateServicesModal = ({ stop, serviceId, updateService }) => {
   });
   const [loading, setLoading] = useState(false);
   let [triggerServer, activateTriggerServer] = useState("not triggered");
+  const { updateService } = useContext(currentUserContext);
 
   useEffect(() => {
     if (triggerServer === "triggered" && validateForm() && !loading) {
