@@ -1,6 +1,6 @@
 import styles from './loader.module.css'
 
-const LoaderCircle = ({ size, sizeValue, color }) => {
+const LoaderCircle = ({ size, sizeValue, color, position }) => {
   let defaultSize
   let defaultColor
 
@@ -27,6 +27,7 @@ const LoaderCircle = ({ size, sizeValue, color }) => {
   return (
     <span
       style={{
+        position: position ? position:"",
         width: defaultSize,
         height: defaultSize,
         borderColor: defaultColor,

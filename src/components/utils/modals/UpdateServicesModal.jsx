@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
-  firebaseServiceUpdateService,
-  firebaseServiceChangeVisibilityOfService,
+  firebaseServiceGetService,
+  firebaseServiceUpdateService
 } from "../../../api/Services";
 import Checkbox from "../../elements/inputs/Checkbox";
 import Input from "../../elements/inputs/Input";
@@ -16,152 +16,148 @@ import {
   categories,
 } from "./DumyUpdateServicesModalInfo";
 import currentUserContext from "../../../dataManager/context/currentUserContext";
-import LoadingCircle from "../../../components/utils/loaders/LoaderCircle";
+import { ToastContext } from 'react-simple-toastify'
+import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
 
-const UpdateServicesModal = ({ stop, serviceId }) => {
+const UpdateServicesModal = ({ stop, serviceId, service }) => {
+  // Set local state
   const [formData, setFormData] = useState({
-    categories: [],
-    coursesLocation: [],
-    coursesType: [],
-    currentGradeLevel: "",
-    description: "",
-    minPrice: "",
-    levelsUnit: [],
-    teachingUnit: [],
+    categories: service.categories,
+    coursesLocation: service.coursesLocation,
+    coursesType: service.coursesType,
+    currentGradeLevel: service.currentGradeLevel,
+    description: service.description,
+    minPrice: service.minPrice,
+    levelsUnit: service.levelsUnit,
+    teachingUnit: service.teachingUnit,
     isVisible: false,
   });
   const [loading, setLoading] = useState(false);
   let [triggerServer, activateTriggerServer] = useState("not triggered");
+
+  // Get global state
   const { updateService } = useContext(currentUserContext);
+  const { displayToast } = useContext(ToastContext)
 
   useEffect(() => {
     if (triggerServer === "triggered" && validateForm() && !loading) {
       setLoading(true);
-      const serverResponse = async () => {
-        const { data } = await firebaseServiceUpdateService(
-          serviceId,
-          formData
-        );
-
-        if (data) {
-          updateService(formData);
-          setLoading(false);
-          stop();
-        }
-      };
-      serverResponse();
+      
+      serverResponse(setLoading)
     }
   }, [triggerServer]);
 
+  const serverResponse = async (setLoading) => {
+    const { data } = await firebaseServiceUpdateService(
+      serviceId,
+      formData
+    );
+
+    if (data) {
+      getCurrentService(setLoading)
+
+      displayToast("Votre service a été mis à jour, pensez à publier")
+    }
+  };
+
+  const getCurrentService = async () => {
+    const { data } = await firebaseServiceGetService(serviceId)
+
+    if (data) {
+      updateService(data);
+      stop();
+    }
+
+    setLoading(false)
+  }
+
   const handleChange = (event) => {
     activateTriggerServer("not triggered");
-    const isChecked = event.target.checked;
+
+    const value = event.target.value
     if (!loading) {
       if (event.target.type === "checkbox") {
-        if (isChecked) {
-          switch (event.target.name) {
-            case "categories":
-              setFormData({
-                ...formData,
-                categories: [...formData.categories, event.target.value],
-              });
-              break;
-            case "coursesLocation":
-              setFormData({
-                ...formData,
-                coursesLocation: [
-                  ...formData.coursesLocation,
-                  event.target.value,
-                ],
-              });
-              break;
-            case "coursesType":
-              setFormData({
-                ...formData,
-                [event.target.name]: [
-                  ...formData.coursesType,
-                  event.target.value,
-                ],
-              });
-              break;
-            case "levelsUnit":
-              setFormData({
-                ...formData,
-                [event.target.name]: [
-                  ...formData.levelsUnit,
-                  event.target.value,
-                ],
-              });
-              break;
-            case "teachingUnit":
-              setFormData({
-                ...formData,
-                [event.target.name]: [
-                  ...formData.teachingUnit,
-                  event.target.value,
-                ],
-              });
-              break;
-            default:
-              return formData;
+        switch (event.target.name) {
+          case "categories": {
+            const formDataClone = {...formData}
+
+            const exist = formDataClone.categories.includes(value)
+
+            if (exist) {
+              formDataClone.categories = formDataClone.categories.filter(unit => unit !== value)
+            } else {
+              formDataClone.categories.push(value)
+            }
+
+            setFormData(formDataClone);
+
+            break;
           }
-        } else {
-          switch (event.target.name) {
-            case "categories":
-              const index = formData.categories.indexOf(event.target.name);
-              setFormData({
-                ...formData,
-                categories: formData.categories.splice(index, 1),
-              });
-              break;
-            case "coursesLocation":
-              const indexCoursesLocation = formData.coursesLocation.indexOf(
-                event.target.name
-              );
-              setFormData({
-                ...formData,
-                categories: formData.coursesLocation.splice(
-                  indexCoursesLocation,
-                  1
-                ),
-              });
-              break;
-            case "coursesType":
-              const indexCoursesType = formData.coursesType.indexOf(
-                event.target.name
-              );
-              setFormData({
-                ...formData,
-                categories: formData.coursesType.splice(indexCoursesType, 1),
-              });
-              break;
-            case "levelsUnit":
-              const indexLevelsUnit = formData.coursesType.indexOf(
-                event.target.name
-              );
-              setFormData({
-                ...formData,
-                [event.target.name]: formData.levelsUnit.splice(
-                  indexLevelsUnit,
-                  1
-                ),
-              });
-              break;
-            case "teachingUnit":
-              const indexTeachingUnit = formData.coursesType.indexOf(
-                event.target.name
-              );
-              setFormData({
-                ...formData,
-                [event.target.name]: formData.levelsUnit.splice(
-                  indexTeachingUnit,
-                  1
-                ),
-              });
-              break;
-            default:
-              return formData;
+
+          case "coursesLocation": {
+            const formDataClone = {...formData}
+
+            const exist = formDataClone.coursesLocation.includes(value)
+
+            if (exist) {
+              formDataClone.coursesLocation = formDataClone.coursesLocation.filter(unit => unit !== value)
+            } else {
+              formDataClone.coursesLocation.push(value)
+            }
+
+            setFormData(formDataClone);
+
+            break;
           }
+
+          case "coursesType": {
+            const formDataClone = {...formData}
+
+            const exist = formDataClone.coursesType.includes(value)
+
+            if (exist) {
+              formDataClone.coursesType = formDataClone.coursesType.filter(unit => unit !== value)
+            } else {
+              formDataClone.coursesType.push(value)
+            }
+
+            setFormData(formDataClone);
+
+            break;
+          }
+
+          case "levelsUnit": {
+            const formDataClone = {...formData}
+
+            const exist = formDataClone.levelsUnit.includes(value)
+
+            if (exist) {
+              formDataClone.levelsUnit = formDataClone.levelsUnit.filter(unit => unit !== value)
+            } else {
+              formDataClone.levelsUnit.push(value)
+            }
+
+            setFormData(formDataClone);
+
+            break;
+          }
+
+          case "teachingUnit": {
+            const formDataClone = {...formData}
+
+            const exist = formDataClone.teachingUnit.includes(value)
+
+            if (exist) {
+              formDataClone.teachingUnit = formDataClone.teachingUnit.filter(unit => unit !== value)
+            } else {
+              formDataClone.teachingUnit.push(value)
+            }
+            setFormData(formDataClone);
+
+            break;
+          }
+
+          default: break
         }
       } else {
         setFormData({
@@ -174,6 +170,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
+
     activateTriggerServer("triggered");
     if (!validateForm()) {
       alert("Remplissez tous le formulaire");
@@ -210,19 +207,32 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
 
   const { minPrice, description, currentGradeLevel } = formData;
   return (
-    <div className="w-screen h-full bg-white absolute z-50 py-8">
-      {loading && <LoadingCircle size="large" />}
+    <div 
+      style={{ 
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "calc(100% - 0px)",
+        overflowY: "scroll",
+        backgroundColor: "#0f272e",
+      }} 
+      className="w-screen h-auto bg-white z-50 py-8"
+    >
+      {
+        loading && <LoaderCircle size="large" position="fixed" />
+      }
       <H3
-        color="rgb(255, 255, 255)"
+        color="#fff"
         classe="mb-10 text-center mx-auto w-11/12 max-w-xl"
       >
-        Ci-Dessus est le formulaire pour modifie les informations sur votre
-        services
+        Ci-Dessus est le formulaire pour modifier les informations sur votre
+        service
       </H3>
-      <form className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-11/12 max-w-xl text-gray-600 bg-white mx-auto">
+      <form style={{ opacity: loading ? .6:1 }} className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-11/12 max-w-xl text-gray-600 bg-white mx-auto">
         <Paragraphe classe="text-sm mb-0 font-bold">Filières</Paragraphe>
         <Paragraphe classe="text-xs mb-2 mt-0 md:text-xs">
-          (il est recommandé de selectionner maximum 3 filières)
+          (il est recommandé de sélectionner maximum 3 filières)
         </Paragraphe>
         <div className="md:flex  flex-wrap">
           {matiere.map((matiere) => (
@@ -231,6 +241,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
               text={matiere}
               htmlFor={matiere}
               name="teachingUnit"
+              values={formData.teachingUnit}
               handleChange={handleChange}
             />
           ))}
@@ -239,7 +250,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
           Niveau scolaire
         </Paragraphe>
         <Paragraphe classe="text-xs mb-2 md:text-xs">
-          (vous pouvez selectionner plusieurs niveaux)
+          (vous pouvez sélectionner plusieurs niveaux)
         </Paragraphe>
         <div className="md:flex  flex-wrap">
           {niveauScolarie.map((niveau) => (
@@ -248,15 +259,16 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
               text={niveau}
               htmlFor={niveau}
               name="levelsUnit"
+              values={formData.levelsUnit}
               handleChange={handleChange}
             />
           ))}
         </div>
         <Paragraphe classe="text-sm mt-3 md:mt-5 font-bold">
-          Type de repétiton
+          Type de répétiton
         </Paragraphe>
         <Paragraphe classe="text-xs mb-2 md:text-xs">
-          (vous pouvez selectionner plusieurs type)
+          (vous pouvez sélectionner plusieurs type)
         </Paragraphe>
         <div className="md:flex  flex-wrap">
           {typeDeRepétition.map((type) => (
@@ -265,15 +277,16 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
               text={type}
               htmlFor={type}
               name="coursesType"
+              values={formData.coursesType}
               handleChange={handleChange}
             />
           ))}
         </div>
         <Paragraphe classe="text-sm mt-3 md:mt-5 font-bold">
-          Lieu de repetition
+          Lieu de répétition
         </Paragraphe>
         <Paragraphe classe="text-xs mb-2 md:text-xs">
-          (vous pouvez selectionner plusieurs lieux)
+          (vous pouvez sélectionner plusieurs lieux)
         </Paragraphe>
         <div className="md:flex  flex-wrap">
           {lieuDeRepetion.map((lieu) => (
@@ -282,12 +295,13 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
               text={lieu}
               htmlFor={lieu}
               name="coursesLocation"
+              values={formData.coursesLocation}
               handleChange={handleChange}
             />
           ))}
         </div>
         <Paragraphe classe="text-sm mt-3 md:mt-5 mb-2 font-bold">
-          Categorie
+          Catégorie
         </Paragraphe>
         <div className="md:flex  flex-wrap">
           {categories.map((categorie) => (
@@ -296,6 +310,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
               text={categorie}
               htmlFor={categorie}
               name="categories"
+              values={formData.categories}
               handleChange={handleChange}
             />
           ))}
@@ -317,7 +332,7 @@ const UpdateServicesModal = ({ stop, serviceId }) => {
           placeholder="Entrez votre occupation actuel"
         />
         <Paragraphe classe="text-sm mt-3 font-bold">
-          <span>Presentez-vous</span>{" "}
+          <span>Présentez-vous</span>{" "}
           <span className="text-xs md:text-xs font-normal">
             (minimum 100 caractères)
           </span>

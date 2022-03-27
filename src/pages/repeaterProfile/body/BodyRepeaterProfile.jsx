@@ -344,6 +344,7 @@ const BodyRepeaterProfile = () => {
               serviceId={serviceId}
               updateService={updateService}
               stop={() => setActiveServicesModal(false)}
+							service={service}
             />
           )}
 

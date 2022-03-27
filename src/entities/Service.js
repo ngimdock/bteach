@@ -142,25 +142,31 @@ class Service{
 		if(data){
 			const{
 				id,
-				minPrise,
+				minPrice,
 				documentToCertify,
 				currentGradeLevel,
 				teachingUnit,
 				levelsUnit,
 				coursesType,
 				coursesLocation,
-				description
+				description,
+				categories,
+				isVisible
 			} = data
+
+			console.log(data)
 
 			this.id = id ? id : this.id
 			this.documentToCertify = documentToCertify ? documentToCertify : this.documentToCertify
-			this.minPrise = minPrise ? minPrise : this.minPrise
+			this.minPrice = minPrice ? minPrice : this.minPrice
 			this.currentGradeLevel = currentGradeLevel ? currentGradeLevel : this.currentGradeLevel
 			this.teachingUnit = teachingUnit ? [...teachingUnit] : [...this.teachingUnit]
 			this.levelsUnit = levelsUnit ? [...levelsUnit] : [...this.levelsUnit]
 			this.coursesType = coursesType ? [...coursesType] : [...this.coursesType]
 			this.coursesLocation = coursesLocation ? [...coursesLocation] : [...this.coursesLocation]
 			this.description = description ? description : this.description
+			this.categories = categories ? categories : this.categories
+			this.isVisible = isVisible
 		}
 	}
 

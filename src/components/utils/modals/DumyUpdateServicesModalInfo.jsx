@@ -5,7 +5,7 @@ const matiere = [
   "Informatique",
   "SVT",
   "Anglais",
-  "Francais",
+  "Français",
   "Allemand",
   "Espagnol",
   "Arabe",
@@ -16,21 +16,26 @@ const matiere = [
   "Entreprenuariat",
   "Marketing",
   "Economie",
-  "Politique",
 ];
 
 const niveauScolarie = [
   "Ecole primarie",
-  "Lycée",
-  "Universite",
-  "repétition specialé",
+  "6e",
+  "5e",
+  "4e",
+  "3e",
+  "Seconde",
+  "Première",
+  "Terminale",
+  "Licence 1",
+  "Lincence 2"
 ];
 
-const typeDeRepétition = ["repétiton individuel", "repétition en groupe"];
+const typeDeRepétition = ["repétition individuelle", "repétition en groupe"];
 
 const lieuDeRepetion = ["chez l'eleve", "chez le prof", "en ligne"];
 
-const categories = ["Primaraire", "Secondaraire", "Universite"];
+const categories = ["Primaire", "Secondaire", "Université"];
 
 export {
   niveauScolarie,
