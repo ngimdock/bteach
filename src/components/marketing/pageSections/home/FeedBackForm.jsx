@@ -32,9 +32,9 @@ const FeedBackForm = () => {
 
 				<div className="grid lg:grid-cols-2">
 					<div className="lg:pr-16 lg:mt-12 mb-20">
-						<img src={image} alt="feedback" className="lg:mt-16" />
+						<img src={image} alt="feedback" className="lg:mt-16 feedback-img" />
 					</div>
-					<div className="px-2">
+					<div className="px-2 feedback-form">
 						<form onSubmit={handleSubmit}>
 							<p className="text-2xl font-normal lg:my-5">Ajoutez un avis</p>
 							<input
