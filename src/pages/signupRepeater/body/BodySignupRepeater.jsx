@@ -7,8 +7,10 @@ import ALink from "../../../components/elements/a/ALink";
 import { firebaseUserCreateUser } from "../../../api/Users";
 import LoadingCircle from '../../../components/utils/loaders/LoaderCircle'
 import { Navigate } from "react-router-dom";
+import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
 
 const BodySignupRepeater = () => {
+	// Set local state
 	let [formData, setFormData] = useState({
 		nom: "",
 		prenom: "",
@@ -21,54 +23,52 @@ const BodySignupRepeater = () => {
 		quartier: "",
 		sexe: "",
 	});
-
-	const [selected, setSelected] = React.useState("");
-
-	const townSelect = [
-			"Yaounde",
-			"Douala",
-			"Bamenda",
-	];
+	const [loading, setLoading] = useState(false)
+	const [redirect, setRedirect] = useState(false)
 
 	const town1Select = ["Essos", "Cité U", "Etoudi", "Mimboman"];
 	const town2Select = ["Bonaberi", "Bonamoussadi", "Bepanda", "Logbassi"];
 	const town3Select = ["Kumbo", "Nkambé", "Wum", "Bambui"];
 
-	let type = null;
-	let options = null;
+	const generateDistricts = () => {
+		const { ville } = formData
 
-	if (selected === "Yaounde") {
-			type = town1Select;
-	} else if (selected === "Douala") {
-			type = town2Select;
-	} else if (selected === "Bamenda") {
-			type = town3Select;
+		switch (ville) {
+			case "yaoundé": {
+				return town1Select.map((el) => <option key={el} value={el}>{el}</option>)
+			}
+
+			case "douala": {
+				return town2Select.map((el) => <option key={el} value={el}>{el}</option>)
+			}
+
+			case "bamenda": {
+				return town3Select.map((el) => <option key={el} value={el}>{el}</option>)
+
+			}
+
+			default: break
+		}
 	}
-
-	if (type) {
-			options = type.map((el) => <option key={el}>{el}</option>);
-	}
-
-	
 
 	const changeSelectOptionHandler = (event) => {
-			setSelected(event.target.value);
+		handleChange(event)
 	};
 
 	const handleChange = (event) => {
-		if (formData.anneeNaissance) {
-			console.log({date: new Date(formData.anneeNaissance).getTime()})
+		if (!loading) {
+			setFormData({
+				...formData,
+				[event.target.name]: event.target.value,
+			});
 		}
-		setFormData({
-			...formData,
-			[event.target.name]: event.target.value,
-		});
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 
-		if (validateForm()) {
+		if (validateForm() && !loading) {
+			setLoading(true)
 			try {
 				// Create a user and store his data in the database
 				const { data, error } = await firebaseUserCreateUser({
@@ -86,11 +86,15 @@ const BodySignupRepeater = () => {
 
 				if (data) {
 					console.log("User created successfully")
+
+					setRedirect(true)
 				} else {
 					console.log(error)
 				}
 			} catch (err) {
 				console.log(err)
+			} finally {
+				setLoading(false)
 			}
 		}
 	}
@@ -128,14 +132,23 @@ const BodySignupRepeater = () => {
 	}
 
 	return (
-		<div className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+		<div style={{ opacity: loading ? .6:1 }} className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+			{
+				redirect && <Navigate to="/" />
+			}
+
+			{
+				loading && <LoaderCircle size="normal" />
+			}
+			
+			
 			<H3 color="#00171f" classe="mb-10 text-center">
 				Suivre les étapes pour s'inscrire en tant repétiteur qui offre des services
 				
 			</H3>
 			<form
 				className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-full"
-				onSubmit={handleSubmit}
+				onSubmit={(e) => e.preventDefault()}
 			>
 				<Input
 					type="text"
@@ -199,21 +212,21 @@ const BodySignupRepeater = () => {
 					onChange={changeSelectOptionHandler}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option>Ville*</option>
-					<option>Yaounde</option>
-					<option>Douala</option>
-					<option>Bamenda</option>
+					<option value="">Ville*</option>
+					<option value="yaoundé">Yaounde</option>
+					<option value="douala">Douala</option>
+					<option value="bamenda">Bamenda</option>
 				</select>
 				<select
 					name="quartier"
 					onChange={changeSelectOptionHandler}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option>
+					<option value="">
 						Quartier* (choisissez le quartier le plus proche de chez vous)
 					</option>
 					{
-						options
+						generateDistricts()
 					}
 				</select>
 
@@ -230,7 +243,7 @@ const BodySignupRepeater = () => {
 						/>
 					))}
 				</div>
-				<button className="self-end flex items-center px-4 py-1.5 mb-2 mt-6 hover:cursor-pointer hover:no-underline bg-primary text-white text-center rounded-full basis-6/12 sm:px-5">
+				<button onClick={handleSubmit} className="self-end flex items-center px-4 py-1.5 mb-2 mt-6 hover:cursor-pointer hover:no-underline bg-primary text-white text-center rounded-full basis-6/12 sm:px-5">
 					<span className="text-sm tracking-wide opacity-90">Terminer</span>
 				</button>
 			</form>

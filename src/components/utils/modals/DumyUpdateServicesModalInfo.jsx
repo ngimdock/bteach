@@ -19,7 +19,7 @@ const matiere = [
 ];
 
 const niveauScolarie = [
-  "Ecole primarie",
+  "Ecole primaire",
   "6e",
   "5e",
   "4e",
