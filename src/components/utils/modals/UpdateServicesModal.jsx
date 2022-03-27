@@ -45,7 +45,7 @@ const UpdateServicesModal = ({ stop, serviceId, service }) => {
       
       serverResponse(setLoading)
     }
-  }, [triggerServer]);
+  }, [triggerServer, loading]);
 
   const serverResponse = async (setLoading) => {
     const { data } = await firebaseServiceUpdateService(

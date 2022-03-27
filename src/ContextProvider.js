@@ -26,10 +26,7 @@ import {
 
 	createAnnonce,
 	updateAnnonce,
-	changeAnnonceVisibility,
-
-	deleteRepeater,
-	certifiedRepeater
+	changeAnnonceVisibility
 } from "./dataManager/data/currentUser/currentUserAction"
 
 import {
