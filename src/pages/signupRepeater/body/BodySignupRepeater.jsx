@@ -222,7 +222,7 @@ const BodySignupRepeater = () => {
 				</select>
 				<select
 					name="quartier"
-					onChange={changeSelectOptionHandler}
+					handleChange={handleChange}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
 					<option>
