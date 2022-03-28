@@ -9,6 +9,7 @@ import ClientProfile from './pages/clientProfile/ClientProfile'
 import RepeaterProfile from './pages/repeaterProfile/RepeaterProfile'
 import SearchRepeaters from './pages/searchRepeaters/SearchRepeaters'
 import SearchClients from './pages/searchClients/SearchClients'
+import Team from './pages/team/Team'
 import Error404 from './pages/error404/Error404'
 
 
@@ -36,6 +37,8 @@ const Router = () => {
 					<Route  path="clients" element={<SearchClients />} />
 					<Route  path="repeaters" element={<SearchRepeaters />} />
 				</Route>
+
+				<Route path="team" element={<Team />} />
 
 				<Route  path="*" element={<Error404 />} />
 			</Route>
