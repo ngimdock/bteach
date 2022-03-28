@@ -6,7 +6,7 @@ const DropdownSubjects = ({ onAddFilter }) => {
 	const options = [
 		{ value: 'Matières' },
 		{ value: 'Informatique' },
-		{ value: 'Mathématiques' },
+		{ value: 'Mathématique' },
 		{ value: 'Chimie' },
 		{ value: 'Physique' },
 		{ value: 'Anglais' },

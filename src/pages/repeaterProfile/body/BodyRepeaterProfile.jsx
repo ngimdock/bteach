@@ -32,7 +32,7 @@ import Button from "../../../components/elements/buttons/Button";
 import H3 from "../../../components/elements/titles/H3";
 import RecommandationCarousel from "../../../components/utils/carousels/RecommandationCarousel";
 import currentUserContext from "../../../dataManager/context/currentUserContext";
-import { BsCameraFill } from "react-icons/bs";
+import { BsCameraFill, BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import AddProfilPhotoModal from "../../../components/utils/modals/addPhotoModal";
 import { firebaseUserChangeProfilePic } from "../../../api/Users";
 import { uploadImage } from "../../../api/utils";
@@ -436,14 +436,29 @@ const BodyRepeaterProfile = () => {
                           textAlign: "center",
                           opacity: changeVisibilityLoading ? 0.6 : 1,
                         }}
-                        classe={`${style.profileBtnFirst2}`}
+                        classe={`${style.profileBtnFirst2} flex align-center`}
                         size="medium"
                         theme="danger"
                         action={() => handleChangeVisibility()}
                       >
                         {service.getIsVisible
-                          ? "Masquer le service"
-                          : "Publier le service"}
+                          ? (
+                            <span className="flex flex-row justify-between align-center">
+                              <BsFillEyeFill size={25} className="mr-3" />
+
+                              <span>
+                                Masquer le service
+                              </span>
+                            </span>
+                          ):(
+                            <span className="flex flex-row justify-between align-center">
+                              <BsFillEyeSlashFill size={25} className="mr-3" />
+
+                              <span>
+                                Publier le service
+                              </span>
+                            </span>  
+                          )}
 
                         {changeVisibilityLoading && (
                           <LoaderCircle size="small" />
