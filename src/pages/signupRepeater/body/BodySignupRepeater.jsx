@@ -25,14 +25,20 @@ const BodySignupRepeater = () => {
 	const [selected, setSelected] = React.useState("");
 
 	const townSelect = [
-			"Yaounde",
-			"Douala",
-			"Bamenda",
+		"Yaounde",
+		"Douala",
+		"Bamenda",
+	    "Bafoussam",
+	    "Maroua",
+	    "Dschang"
 	];
 
-	const town1Select = ["Essos", "Cité U", "Etoudi", "Mimboman"];
-	const town2Select = ["Bonaberi", "Bonamoussadi", "Bepanda", "Logbassi"];
-	const town3Select = ["Kumbo", "Nkambé", "Wum", "Bambui"];
+	const town1Select = ["Biteng", "Cité U", "Emana", "Etoudi", "Efoulan", "Ekounou", "Essos", "Mimboman", "Mvan", "Nkolbisson", "Nkoabang", "Ntui", "Nlonkak", "Ngoa Ekélé", "Olembé", "Yambassa"];
+	const town2Select = ["Bali", "Bonaberi", "Babylone", "Bonamoussadi", "Bepanda", "Bessengue", "Denver City", "Logbassi", "Logpom", "Youpwe", "Cité Pondi", "Nkondo", "Yabassi", "Santa Barbara"];
+	const town3Select = ["Atualakom", "Bambui", "Bonambappé", "Kumbo", "Nkambé", "Wum", "Mubang", "Munka", "Njenefor", "Nketesoh", "Ndogsimbi"];
+	const town4Select = ["Baleng", "Banego", "Djeleng", "Famla", "Kamkop", "Ndiangbou", "Ndiangdam", "Ndiangsouoh", "Ngoueng", "Tamdja", "Toukouop"];
+	const town5Select = ["Djarengol", "Domayo Galdima", "Hardéo", "Kodek", "Kodek Djarengol", "Kongola Djiddéo", "Louga Payendé Banana", "Marouaré Matakam", "Pallar", "Zokok"];
+	const town6Select = ["Asseitsa", "Athoumeto", "Aza'a", "Azuenla", "Canne à sucre", "Dounga", "Femteu", "Fiankop", "Leufock", "Makemtsa"];
 
 	let type = null;
 	let options = null;
@@ -43,6 +49,12 @@ const BodySignupRepeater = () => {
 			type = town2Select;
 	} else if (selected === "Bamenda") {
 			type = town3Select;
+	} else if (selected === "Bafoussam") {
+	    type = town4Select;
+	} else if (selected === "Maroua") {
+	    type = town5Select;
+	} else if (selected === "Dschang") {
+	    type = town6Select;
 	}
 
 	if (type) {
@@ -200,9 +212,13 @@ const BodySignupRepeater = () => {
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
 					<option>Ville*</option>
-					<option>Yaounde</option>
-					<option>Douala</option>
+					
+					<option>Bafoussam</option>
 					<option>Bamenda</option>
+					<option>Douala</option>
+					<option>Dschang</option>
+					<option>Maroua</option>
+					<option>Yaounde</option>
 				</select>
 				<select
 					name="quartier"
