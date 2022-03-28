@@ -1,33 +1,44 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState, useContext, useMemo } from "react";
 import style from './style.module.css'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 import ImgCircle from "../../elements/imgCircle/ImgCircle";
+import Paragraphe from "../../elements/p/Paragraphe";
+import serviceContext from "../../../dataManager/context/servicesContext";
 
 const image = require("../../../medias/photos/shallow-focus-shot-young-black-male-grey-wall (1).jpg")
 
-const RecommandationItem = ({ stars, message }) => {
+const RecommandationItem = ({ note }) => {
+
+  console.log(note);
 
   return (
     <article className={style.recommandationItem}>
-      <span>
-       { message }
-      </span>
+
+      <div className="grid content-between h-full">
+        <Paragraphe>
+        { note.message }
+        </Paragraphe>
+        <span>{`${note.stars} étoiles`}</span>
+      </div>
 
       <div className={style.recommandationInfo}>
-        <ImgCircle classe={style.recommandationImage} src={image} alt="eleve" />
+        <ImgCircle classe={style.recommandationImage} src={note.author.profilePic} alt="eleve" />
 
-        <span className={style.recommandationLevel}>Eleve de 3-ieme</span>
+        <span className={`${style.recommandationLevel} block test-xs `}>{`${note.author.name + " " + note.author.firstName }`}</span>
+        <span className={style.recommandationLevel}>{`${note.author.name + " " + note.author.firstName }`}</span>
       </div>
     </article>
   )
 }
 
-const RecommandationCarousel = ({ notes }) => {
+const RecommandationCarousel = ({ notes, serviceId }) => {
 
-  console.log(notes)
-  
+  console.log(notes);
   // Set Local state
   const [slideIndex, setSlideIndex] = useState(0)
+
+  //services context
+  const { services, storeAllNotesService } = useContext(serviceContext);
   
   // Set Slider Ref
   const slider = useRef()
@@ -36,6 +47,10 @@ const RecommandationCarousel = ({ notes }) => {
   useEffect(() => {
     slider.current.style.translate = `-${slideIndex * 100}%`
   }, [slideIndex])
+
+  useEffect(() => {
+    console.log(getService(services, serviceId).getNotes)
+  }, []);
 
   const handleSlide = (action) => {
     switch (action) {
@@ -64,6 +79,14 @@ const RecommandationCarousel = ({ notes }) => {
     }
   }
 
+  const getService = (services, serviceId) => {
+    const service = services.find((serv) => {
+      return serv.getId === serviceId;
+    });
+
+    return service;
+  };
+
   return (
     <section className={style.recommandation}>
       <section className={style.recommationContainer}>
@@ -72,9 +95,11 @@ const RecommandationCarousel = ({ notes }) => {
           className={style.recommandationSlider}
         >
           {
-            [1, 1, 1].map((item) => {
-              return <RecommandationItem  message={item.message} />
-            })
+            notes && (
+              notes.map((note) => {
+                return <RecommandationItem note={note} />
+              })
+            )
           }
         </div>
       </section>
