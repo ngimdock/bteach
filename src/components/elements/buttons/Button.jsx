@@ -74,7 +74,7 @@ const Button = (props) => {
 			className={`${classe} ${radius} ${padding} ${textSize} ${background} ${backgroundHover} ${textColor} inline-block uppercase md:tracking-wider text-white animate-moyen font-primary`}
 			style={style}
 		>
-			<button onClick={action}>
+			<button>
 				{ children }
 			</button>
 		</Link>

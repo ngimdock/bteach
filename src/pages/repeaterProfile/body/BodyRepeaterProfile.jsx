@@ -46,6 +46,7 @@ import AskToSigninModal from "../../../components/utils/modals/AskToSigninModal"
 import { firebaseServiceChangeVisibilityOfService } from "../../../api/Services";
 import { ToastContext } from "react-simple-toastify";
 import UpdateServicesModal from "../../../components/utils/modals/UpdateServicesModal";
+import { firebaseGetNotes } from "../../../api/Notes";
 
 const imageIllustration = require("../../../medias/illustrations/process1.png");
 
@@ -187,14 +188,9 @@ const BodyRepeaterProfile = () => {
     }
   }, [imageURL]);
 
-  // useEffect(() => {
-  // 	if (currentUser.getRole === 1){
-  // 		console.log("repeater")
-  // 		const {
-
-  // 		} = currentUser.getService
-  // 	}
-  // }, []);
+  useEffect(() => {
+  	firebaseGetNotes(serviceId)
+  }, []);
 
   useEffect(() => {
     const serviceTmp = getService(services, serviceId);
@@ -583,6 +579,7 @@ const BodyRepeaterProfile = () => {
           <CreateNoteModal
             isOpen={isModalAnnonceOpen}
             closeModal={() => setIsModalAnnonceOpen(false)}
+            serviceId={serviceId}
           />
           <ContactRepeaterModal
             data={owner}

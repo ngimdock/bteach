@@ -10,6 +10,7 @@ import currentUserContext from '../../../dataManager/context/currentUserContext'
 function CreateNoteModal({ isOpen, closeModal, serviceId }) {
   const [stars, setStars] = useState(0)
   const [message, setMessage] = useState("")
+  const [loading, setLoading] = useState(false)
 
   //context
   const { currentUser } = useContext(currentUserContext)
@@ -26,10 +27,28 @@ function CreateNoteModal({ isOpen, closeModal, serviceId }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const data = { stars, message } // get data from the state
-    firebaseCreateNote(currentUser.getId, serviceId, data) //storenote on database 
-    handleClose() //close modal
-    console.log({idUser: currentUser.getId, serviceId, ...data })
+    
+    if (validateForm() && !loading) {
+      setLoading(true)
+      console.log("yo")
+      const data = { stars, message } // get data from the state
+    
+      
+      console.log({idUser: currentUser.getId, serviceId, ...data })
+  
+      firebaseCreateNote(currentUser.getId, serviceId, data) //store note on database 
+    
+      setLoading(false)
+
+      handleClose()
+    }
+  }
+
+  const validateForm = () => {
+    if (stars > 0 && message)
+      return true
+
+    return false
   }
 
 	const formatStars = (stars) => {
@@ -132,9 +151,8 @@ function CreateNoteModal({ isOpen, closeModal, serviceId }) {
                     annuler
                   </Button>
                   <Button
-                    type="button"
                     size="small"
-                    action={(event) => handleSubmit(event)}
+                    action={handleSubmit}
                   >
                     récommander
                   </Button>

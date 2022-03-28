@@ -1,6 +1,7 @@
 // Note operations
 import { addDoc, onSnapshot, query, where } from 'firebase/firestore'
 import { db, storage } from '../../firebase'
+import { firebaseUserGetUser } from '../Users'
 import { getCollection, getCollections } from '../utils'
 
 /**
@@ -14,16 +15,28 @@ const firebaseGetNotes = (idService, globalStateAddNotes = (data) => {}) => {
 
   const q = query(notesCollectionRef, where("service", "==", serviceCollectionRef))
 
-  onSnapshot(q, (snapshots) => {
+  
+  onSnapshot(q, async (snapshots) => {
+    const getUserData = async (uid) => {
+      try {
+        const { data } = await firebaseUserGetUser(uid)
+  
+        return { data }
+      } catch (err) {
+        return { error: "Une est survenu" }
+      }
+    }
+
     // Empty array for notes
     const notes = []
 
     // Get data of notes
-    snapshots.docs.forEach(doc => {
-      notes.push({ ...doc.data(), id: doc.id })
-    })
+    for (let doc of snapshots.docs) {
+      const { data } = await getUserData(doc.data().author.id)
 
-    console.log(notes)
+      notes.push({ ...doc.data(), id: doc.id, author: data })
+    }
+
     // Add to the global state
     globalStateAddNotes(idService, notes)
 
