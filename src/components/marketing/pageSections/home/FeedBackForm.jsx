@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-
-import H3 from "../../../elements/titles/H3";
 import Container from '../../../utils/Container';
-import Input from "../../../elements/inputs/Input";
 
 import image from "../../../../medias/illustrations/feedback.png"
 
