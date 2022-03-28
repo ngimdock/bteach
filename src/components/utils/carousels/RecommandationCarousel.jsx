@@ -25,7 +25,6 @@ const RecommandationItem = ({ note }) => {
         <ImgCircle classe={style.recommandationImage} src={note.author.profilePic} alt="eleve" />
 
         <span className={`${style.recommandationLevel} block test-xs `}>{`${note.author.name + " " + note.author.firstName }`}</span>
-        <span className={style.recommandationLevel}>{`${note.author.name + " " + note.author.firstName }`}</span>
       </div>
     </article>
   )
