@@ -62,7 +62,6 @@ const RepeaterProfile = ({ repeaterName }) => {
 			setRedirect(true)
 		}
 
-		console.log({service, services})
 	}, [services, serviceId, currentUser])
 
 

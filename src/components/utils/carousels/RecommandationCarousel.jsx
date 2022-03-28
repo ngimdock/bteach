@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import style from './style.module.css'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 import ImgCircle from "../../elements/imgCircle/ImgCircle";
 
 const image = require("../../../medias/photos/shallow-focus-shot-young-black-male-grey-wall (1).jpg")
 
-const RecommandationItem = () => {
+const RecommandationItem = ({ stars, message }) => {
+
   return (
     <article className={style.recommandationItem}>
       <span>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius voluptate similique asperiores sapiente est dolores tempora sequi, officia iste rem consectetur fugiat vel nesciunt earum veniam voluptatem aspernatur odit. Qui corrupti odit, perferendis quisquam harum libero recusandae excepturi autem deleniti rerum modi sapiente, animi facere, sint est incidunt illum tenetur!
+       { message }
       </span>
 
       <div className={style.recommandationInfo}>
@@ -21,7 +22,10 @@ const RecommandationItem = () => {
   )
 }
 
-const RecommandationCarousel = () => {
+const RecommandationCarousel = ({ notes }) => {
+
+  // console.log(notes)
+  
   // Set Local state
   const [slideIndex, setSlideIndex] = useState(0)
   
@@ -68,8 +72,8 @@ const RecommandationCarousel = () => {
           className={style.recommandationSlider}
         >
           {
-            [1, 1, 1].map((item) => {
-              return <RecommandationItem />
+            notes.map((item) => {
+              return <RecommandationItem  message={item.message} />
             })
           }
         </div>
@@ -91,4 +95,4 @@ const RecommandationCarousel = () => {
   )
 }
 
-export default RecommandationCarousel
+export default React.memo(RecommandationCarousel)

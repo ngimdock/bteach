@@ -11,10 +11,10 @@ const RectangularLink = (props) => {
 	} = props
 
 	return(
-		<div className="mx-auto my-3">
+		<div className={`${classe} mx-auto my-3`}>
 			<Link 
 				to={link}
-				className={`${classe} px-8 py-3 text-white bg-gray-300  hover:bg-dark transition ease-in-out duration-300`}
+				className={`px-8 py-3 text-white bg-gray-300  hover:bg-dark transition ease-in-out duration-300`}
 				onClick={onClick}
 				>
 				{ children }

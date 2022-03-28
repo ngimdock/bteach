@@ -24,7 +24,7 @@ const Footer = () => {
 	}
 
 	return(
-		<footer className={`${style.footer} mt-20 md:mt-32` }>
+		<footer className={`${style.footer} bg-black mt-20 md:mt-32` }>
 			<div className={style.footerOne}>
 				<div className={style.footerTwo}>
 					<span className={style.footerTitle}>Type répétiteurs</span>

@@ -23,10 +23,10 @@ const firebaseGetNotes = (idService, globalStateAddNotes = (data) => {}) => {
       notes.push({ ...doc.data(), id: doc.id })
     })
 
+    console.log(notes)
     // Add to the global state
-    globalStateAddNotes(notes)
+    globalStateAddNotes(idService, notes)
 
-    console.log({notes})
   })
 }
 

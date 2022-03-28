@@ -16,6 +16,7 @@ import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal"
 import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal"
 import LoadingPage from '../../../components/marketing/navbar/LoadingPage'
 import AskToSigninModal from '../../../components/utils/modals/AskToSigninModal'
+import { firebaseGetNotes } from "../../../api/Notes/index"
 
 const imageIllustration = require("../../../medias/illustrations/process1.png")
 
@@ -80,7 +81,7 @@ const BodyRepeaterProfile = () => {
 
 	// Get global state
 	const { currentUser, updateProfilePic } = useContext(currentUserContext)
-	const { services } = useContext(serviceContext)
+	const { services, storeAllNotesService } = useContext(serviceContext)
 
 
 	// Set locale state
@@ -100,6 +101,7 @@ const BodyRepeaterProfile = () => {
 	const [isModalAnnonceOpen, setIsModalAnnonceOpen] = useState(false)
 	const [isModalContactRepeaterOpen, setIsModalContactRepeaterOpen] = useState(false)
 	const [isModalAskToSigninOpen, setIsModalAskToSigninOpen] = useState(false)
+	const [notes, setNotes] = useState([])
 
 	// Use ref section
 	const inputRef = useRef()
@@ -140,6 +142,21 @@ const BodyRepeaterProfile = () => {
 		}
 	}, [imageURL])
 
+	useEffect(() => {
+		firebaseGetNotes(serviceId, storeAllNotesService) //store notes for this service in global state
+	}, []);
+
+	// useEffect(() => {
+	// 	const index = services.findIndex(serv => serv.getId === serviceId)
+	// 	const notesServices =  services[index].getNotes
+	// 	setNotes(notesServices)
+	// }, [notes]);
+
+	const getAllNotesService = () => {
+		const index = services.findIndex(serv => serv.getId === serviceId)
+		return services[index].getNotes
+	}
+
 	// useEffect(() => {
 	// 	if (currentUser.getRole === 1){
 	// 		console.log("repeater")
@@ -156,8 +173,6 @@ const BodyRepeaterProfile = () => {
 		const service = isCurrentUser(currentUser, serviceId) ? (
 			currentUser.getService 
 		) : (serviceTmp)
-
-		console.log({ serviceTmp })
 
 		const owner = isCurrentUser(currentUser, serviceId) ? (
 			currentUser
@@ -393,7 +408,7 @@ const BodyRepeaterProfile = () => {
 								
 								<H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
 
-								<RecommandationCarousel />
+								<RecommandationCarousel notes={notes} />
 							</div>
 
 							<ImgCircle 
@@ -404,6 +419,7 @@ const BodyRepeaterProfile = () => {
 
 						</section>
 						<CreateNoteModal
+							serviceId = {serviceId}
 							isOpen={isModalAnnonceOpen}
 							closeModal={() => setIsModalAnnonceOpen(false)}
 						/>
@@ -448,4 +464,4 @@ function ArticleBlock({ title, listElements, color  }) {
 }
 
 
-export default BodyRepeaterProfile
+export default React.memo(BodyRepeaterProfile)

@@ -13,6 +13,7 @@ import shallow from "../../../../medias/photos/shallow-focus-shot-young-black-ma
 import Container from '../../../utils/Container';
 import searchContext from "../../../../dataManager/context/searchContext";
 import { Navigate } from "react-router-dom";
+import Button from '../../../elements/buttons/Button';
 
 const domains = [
 	{
@@ -194,7 +195,10 @@ const RepeaterDomains = () => {
 					}
 					
 				</div>
-
+				
+				<Button size="big" link="/search/repeaters" theme="red" classe="w-auto mt-16 mx-auto">
+					Tous les repétiteurs
+				</Button>
 			</div>
 
 			{
