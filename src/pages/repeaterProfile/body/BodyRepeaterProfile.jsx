@@ -1,24 +1,3 @@
-// import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
-// import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
-// import style from '../../../css/personalInfoRepeater.module.css'
-// import Button from '../../../components/elements/buttons/Button'
-// import H3 from '../../../components/elements/titles/H3'
-// import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
-// import currentUserContext from '../../../dataManager/context/currentUserContext'
-// import { BsCameraFill } from 'react-icons/bs'
-// import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
-// import { firebaseUserChangeProfilePic } from '../../../api/Users'
-// import { uploadImage } from '../../../api/utils'
-// import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
-// import { useLocation } from 'react-router-dom'
-// import serviceContext from '../../../dataManager/context/servicesContext'
-// import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal"
-// import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal"
-// import LoadingPage from '../../../components/marketing/navbar/LoadingPage'
-// import AskToSigninModal from '../../../components/utils/modals/AskToSigninModal'
-// import { firebaseGetNotes } from "../../../api/Notes/index"
-
-// const imageIllustration = require("../../../medias/illustrations/process1.png")
 import React, {
   useCallback,
   useContext,
@@ -116,7 +95,7 @@ const BodyRepeaterProfile = () => {
     changeServiceVisibility,
     updateService,
   } = useContext(currentUserContext);
-  const { services } = useContext(serviceContext);
+  const { services, storeAllNotesService } = useContext(serviceContext);
   const { displayToast } = useContext(ToastContext);
 
   // Set locale state
@@ -139,6 +118,7 @@ const BodyRepeaterProfile = () => {
   const [isModalAskToSigninOpen, setIsModalAskToSigninOpen] = useState(false);
   const [changeVisibilityLoading, setChangeVisibilityLoading] = useState(false);
   const [activeServicesModal, setActiveServicesModal] = useState(false);
+  const [notes, setNotes] = useState([])
 
   // Use ref section
   const inputRef = useRef();
@@ -188,9 +168,11 @@ const BodyRepeaterProfile = () => {
     }
   }, [imageURL]);
 
-  // useEffect(() => {
-  // 	firebaseGetNotes(serviceId)
-  // }, []);
+  useEffect(() => {
+  	firebaseGetNotes(serviceId, storeAllNotesService)
+    setNotes(getService(services, serviceId).getNotes)
+    console.log(notes);
+  }, [getService(services, serviceId).getNotes]);
 
   useEffect(() => {
     const serviceTmp = getService(services, serviceId);
@@ -199,8 +181,6 @@ const BodyRepeaterProfile = () => {
     const service = isCurrentUser(currentUser, serviceId)
       ? currentUser.getService
       : serviceTmp;
-
-    console.log({ serviceTmp });
 
     const owner = isCurrentUser(currentUser, serviceId)
       ? currentUser
@@ -582,7 +562,10 @@ const BodyRepeaterProfile = () => {
 
               <H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
 
-              <RecommandationCarousel />
+              <RecommandationCarousel
+               notes={notes}
+                serviceId={serviceId} 
+              />
             </div>
 
             <ImgCircle

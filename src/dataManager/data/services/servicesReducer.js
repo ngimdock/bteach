@@ -71,7 +71,6 @@ const servicesReducer = (state=[], action) => {
 
 			if(index > -1){
 				services[index].storeAllNotes(notes)
-				// console.log(services[index].getNotes)
 				return services
 			}
 			return state
