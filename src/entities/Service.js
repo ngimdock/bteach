@@ -19,8 +19,6 @@ class Service{
 
 	constructor(data){
 		this.initialization(data)
-		this.isVisible = 1
-		this.isCertified = 0
 	}
 
 	get getServiceData(){
@@ -108,6 +106,10 @@ class Service{
 	get getNotes(){
 		return this.notes
 	}
+	
+	get getCategories () {
+		return this.categories
+	}
 
 	initialization(data){
 		if(data){
@@ -124,7 +126,9 @@ class Service{
 				description,
 				owner,
 				categories,
-				notes
+				notes,
+				isVisible,
+				isCertified
 			} = data
 
 			const allNotes = notes ? notes.map(note => new Note(note)) : []
@@ -141,6 +145,8 @@ class Service{
 			this.owner = new Repeater(owner)
 			this.categories = categories
 			this.notes = [...allNotes]
+			this.isVisible = isVisible
+			this.isCertified = isCertified
 		}
 		
 	}
@@ -149,25 +155,31 @@ class Service{
 		if(data){
 			const{
 				id,
-				minPrise,
+				minPrice,
 				documentToCertify,
 				currentGradeLevel,
 				teachingUnit,
 				levelsUnit,
 				coursesType,
 				coursesLocation,
-				description
+				description,
+				categories,
+				isVisible
 			} = data
+
+			console.log(data)
 
 			this.id = id ? id : this.id
 			this.documentToCertify = documentToCertify ? documentToCertify : this.documentToCertify
-			this.minPrise = minPrise ? minPrise : this.minPrise
+			this.minPrice = minPrice ? minPrice : this.minPrice
 			this.currentGradeLevel = currentGradeLevel ? currentGradeLevel : this.currentGradeLevel
 			this.teachingUnit = teachingUnit ? [...teachingUnit] : [...this.teachingUnit]
 			this.levelsUnit = levelsUnit ? [...levelsUnit] : [...this.levelsUnit]
 			this.coursesType = coursesType ? [...coursesType] : [...this.coursesType]
 			this.coursesLocation = coursesLocation ? [...coursesLocation] : [...this.coursesLocation]
 			this.description = description ? description : this.description
+			this.categories = categories ? categories : this.categories
+			this.isVisible = isVisible
 		}
 	}
 

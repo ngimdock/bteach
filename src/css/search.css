@@ -53,7 +53,10 @@
 }
 
 .w_max_content{
-	width: max-content;
+	width: fit-content;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .RepeaterCard .top_part {
@@ -65,6 +68,7 @@
 	width: 100%;
   object-fit: cover;
 }
+
 .RepeaterCard .top_part .card_repeater{
 	height: 300px;
 	width: 100%;

@@ -4,6 +4,8 @@ import Input from "../../../components/elements/inputs/Input";
 import Radio from "../../../components/elements/inputs/Radio";
 import ALink from '../../../components/elements/a/ALink'
 import { firebaseUserCreateUser } from '../../../api/Users'
+import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
+import { Navigate } from "react-router-dom";
 
 const BodySignupClient = () => {
 	let [formData, setFormData] = useState({
@@ -17,51 +19,54 @@ const BodySignupClient = () => {
 		sexe: "",
 		profilePicture: "",
 	});
+	const [loading, setLoading] = useState(false)
+	const [redirect, setRedirect] = useState(false)
 
-	const [selected, setSelected] = React.useState("");
-
-	const townSelect = [
-	    "Yaounde",
-	    "Douala",
-	    "Bamenda",
-	];
 
 	const town1Select = ["Essos", "Cité U", "Etoudi", "Mimboman"];
 	const town2Select = ["Bonaberi", "Bonamoussadi", "Bepanda", "Logbassi"];
 	const town3Select = ["Kumbo", "Nkambé", "Wum", "Bambui"];
 
-	let type = null;
-	let options = null;
+	const generateDistricts = () => {
+		const { ville } = formData
 
-	if (selected === "Yaounde") {
-	    type = town1Select;
-	} else if (selected === "Douala") {
-	    type = town2Select;
-	} else if (selected === "Bamenda") {
-	    type = town3Select;
+		switch (ville) {
+			case "yaoundé": {
+				return town1Select.map((el) => <option key={el} value={el}>{el}</option>)
+			}
+
+			case "douala": {
+				return town2Select.map((el) => <option key={el} value={el}>{el}</option>)
+			}
+
+			case "bamenda": {
+				return town3Select.map((el) => <option key={el} value={el}>{el}</option>)
+
+			}
+
+			default: break
+		}
 	}
-
-	if (type) {
-	    options = type.map((el) => <option key={el}>{el}</option>);
-	}
-
-	
 
 	const changeSelectOptionHandler = (event) => {
-	    setSelected(event.target.value);
+			handleChange(event)
 	};
 
 	const handleChange = (event) => {
-		setFormData({
-			...formData,
-			[event.target.name]: event.target.value,
-		});
+		if (!loading) {
+			setFormData({
+				...formData,
+				[event.target.name]: event.target.value,
+			});
+		}
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 
-		if (validateForm()) {
+		if (validateForm() && !loading) {
+			setLoading(true)
+
 			try {
 				// Create a user and store his data in the database
 				const { data, error } = await firebaseUserCreateUser({
@@ -79,11 +84,15 @@ const BodySignupClient = () => {
 
 				if (data) {
 					console.log("User created successfully")
+
+					setRedirect(true)
 				} else {
 					console.log(error)
 				}
 			} catch (err) {
 				console.log(err)
+			} finally {
+				setLoading(false)
 			}
 		}
 	}
@@ -117,7 +126,16 @@ const BodySignupClient = () => {
 	}
 
 	return (
-		<div className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+		<div style={{ opacity: loading ? .6:1 }} className="flex flex-col justify-center items-center py-14 px-7 w-11/12 h-full max-w-xl mx-auto font-primary">
+			{
+				redirect && <Navigate to="/" />
+			}
+
+			{
+				loading && <LoaderCircle size="normal" />
+			}
+		
+			
 			<H3 color="#00171f" classe="mb-10 text-center">
 				Suivre les étapes pour s'inscrire en tant apprenant qui cherche un
 				repétiteur
@@ -172,10 +190,10 @@ const BodySignupClient = () => {
 					style={{ transition: "padding .4s" }}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option>Ville*</option>
-					<option>Yaounde</option>
-					<option>Douala</option>
-					<option>Bamenda</option>
+					<option value="">Ville*</option>
+					<option value="yaoundé">Yaounde</option>
+					<option value="douala">Douala</option>
+					<option value="bamenda">Bamenda</option>
 				</select>
 				<select
 					name="quartier"
@@ -183,12 +201,14 @@ const BodySignupClient = () => {
 					style={{ transition: "padding .4s" }}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
-					<option>Quartier*</option>
-		            {
-		              	options
-		            }
+					<option value="">Quartier*</option>
+		      {
+		        generateDistricts()
+		      }
 				</select>
-				<label
+
+
+				{/* <label
 					htmlFor="profilePicture"
 					className="bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-400 text-xs md:text-sm  focus:outline-none focus:bg-gray2-ligth focus:px-6 mb-3 w-full block"
 				>
@@ -203,7 +223,9 @@ const BodySignupClient = () => {
 					placeholder="Entrez votre photo de profil"
 					onChange={handleChange}
 					accept=".jpg, .jpeg, .png"
-				/>
+				/> */}
+
+
 				<div className="flex text-gray-400 mb-3">
 					<span className="mr-3">Sexe*</span>
 					{["homme", "femme"].map((sexe) => (

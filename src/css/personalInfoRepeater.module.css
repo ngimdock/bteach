@@ -1,5 +1,9 @@
 /* CSS module for the personal info page of the repeater */
 
+body {
+  overflow-x: hidden;
+}
+
 .profileContainer {
   width: 100%;
   height: auto;

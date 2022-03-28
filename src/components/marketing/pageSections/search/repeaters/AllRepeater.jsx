@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import RepeaterCard from "../elements/RepeaterCard";
 import serviceContext from "../../../../../dataManager/context/servicesContext";
+import H4 from "../../../../elements/titles/H4";
 
 const getFilters = (filters) => {
 	const FILTERS_SCHEMA = {
@@ -116,11 +117,16 @@ const AllRepeater = ({ filters }) => {
 
 	const getFilteredServices = (filter, services) => {
 		if (filter.length > 0) {
-			const getFiltersValues = (filters) => filters.map(f => f.value)
+			const getFiltersValues = (filters) => filters.map(f => {
+				if (typeof f.value === "string")
+					return f.value.toLowerCase()
+
+				return f.value
+			})
 
 			switch (filter[0].type) {
 				case "matiere": {
-					return services.filter(service => service.teachingUnit.some(unit => getFiltersValues(filter).includes(unit)))
+					return services.filter(service => service.teachingUnit.some(unit => getFiltersValues(filter).includes(unit.toLowerCase())))
 				}
 	
 				case "sexe": {
@@ -128,15 +134,15 @@ const AllRepeater = ({ filters }) => {
 				}
 	
 				case "niveau": {
-					return services.filter(service => service.categories.some(cat => getFiltersValues(filter).includes(cat)))
+					return services.filter(service => service.categories.some(cat => getFiltersValues(filter).includes(cat.toLowerCase())))
 				}
 	
 				case "lieu": {
-					return services.filter(service => service.coursesLocation.some(location => getFiltersValues(filter).includes(location)))
+					return services.filter(service => service.coursesLocation.some(location => getFiltersValues(filter).includes(location.toLowerCase())))
 				}
 	
 				case "ville": {
-					return services.filter(service => getFiltersValues(filter).includes(service.owner.town))
+					return services.filter(service => getFiltersValues(filter).includes(service.owner.town.toLowerCase()))
 				}
 
 				case "keyword": {
@@ -157,20 +163,25 @@ const AllRepeater = ({ filters }) => {
 
 	return(
 		<>
-			<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
-				{
-					displayServiceBasedOnFilters().length > 0 && (
-						displayServiceBasedOnFilters().map(service => {
-							return (
-								<RepeaterCard
-									key={service.getId}
-									data={service}
-								/>
-							)
-						})
-					)
-				}
-			</div>
+			{
+				displayServiceBasedOnFilters().length > 0 && (
+					<>
+						<H4 classe="ml-2">{displayServiceBasedOnFilters().length} Résultats</H4>
+						<div className="my-5 grid lg:grid-cols-3 md:grid-cols-2">
+							{
+								displayServiceBasedOnFilters().map(service => {
+									return (
+										<RepeaterCard
+											key={service.getId}
+											data={service}
+										/>
+									)
+								})
+							}
+						</div>
+					</>
+				)
+			}
 
 			{
 				displayServiceBasedOnFilters().length === 0 && (
