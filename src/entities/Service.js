@@ -1,4 +1,5 @@
 import Repeater from "./Repeater"
+import Note from "./Note"
 
 class Service{
 	id
@@ -14,6 +15,7 @@ class Service{
 	description
 	owner
 	categories
+	notes
 
 	constructor(data){
 		this.initialization(data)
@@ -98,6 +100,13 @@ class Service{
 	 	return this.description
 	 }
 
+	/**
+	* @returns array of notes given
+	*/
+	get getNotes(){
+		return this.notes
+	}
+	
 	get getCategories () {
 		return this.categories
 	}
@@ -117,9 +126,12 @@ class Service{
 				description,
 				owner,
 				categories,
+				notes,
 				isVisible,
 				isCertified
 			} = data
+
+			const allNotes = notes ? notes.map(note => new Note(note)) : []
 
 			this.id = id
 			this.documentToCertify = documentToCertify ? documentToCertify : null
@@ -132,6 +144,7 @@ class Service{
 			this.description = description
 			this.owner = new Repeater(owner)
 			this.categories = categories
+			this.notes = [...allNotes]
 			this.isVisible = isVisible
 			this.isCertified = isCertified
 		}
@@ -190,6 +203,35 @@ class Service{
 
 	setDocumentToCertify(document){
 		this.documentToCertify = document
+	}
+
+	changeNoteVisibility(id, info){
+		const index = this.notes.findIndex(note => note.id === id)
+		this.notes[index].setIsVisible(info)
+	}
+
+	createNote(data){
+		this.notes.push(new Note(data))
+	}
+
+	storeAllNotes(notes){
+		if(notes){
+			for(let note of notes){
+				this.notes.push(new Note(note))
+			}
+		}
+	}
+
+	deleteNote(id){
+		let notesTmp = this.notes.filter(note => note.getId !== id)
+		this.notes = notesTmp
+	}
+
+	updateNote(id, data){
+		const index = this.notes.findIndex(note => note.getId === id)
+		if(index > -1){
+			this.notes[index].updateNote(data)
+		}
 	}
 }
 

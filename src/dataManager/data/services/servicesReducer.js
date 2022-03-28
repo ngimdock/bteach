@@ -3,7 +3,12 @@ import Service from "../../../entities/Service"
 import { 
 	ADD_SERVICE, 
 	ADD_ALL_SERVICES, 
-	REMOVE_SERVICE
+	REMOVE_SERVICE,
+
+	CREATE_NOTE_SERVICE,
+    UPDATE_NOTE_SERVICE,
+    DELETE_NOTE_SERVICE,
+    STORE_ALL_NOTES_SERVICE
 } from "./types"
 
 const servicesReducer = (state=[], action) => {
@@ -44,8 +49,44 @@ const servicesReducer = (state=[], action) => {
 			return state
 		}
 
+		case CREATE_NOTE_SERVICE: {
+			const { idService, data } = action.payload
+			const services = [...state]
+			const index = findServiceIndex(services, idService) //find the index of service to create a note
+
+			if(index > -1){
+				services[index].createNote(data)
+				console.log("note was created")
+				console.log(services)
+				return services
+			}
+			
+			return state
+		}
+
+		case STORE_ALL_NOTES_SERVICE : {
+			const { idService, notes } = action.payload
+			const services = [...state]
+			const index = findServiceIndex(services, idService) //find the index of service to create a note
+
+			if(index > -1){
+				services[index].storeAllNotes(notes)
+				// console.log(services[index].getNotes)
+				return services
+			}
+			return state
+		}
+
 		default: return state
 	}
+}
+
+function findServiceIndex(services, idService){
+	const index = services.findIndex(function(serv){
+		return serv.id === idService
+	})
+
+	return index
 }
 
 export default servicesReducer

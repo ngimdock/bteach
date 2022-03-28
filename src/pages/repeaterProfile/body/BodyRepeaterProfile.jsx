@@ -1,3 +1,24 @@
+// import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+// import ImgCircle from '../../../components/elements/imgCircle/ImgCircle'
+// import style from '../../../css/personalInfoRepeater.module.css'
+// import Button from '../../../components/elements/buttons/Button'
+// import H3 from '../../../components/elements/titles/H3'
+// import RecommandationCarousel from '../../../components/utils/carousels/RecommandationCarousel'
+// import currentUserContext from '../../../dataManager/context/currentUserContext'
+// import { BsCameraFill } from 'react-icons/bs'
+// import AddProfilPhotoModal from '../../../components/utils/modals/addPhotoModal'
+// import { firebaseUserChangeProfilePic } from '../../../api/Users'
+// import { uploadImage } from '../../../api/utils'
+// import LoaderCircle from '../../../components/utils/loaders/LoaderCircle'
+// import { useLocation } from 'react-router-dom'
+// import serviceContext from '../../../dataManager/context/servicesContext'
+// import CreateNoteModal from "../../../components/utils/modals/CreateNoteModal"
+// import ContactRepeaterModal from "../../../components/utils/modals/ContactRepeaterModal"
+// import LoadingPage from '../../../components/marketing/navbar/LoadingPage'
+// import AskToSigninModal from '../../../components/utils/modals/AskToSigninModal'
+// import { firebaseGetNotes } from "../../../api/Notes/index"
+
+// const imageIllustration = require("../../../medias/illustrations/process1.png")
 import React, {
   useCallback,
   useContext,

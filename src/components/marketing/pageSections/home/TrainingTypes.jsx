@@ -26,11 +26,11 @@ const TrainingTypes = () => {
 
 	return(
 
-		<Container classe="mt-20 md:mt-32 flex justify-center ">
+		<Container classe="mt-32 md:mt-32 flex justify-center ">
 			<div className="w-full grid lg:grid-cols-3 md:grid-cols-2 gap-y-8">
 				<RectangularLink link="#" onClick={() => handleAddFilter("primaire")}>Formation primaire</RectangularLink>
 				<RectangularLink link="#" onClick={() => handleAddFilter("secondaire")}>Formation secondaire</RectangularLink>
-				<RectangularLink link="#" onClick={() => handleAddFilter("université")}>Formation université</RectangularLink>
+				<RectangularLink link="#" classe="md:mx-auto lg:mx-0" onClick={() => handleAddFilter("université")}>Formation université</RectangularLink>
 				{/* <RectangularLink link="" className="block mx-auto">Formation spécialisée</RectangularLink> */}
 			</div>
 
