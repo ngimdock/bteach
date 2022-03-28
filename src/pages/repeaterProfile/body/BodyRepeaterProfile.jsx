@@ -172,7 +172,7 @@ const BodyRepeaterProfile = () => {
   	firebaseGetNotes(serviceId, storeAllNotesService)
     setNotes(getService(services, serviceId).getNotes)
     console.log(notes);
-  }, [getService(services, serviceId).getNotes]);
+  }, []);
 
   useEffect(() => {
     const serviceTmp = getService(services, serviceId);
@@ -560,12 +560,20 @@ const BodyRepeaterProfile = () => {
                 </div>
               </article>
 
-              <H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
+              <H3 classe="mt-20">Les recommandations du répétiteur ({notes.length})</H3>
 
-              <RecommandationCarousel
-               notes={notes}
-                serviceId={serviceId} 
-              />
+              {
+                notes.length > 0 ? (
+                  <RecommandationCarousel
+                    notes={notes}
+                    serviceId={serviceId} 
+                  />
+                ):(
+                  <div className="border-2 w-full mt-6 py-3 px-5">
+                    Pas de recommandations
+                  </div>
+                )
+              }
             </div>
 
             <ImgCircle

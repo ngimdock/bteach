@@ -25,15 +25,12 @@ const RecommandationItem = ({ note }) => {
         <ImgCircle classe={style.recommandationImage} src={note.author.profilePic} alt="eleve" />
 
         <span className={`${style.recommandationLevel} block test-xs `}>{`${note.author.name + " " + note.author.firstName }`}</span>
-        <span className={style.recommandationLevel}>{`${note.author.name + " " + note.author.firstName }`}</span>
       </div>
     </article>
   )
 }
 
 const RecommandationCarousel = ({ notes, serviceId }) => {
-
-  console.log(notes);
   // Set Local state
   const [slideIndex, setSlideIndex] = useState(0)
 
@@ -55,7 +52,7 @@ const RecommandationCarousel = ({ notes, serviceId }) => {
   const handleSlide = (action) => {
     switch (action) {
       case "next": {
-        if (slideIndex === 2) {
+        if (slideIndex === notes.length-1) {
           setSlideIndex(0)
         } else {
           setSlideIndex(prev => prev + 1)
@@ -66,7 +63,7 @@ const RecommandationCarousel = ({ notes, serviceId }) => {
 
       case "prev": {
         if (slideIndex === 0) {
-          setSlideIndex(2)
+          setSlideIndex(notes.length-1)
         } else {
           setSlideIndex(prev => prev - 1)
         }
@@ -115,7 +112,7 @@ const RecommandationCarousel = ({ notes, serviceId }) => {
         className={style.recommandationNext} 
       />
 
-      <span className={style.sliderIndicator}>{slideIndex + 1} sur 3</span>
+      <span className={style.sliderIndicator}>{slideIndex + 1} sur {notes.length}</span>
     </section>
   )
 }
