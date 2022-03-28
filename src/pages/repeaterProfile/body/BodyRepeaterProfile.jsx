@@ -188,9 +188,9 @@ const BodyRepeaterProfile = () => {
     }
   }, [imageURL]);
 
-  useEffect(() => {
-  	firebaseGetNotes(serviceId)
-  }, []);
+  // useEffect(() => {
+  // 	firebaseGetNotes(serviceId)
+  // }, []);
 
   useEffect(() => {
     const serviceTmp = getService(services, serviceId);
