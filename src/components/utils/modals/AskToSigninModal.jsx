@@ -49,7 +49,7 @@ function AskToSigninModal({ isOpen, closeModal }) {
                   <H3>Vous n'êtes pas connecté</H3>
 
                   <Paragraphe size="small" classe="mt-3">
-                    Veillez vous connecter avant d'effectuer cette action
+                    Pour effectuer cette action vous devez vous connecter à votre compte, ou créer un si vous n'en avez pas !
                   </Paragraphe>
                 </div>
 

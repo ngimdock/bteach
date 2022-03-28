@@ -545,7 +545,7 @@ const BodyRepeaterProfile = () => {
                 </div>
               </article>
 
-              <H3 classe="mt-20">Les recommandations du repetiteur (4)</H3>
+              <H3 classe="mt-20">{`Les recommandations du repetiteur (${notes.length})`}</H3>
 
               <RecommandationCarousel
                notes={notes}

@@ -49,6 +49,18 @@ const DISCIPLINES = [
 				value: "sciences"
 			}
 		]
+	},
+
+	{
+		id: 5,
+		value: "Prof de sport",
+		filters: [
+			{
+				id: 1,
+				type: "matiere",
+				value: "sport"
+			}
+		]
 	}
 ]
 
