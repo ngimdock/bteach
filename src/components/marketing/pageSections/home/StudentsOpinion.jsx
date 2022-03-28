@@ -39,7 +39,7 @@ const StudentsOpinion = () => {
 
 	return(
 
-		<div className="mt-96 md:mt-20 container_sections_home lg:mx-60 mx-5">
+		<div className="mt-28 md:mt-20 container_sections_home lg:mx-60 mx-5">
 
 			<div className="testimonial_slider_2 shadow py-5 lg:pl-5">
 				<input type="radio" name="slider_2" id="slide_2_1" checked />

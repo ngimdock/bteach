@@ -24,7 +24,7 @@ const RecommandationItem = ({ stars, message }) => {
 
 const RecommandationCarousel = ({ notes }) => {
 
-  // console.log(notes)
+  console.log(notes)
   
   // Set Local state
   const [slideIndex, setSlideIndex] = useState(0)
@@ -72,7 +72,7 @@ const RecommandationCarousel = ({ notes }) => {
           className={style.recommandationSlider}
         >
           {
-            notes.map((item) => {
+            [1, 1, 1].map((item) => {
               return <RecommandationItem  message={item.message} />
             })
           }
