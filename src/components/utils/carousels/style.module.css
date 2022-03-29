@@ -1,7 +1,7 @@
 /* CSS module for recommandation carousel */
 
 :root {
-  --slider-value: 0%
+  --slider-value: 0%;
 }
 
 .recommandation {
@@ -31,7 +31,7 @@
   height: 100%;
   display: flex;
   flex-wrap: nowrap;
-  transition: translate .4s, transform .4s;
+  transition: translate 0.4s, transform 0.4s;
 }
 
 .recommandationPrev,
@@ -40,7 +40,7 @@
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
 .recommandationPrev {
@@ -64,6 +64,7 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
   flex-shrink: 0;
 }
 

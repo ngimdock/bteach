@@ -30,12 +30,9 @@ const RecommandationItem = ({ note }) => {
   )
 }
 
-const RecommandationCarousel = ({ notes, serviceId }) => {
+const RecommandationCarousel = ({ notes }) => {
   // Set Local state
   const [slideIndex, setSlideIndex] = useState(0)
-
-  //services context
-  const { services, storeAllNotesService } = useContext(serviceContext);
   
   // Set Slider Ref
   const slider = useRef()
@@ -44,10 +41,6 @@ const RecommandationCarousel = ({ notes, serviceId }) => {
   useEffect(() => {
     slider.current.style.translate = `-${slideIndex * 100}%`
   }, [slideIndex])
-
-  useEffect(() => {
-    console.log(getService(services, serviceId).getNotes)
-  }, []);
 
   const handleSlide = (action) => {
     switch (action) {

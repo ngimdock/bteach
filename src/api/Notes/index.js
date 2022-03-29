@@ -38,7 +38,7 @@ const firebaseGetNotes = (idService, globalStateAddNotes = (data) => {}) => {
     }
 
     // Add to the global state
-    globalStateAddNotes(idService, notes)
+    globalStateAddNotes(notes)
 
   })
 }

@@ -95,7 +95,7 @@ const BodyRepeaterProfile = () => {
     changeServiceVisibility,
     updateService,
   } = useContext(currentUserContext);
-  const { services, storeAllNotesService } = useContext(serviceContext);
+  const { services } = useContext(serviceContext);
   const { displayToast } = useContext(ToastContext);
 
   // Set locale state
@@ -169,9 +169,9 @@ const BodyRepeaterProfile = () => {
   }, [imageURL]);
 
   useEffect(() => {
-  	firebaseGetNotes(serviceId, storeAllNotesService)
-    setNotes(getService(services, serviceId).getNotes)
-    console.log(notes);
+  	firebaseGetNotes(serviceId, setNotes)
+    // setNotes(getService(services, serviceId).getNotes)
+    // console.log(notes);
   }, []);
 
   useEffect(() => {
@@ -566,7 +566,6 @@ const BodyRepeaterProfile = () => {
                 notes.length > 0 ? (
                   <RecommandationCarousel
                     notes={notes}
-                    serviceId={serviceId} 
                   />
                 ):(
                   <div className="border-2 w-full mt-6 py-3 px-5">
