@@ -39,7 +39,7 @@ const Router = () => {
 					<Route  path="repeaters" element={<SearchRepeaters />} />
 				</Route>
 
-				<Route path="/terms_of_service" element={<TermOfService/> } />
+				<Route path="terms_of_service" element={<TermOfService/> } />
 				
 				<Route path="team" element={<Team />} />
 
