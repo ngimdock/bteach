@@ -50,7 +50,7 @@ const Footer = () => {
 					<span className={style.footerTitle}>Politique</span>
 
 					<nav className={style.footerNav}>
-						<ALink classe={style.footerNavLink} link="#">Condition d'utilisation</ALink>
+						<ALink classe={style.footerNavLink} link="/terms_of_service">Condition d'utilisation</ALink>
 						<ALink classe={style.footerNavLink} link="#">Politique de confidentialite</ALink>
 					</nav>
 				</div>
