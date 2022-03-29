@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import H3 from "../../../elements/titles/H3";
 import Container from '../../../utils/Container';
-
 import image from "../../../../medias/illustrations/feedback.png"
 import currentUserContext from "../../../../dataManager/context/currentUserContext";
 import LoaderCircle from "../../../../components/utils/loaders/LoaderCircle"

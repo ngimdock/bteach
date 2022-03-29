@@ -6,6 +6,8 @@ import ALink from '../../../components/elements/a/ALink'
 import { firebaseUserCreateUser } from '../../../api/Users'
 import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
 import { Navigate } from "react-router-dom";
+import { townSelect } from "../../../utils/townsData";
+import generateDistricts from "../../../utils/generateDistricts";
 
 const BodySignupClient = () => {
 	let [formData, setFormData] = useState({
@@ -22,60 +24,8 @@ const BodySignupClient = () => {
 	const [loading, setLoading] = useState(false)
 	const [redirect, setRedirect] = useState(false)
 
-	const [selected, setSelected] = React.useState("");
-
-	const townSelect = [
-	    "Yaounde",
-	    "Douala",
-	    "Bamenda",
-	    "Bafoussam",
-	    "Maroua",
-	    "Dschang"
-	];
-
-	const town1Select = ["Biteng", "Cité U", "Emana", "Etoudi", "Efoulan", "Ekounou", "Essos", "Mimboman", "Mvan", "Nkolbisson", "Nkoabang", "Ntui", "Nlonkak", "Ngoa Ekélé", "Olembé", "Yambassa"];
-	const town2Select = ["Bali", "Bonaberi", "Babylone", "Bonamoussadi", "Bepanda", "Bessengue", "Denver City", "Logbassi", "Logpom", "Youpwe", "Cité Pondi", "Nkondo", "Yabassi", "Santa Barbara"];
-	const town3Select = ["Atualakom", "Bambui", "Bonambappé", "Kumbo", "Nkambé", "Wum", "Mubang", "Munka", "Njenefor", "Nketesoh", "Ndogsimbi"];
-	const town4Select = ["Baleng", "Banego", "Djeleng", "Famla", "Kamkop", "Ndiangbou", "Ndiangdam", "Ndiangsouoh", "Ngoueng", "Tamdja", "Toukouop"];
-	const town5Select = ["Djarengol", "Domayo Galdima", "Hardéo", "Kodek", "Kodek Djarengol", "Kongola Djiddéo", "Louga Payendé Banana", "Marouaré Matakam", "Pallar", "Zokok"];
-	const town6Select = ["Asseitsa", "Athoumeto", "Aza'a", "Azuenla", "Canne à sucre", "Dounga", "Femteu", "Fiankop", "Leufock", "Makemtsa"];
-
-	const generateDistricts = () => {
-		const { ville } = formData
-
-		switch (ville) {
-			case "yaoundé": {
-				return town1Select.map((el) => <option key={el} value={el}>{el}</option>)
-			}
-	// if (selected === "Yaounde") {
-	//     type = town1Select;
-	// } else if (selected === "Douala") {
-	//     type = town2Select;
-	// } else if (selected === "Bamenda") {
-	//     type = town3Select;
-	// } else if (selected === "Bafoussam") {
-	//     type = town4Select;
-	// } else if (selected === "Maroua") {
-	//     type = town5Select;
-	// } else if (selected === "Dschang") {
-	//     type = town6Select;
-	// }
-
-			case "douala": {
-				return town2Select.map((el) => <option key={el} value={el}>{el}</option>)
-			}
-
-			case "bamenda": {
-				return town3Select.map((el) => <option key={el} value={el}>{el}</option>)
-
-			}
-
-			default: break
-		}
-	}
-
 	const changeSelectOptionHandler = (event) => {
-			handleChange(event)
+		handleChange(event)
 	};
 
 	const handleChange = (event) => {
@@ -218,12 +168,7 @@ const BodySignupClient = () => {
 				>
 					<option>Ville*</option>
 					
-					<option>Bafoussam</option>
-					<option>Bamenda</option>
-					<option>Douala</option>
-					<option>Dschang</option>
-					<option>Maroua</option>
-					<option>Yaounde</option>
+					{townSelect.map((el) => <option key={el} value={el}>{el}</option>)}
 				</select>
 				<select
 					name="quartier"
@@ -232,30 +177,10 @@ const BodySignupClient = () => {
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
 					<option value="">Quartier*</option>
-		      {
-		        generateDistricts()
-		      }
+					{
+						generateDistricts(formData.ville)
+					}
 				</select>
-
-
-				{/* <label
-					htmlFor="profilePicture"
-					className="bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-400 text-xs md:text-sm  focus:outline-none focus:bg-gray2-ligth focus:px-6 mb-3 w-full block"
-				>
-					Selectionner votre photo de profile
-				</label>
-				<input
-					className="hidden"
-					type="file"
-					name="profilePicture"
-					id="profilePicture"
-					value={formData.profilePicture}
-					placeholder="Entrez votre photo de profil"
-					onChange={handleChange}
-					accept=".jpg, .jpeg, .png"
-				/> */}
-
-
 				<div className="flex text-gray-400 mb-3">
 					<span className="mr-3">Sexe*</span>
 					{["homme", "femme"].map((sexe) => (

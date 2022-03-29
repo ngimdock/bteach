@@ -39,7 +39,7 @@ const Footer = () => {
 					<span className={style.footerTitle}>A propos</span>
 
 					<nav className={style.footerNav}>
-						<ALink classe={style.footerNavLink} link="#">Notre equipe</ALink>
+						<ALink classe={style.footerNavLink} link="/team">Notre equipe</ALink>
 						<ALink classe={style.footerNavLink} link="#">Nos valeurs</ALink>
 						<ALink classe={style.footerNavLink} link="#">Nos references</ALink>
 					</nav>
