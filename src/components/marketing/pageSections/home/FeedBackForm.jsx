@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import H3 from "../../../elements/titles/H3";
 import Container from '../../../utils/Container';
-import Input from "../../../elements/inputs/Input";
 
 import image from "../../../../medias/illustrations/feedback.png"
 import currentUserContext from "../../../../dataManager/context/currentUserContext";
@@ -56,6 +54,8 @@ const FeedBackForm = () => {
 
 				if (data) {
 					alert("Feedback sent")
+
+					setFormData({ ...formData, message: "" })
 				}
 			} catch (err) {
 				console.log(err)

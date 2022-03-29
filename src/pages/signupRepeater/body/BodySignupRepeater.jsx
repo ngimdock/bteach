@@ -25,9 +25,12 @@ const BodySignupRepeater = () => {
 	const [loading, setLoading] = useState(false)
 	const [redirect, setRedirect] = useState(false)
 
-	const town1Select = ["Essos", "Cité U", "Etoudi", "Mimboman"];
-	const town2Select = ["Bonaberi", "Bonamoussadi", "Bepanda", "Logbassi"];
-	const town3Select = ["Kumbo", "Nkambé", "Wum", "Bambui"];
+	const town1Select = ["Biteng", "Cité U", "Emana", "Etoudi", "Efoulan", "Ekounou", "Essos", "Mimboman", "Mvan", "Nkolbisson", "Nkoabang", "Ntui", "Nlonkak", "Ngoa Ekélé", "Olembé", "Yambassa"];
+	const town2Select = ["Bali", "Bonaberi", "Babylone", "Bonamoussadi", "Bepanda", "Bessengue", "Denver City", "Logbassi", "Logpom", "Youpwe", "Cité Pondi", "Nkondo", "Yabassi", "Santa Barbara"];
+	const town3Select = ["Atualakom", "Bambui", "Bonambappé", "Kumbo", "Nkambé", "Wum", "Mubang", "Munka", "Njenefor", "Nketesoh", "Ndogsimbi"];
+	const town4Select = ["Baleng", "Banego", "Djeleng", "Famla", "Kamkop", "Ndiangbou", "Ndiangdam", "Ndiangsouoh", "Ngoueng", "Tamdja", "Toukouop"];
+	const town5Select = ["Djarengol", "Domayo Galdima", "Hardéo", "Kodek", "Kodek Djarengol", "Kongola Djiddéo", "Louga Payendé Banana", "Marouaré Matakam", "Pallar", "Zokok"];
+	const town6Select = ["Asseitsa", "Athoumeto", "Aza'a", "Azuenla", "Canne à sucre", "Dounga", "Femteu", "Fiankop", "Leufock", "Makemtsa"];
 
 	const generateDistricts = () => {
 		const { ville } = formData
@@ -44,6 +47,18 @@ const BodySignupRepeater = () => {
 			case "bamenda": {
 				return town3Select.map((el) => <option key={el} value={el}>{el}</option>)
 
+			}
+
+			case "bafoussam": {
+				return town4Select.map((el) => <option key={el} value={el}>{el}</option>)
+			}
+
+			case "maroua": {
+				return town5Select.map((el) => <option key={el} value={el}>{el}</option>)
+			}
+
+			case "dschang": {
+				return town6Select.map((el) => <option key={el} value={el}>{el}</option>)
 			}
 
 			default: break
@@ -215,10 +230,13 @@ const BodySignupRepeater = () => {
 					<option value="yaoundé">Yaounde</option>
 					<option value="douala">Douala</option>
 					<option value="bamenda">Bamenda</option>
+					<option value="bafoussam">Bafoussam</option>
+					<option value="dschang">Dschang</option>
+					<option value="maroua">Maroua</option>
 				</select>
 				<select
 					name="quartier"
-					onChange={changeSelectOptionHandler}
+					handleChange={handleChange}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
 					<option value="">
