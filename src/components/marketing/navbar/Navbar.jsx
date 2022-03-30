@@ -56,6 +56,7 @@ const Navbar = ({ onOpenModal }) => {
 		setBackgroundMenuBlackVisible(val)
 
 		console.log("hide")
+		console.log(val)
 	}
 
 	return(
@@ -101,7 +102,7 @@ const Navbar = ({ onOpenModal }) => {
 
 			<MobileMenu 
 				show={mobileMenuDisplayed}
-				onHide={handleShowMobileMenu}
+				onHide={() => handleShowMobileMenu(false)}
 				onOpenModal={onOpenModal}	
 			/>
 
