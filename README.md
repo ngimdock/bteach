@@ -8,7 +8,7 @@ This project was developed by 4 young Cameroonian developers to reduce poverty a
 
 ### 1- Clone the project locally
 
-git clone url
+git clone https://github.com/ngimdock/bteach.git
 
 ### 2- Navigate to the root of the project
 
@@ -18,9 +18,17 @@ cd bteach
 
 npm install
 
+or 
+
+yarn install
+
 ### 4- Runs the app in the development mode.
 
 npm start
+
+or
+
+yarn start
 
 ### 5- Navigate to this url in your browser to view the project
 
