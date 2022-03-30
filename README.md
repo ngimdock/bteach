@@ -44,4 +44,8 @@ or
 
 http://localhost:3000/
 
+## Production Link
+
+https://bteach-server.web.app
+
 ## And that's all !!!
