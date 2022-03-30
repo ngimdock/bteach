@@ -152,7 +152,7 @@ const SearchFilter = ({ onGetCurrentFilter, othersFilters }) => {
 			<div className="SearchFilterBox lg:py-3 lg:px-5">
 				<div className="grid lg:grid-cols-2">
 					<div>
-						<div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:mt-2 mt-7">
+						<div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:mt-2 mt-7 px-4">
 							<DropdownSubjects onAddFilter={handleAddFilter} />
 							<DropdownCities onAddFilter={handleAddFilter} />
 							<DropdownGender onAddFilter={handleAddFilter} />

@@ -95,3 +95,12 @@ input.thumb::-moz-range-thumb {
   pointer-events: all;
   position: relative;
 }
+
+@media screen and (max-width: 575px){
+  .multiRangeSlider .slider {
+    width: 200px;
+  }
+  input.thumb {
+    width: 200px;
+  }
+}

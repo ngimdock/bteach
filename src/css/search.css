@@ -13,6 +13,9 @@
 	.radio_label{
 		display: flex;
 	}
+	.CurrentSearchNav{
+		margin-left: 8px;
+	}
 }
 
 .CurrentSearchNav{
