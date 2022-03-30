@@ -69,6 +69,8 @@ const BodySignupRepeater = () => {
 	}
 
 	const changeSelectOptionHandler = (event) => {
+
+		console.log(event.target)
 		handleChange(event)
 	};
 
@@ -130,6 +132,8 @@ const BodySignupRepeater = () => {
 			sexe
 		} = formData
 
+		console.log(formData)
+
 		if (
 			nom &&
 			prenom &&
@@ -165,7 +169,6 @@ const BodySignupRepeater = () => {
 			</H3>
 			<form
 				className="shadow-md-x py-5 px-3 sm:px-5 sm:py-7 rounded-xl flex flex-col w-full"
-				onSubmit={(e) => e.preventDefault()}
 			>
 				<Input
 					type="text"
@@ -239,7 +242,7 @@ const BodySignupRepeater = () => {
 				</select>
 				<select
 					name="quartier"
-					handleChange={handleChange}
+					onChange={changeSelectOptionHandler}
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
 					<option value="">
