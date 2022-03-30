@@ -12,23 +12,33 @@ git clone https://github.com/ngimdock/bteach.git
 
 ### 2- Navigate to the root of the project
 
-cd bteach
+```bash
+  cd bteach
+```
 
 ### 3- Install all dependencies
 
-npm install
+```bash
+  npm install
+```
 
 or 
 
-yarn install
+```bash
+  yarn install
+```
 
 ### 4- Runs the app in the development mode.
 
-npm start
+```bash
+  npm start
+```
 
-or
+or 
 
-yarn start
+```bash
+  yarn start
+```
 
 ### 5- Navigate to this url in your browser to view the project
 
