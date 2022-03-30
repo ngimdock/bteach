@@ -6,6 +6,8 @@ import ALink from '../../../components/elements/a/ALink'
 import { firebaseUserCreateUser } from '../../../api/Users'
 import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
 import { Navigate } from "react-router-dom";
+import { townSelect } from "../../../utils/townsData";
+import generateDistricts from "../../../utils/generateDistricts";
 
 const BodySignupClient = () => {
 	let [formData, setFormData] = useState({
@@ -63,7 +65,7 @@ const BodySignupClient = () => {
 	}
 
 	const changeSelectOptionHandler = (event) => {
-			handleChange(event)
+		handleChange(event)
 	};
 
 	const handleChange = (event) => {
@@ -219,30 +221,10 @@ const BodySignupClient = () => {
 					className=" bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-600 text-xs md:text-sm w-full focus:outline-none focus:bg-gray2-ligth focus:px-6 focus:text-gray-600 mb-3"
 				>
 					<option value="">Quartier*</option>
-		      {
-		        generateDistricts()
-		      }
+					{
+						generateDistricts(formData.ville)
+					}
 				</select>
-
-
-				{/* <label
-					htmlFor="profilePicture"
-					className="bg-white border-b-2 border-gray2 py-2 md:py-3 text-gray-400 text-xs md:text-sm  focus:outline-none focus:bg-gray2-ligth focus:px-6 mb-3 w-full block"
-				>
-					Selectionner votre photo de profile
-				</label>
-				<input
-					className="hidden"
-					type="file"
-					name="profilePicture"
-					id="profilePicture"
-					value={formData.profilePicture}
-					placeholder="Entrez votre photo de profil"
-					onChange={handleChange}
-					accept=".jpg, .jpeg, .png"
-				/> */}
-
-
 				<div className="flex text-gray-400 mb-3">
 					<span className="mr-3">Sexe*</span>
 					{["homme", "femme"].map((sexe) => (

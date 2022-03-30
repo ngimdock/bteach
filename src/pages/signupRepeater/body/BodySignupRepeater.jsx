@@ -7,6 +7,9 @@ import ALink from "../../../components/elements/a/ALink";
 import { firebaseUserCreateUser } from "../../../api/Users";
 import { Navigate } from "react-router-dom";
 import LoaderCircle from "../../../components/utils/loaders/LoaderCircle";
+import { townSelect } from "../../../utils/townsData";
+import generateDistricts from "../../../utils/generateDistricts";
+
 
 const BodySignupRepeater = () => {
 	// Set local state
@@ -243,7 +246,7 @@ const BodySignupRepeater = () => {
 						Quartier* (choisissez le quartier le plus proche de chez vous)
 					</option>
 					{
-						generateDistricts()
+						generateDistricts(formData.ville)
 					}
 				</select>
 
