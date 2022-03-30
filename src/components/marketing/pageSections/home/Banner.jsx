@@ -35,7 +35,7 @@ const Banner = () => {
 						<p className="text-bold text-center"><span className="text-red-500">Business</span> <span className="text-white">&</span> <span className="text-primary">Teach</span></p>
 					</div>
 					
-					<H1 size="big" classe="mt-5 text-center md:text-left">Retrouvez un repetiteur adapté à votre besoin et à vos moyens</H1>
+					<H1 size="big" classe="mt-5 text-center md:text-left">Retrouvez un répétiteur adapté à votre besoin et à vos moyens</H1>
 
 					<BigInput1
 						type="text"

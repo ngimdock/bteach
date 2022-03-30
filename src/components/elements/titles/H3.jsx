@@ -3,9 +3,9 @@ import React from 'react';
 const H3 = (props) => {
 
   const {
-      children,
-      color,
-      classe
+    children,
+    color,
+    classe
   }=props;
 
   let colorH2
@@ -19,7 +19,9 @@ const H3 = (props) => {
       text-xl md:text-2xl lg:text-3xl
       font-extrabold 
       font-primary
-    `}>
+    `}
+      style={{ color: color ? color:"" }}
+    >
       {children}
     </h3>
   );  

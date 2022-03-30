@@ -1,27 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext, useMemo } from "react";
 import style from './style.module.css'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 import ImgCircle from "../../elements/imgCircle/ImgCircle";
+import Paragraphe from "../../elements/p/Paragraphe";
+import serviceContext from "../../../dataManager/context/servicesContext";
 
 const image = require("../../../medias/photos/shallow-focus-shot-young-black-male-grey-wall (1).jpg")
 
-const RecommandationItem = () => {
+const RecommandationItem = ({ note }) => {
+
+  console.log(note);
+
   return (
     <article className={style.recommandationItem}>
-      <span>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius voluptate similique asperiores sapiente est dolores tempora sequi, officia iste rem consectetur fugiat vel nesciunt earum veniam voluptatem aspernatur odit. Qui corrupti odit, perferendis quisquam harum libero recusandae excepturi autem deleniti rerum modi sapiente, animi facere, sint est incidunt illum tenetur!
-      </span>
+
+      <div className="grid content-between h-full">
+        <Paragraphe>
+        { note.message }
+        </Paragraphe>
+        <span>{`${note.stars} étoiles`}</span>
+      </div>
 
       <div className={style.recommandationInfo}>
-        <ImgCircle classe={style.recommandationImage} src={image} alt="eleve" />
+        <ImgCircle classe={style.recommandationImage} src={note.author.profilePic} alt="eleve" />
 
-        <span className={style.recommandationLevel}>Eleve de 3-ieme</span>
+        <span className={`${style.recommandationLevel} block test-xs `}>{`${note.author.name + " " + note.author.firstName }`}</span>
       </div>
     </article>
   )
 }
 
-const RecommandationCarousel = () => {
+const RecommandationCarousel = ({ notes }) => {
   // Set Local state
   const [slideIndex, setSlideIndex] = useState(0)
   
@@ -36,7 +45,7 @@ const RecommandationCarousel = () => {
   const handleSlide = (action) => {
     switch (action) {
       case "next": {
-        if (slideIndex === 2) {
+        if (slideIndex === notes.length-1) {
           setSlideIndex(0)
         } else {
           setSlideIndex(prev => prev + 1)
@@ -47,7 +56,7 @@ const RecommandationCarousel = () => {
 
       case "prev": {
         if (slideIndex === 0) {
-          setSlideIndex(2)
+          setSlideIndex(notes.length-1)
         } else {
           setSlideIndex(prev => prev - 1)
         }
@@ -60,6 +69,14 @@ const RecommandationCarousel = () => {
     }
   }
 
+  const getService = (services, serviceId) => {
+    const service = services.find((serv) => {
+      return serv.getId === serviceId;
+    });
+
+    return service;
+  };
+
   return (
     <section className={style.recommandation}>
       <section className={style.recommationContainer}>
@@ -68,9 +85,11 @@ const RecommandationCarousel = () => {
           className={style.recommandationSlider}
         >
           {
-            [1, 1, 1].map((item) => {
-              return <RecommandationItem />
-            })
+            notes && (
+              notes.map((note) => {
+                return <RecommandationItem note={note} />
+              })
+            )
           }
         </div>
       </section>
@@ -86,9 +105,9 @@ const RecommandationCarousel = () => {
         className={style.recommandationNext} 
       />
 
-      <span className={style.sliderIndicator}>{slideIndex + 1} sur 3</span>
+      <span className={style.sliderIndicator}>{slideIndex + 1} sur {notes.length}</span>
     </section>
   )
 }
 
-export default RecommandationCarousel
+export default React.memo(RecommandationCarousel)

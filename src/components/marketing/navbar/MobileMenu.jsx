@@ -6,6 +6,7 @@ import Button from '../../elements/buttons/Button'
 import ALink from '../../elements/a/ALink'
 import currentUserContext from '../../../dataManager/context/currentUserContext'
 import { firebaseUserLogout } from '../../../api/Users'
+import { Navigate } from 'react-router-dom'
 
 const NavItem = ({ text, link, onClick }) => {
   const defaultLink = link ? link : "#"
@@ -18,9 +19,12 @@ const NavItem = ({ text, link, onClick }) => {
   )
 }
 
-const MobileMenu = ({ show, onHide }) => {
+const MobileMenu = ({ show, onHide, onOpenModal }) => {
   // Get data from the global state
   const { currentUser, logout: userLogout } = useContext(currentUserContext)
+  
+  // Set local state
+  const [redirect, setRedirect] = useState(false)
 
   // Logout function
   const logout = async () => {
@@ -31,6 +35,8 @@ const MobileMenu = ({ show, onHide }) => {
       if (data) {
         // Delete the currentuse from the global state
         userLogout()
+
+        setRedirect(true)
       } else {
         console.log("error while logout")
       }
@@ -49,8 +55,18 @@ const MobileMenu = ({ show, onHide }) => {
     return "admin"
   }
 
+  const handleOpenSignupModal = () => {
+    onHide(false)
+
+    onOpenModal()
+  }
+
   return (
     <article className={`${style.mobileMenuContainer} ${!show ? style.mobileMenuTransition : ""}`}>
+      {
+        redirect && <Navigate to="/" />
+      }
+      
       <div 
 				className={style.navbarIconMenuClose}
 				onClick={onHide}	
@@ -79,7 +95,7 @@ const MobileMenu = ({ show, onHide }) => {
 
               <div className={style.mobileMenuControl}>
                 <Button size="small" link="/sign_in" classe={style.mobileMenuLoginBtn}>CONNEXION</Button>
-                <Button size="small" link="/client/sign_up" theme="red" classe={style.mobileMenuLoginBtn}>INSCRIPTION</Button>
+                <Button size="small" action={handleOpenSignupModal} theme="red" classe={style.mobileMenuLoginBtn}>INSCRIPTION</Button>
               </div>
             </div>
           )
@@ -90,7 +106,10 @@ const MobileMenu = ({ show, onHide }) => {
         <div>
           <NavItem text="Accueil" link="/" />
           <NavItem text="Les repetiteurs" link="/search/repeaters" />
-          <NavItem text="Deconnexion" onClick={logout} />
+
+          {
+            currentUser && <NavItem text="Deconnexion" onClick={logout} />
+          }
         </div>
       </div>
     </article>

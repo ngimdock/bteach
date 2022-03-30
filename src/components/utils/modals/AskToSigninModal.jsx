@@ -48,7 +48,7 @@ function AskToSigninModal({ isOpen, closeModal }) {
                 <div className='flex flex-col'>
                   <H3>Vous n'êtes pas connecté</H3>
 
-                  <Paragraphe>
+                  <Paragraphe size="small" classe="mt-3">
                     Veillez vous connecter avant d'effectuer cette action
                   </Paragraphe>
                 </div>

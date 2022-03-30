@@ -115,13 +115,11 @@ const createService = (data) => {
 	}
 }
 
-const updateService = (id, data) => {
+const updateService = (data) => {
+	console.log(data)
 	return{
 		type: UPDATE_SERVICE,
-		payload: {
-			id,
-			data
-		}
+		payload: data
 	}
 }
 

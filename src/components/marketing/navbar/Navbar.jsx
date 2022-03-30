@@ -9,7 +9,7 @@ import ImgCircle from "../../elements/imgCircle/ImgCircle"
 import NavbarProfilDropdown from "../../utils/dropdowns/NavbarProfileDropdown"
 import MobileMenu from "./MobileMenu"
 
-const Navbar = () => {
+const Navbar = ({ onOpenModal }) => {
 	// Set local state
 	const [mobileMenuDisplayed, setMobileMenuDisplayed] = useState(false)
 	const [backgroundMenuBlackVisible, setBackgroundMenuBlackVisible] = useState(false)
@@ -51,14 +51,12 @@ const Navbar = () => {
 	}
 
 	// Handle mobile menu display
-	const handleShowMobileMenu = () => {
-		setMobileMenuDisplayed(prev => {
-			if (!prev) {
-				setBackgroundMenuBlackVisible(true)
-			}
+	const handleShowMobileMenu = (val) => {
+		setMobileMenuDisplayed(val)
+		setBackgroundMenuBlackVisible(val)
 
-			return !prev
-		})
+		console.log("hide")
+		console.log(val)
 	}
 
 	return(
@@ -76,7 +74,7 @@ const Navbar = () => {
 					!currentUser ? (
 						<>
 							<Button size="medium" link="/sign_in" classe={style.navbarBtnSignin}>CONNEXION</Button>
-							<Button size="medium" link="/client/sign_up" classe={style.navbarBtnSignup}>INSCRIPTION</Button>
+							<Button size="medium" action={onOpenModal} classe={style.navbarBtnSignup}>INSCRIPTION</Button>
 						</>
 					):(
 						<NavbarProfilDropdown
@@ -97,14 +95,15 @@ const Navbar = () => {
 
 			<div 
 				className={style.navbarIconMenu}
-				onClick={handleShowMobileMenu}	
+				onClick={() => handleShowMobileMenu(true)}	
 			>
 				<FaBars />
 			</div>
 
 			<MobileMenu 
 				show={mobileMenuDisplayed}
-				onHide={handleShowMobileMenu}	
+				onHide={() => handleShowMobileMenu(false)}
+				onOpenModal={onOpenModal}	
 			/>
 
 			{

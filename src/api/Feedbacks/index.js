@@ -52,26 +52,28 @@ const firebaseCreateFeebacks = async (idUser, data) => {
   if (data) {
     try {
       // Get collection reference of user and feedbacks
-      const userCollectionRef = getCollection(idUser, "users")
       const feedbacksCollectionRef = getCollections("feedbacks")
+      let userCollectionRef
+      let user
 
-      const user = await getDoc(userCollectionRef)
-
-      if (user.data()) {
-        // Generate the feedbackData
-        const feedbackData = { 
-          message: data, 
-          date: Date.now(), 
-          author: userCollectionRef
-        }
-  
-        // Create a new feedback
-        await addDoc(feedbacksCollectionRef, feedbackData)
-  
-        return { data: true }
+      if (idUser) {
+        userCollectionRef = getCollection(idUser, "users")
+        user = await getDoc(userCollectionRef)
       }
 
-      return { error: "l'utilisateur est introuvable" }
+
+      // Generate the feedbackData
+      const feedbackData = { 
+        message: data.message, 
+        date: Date.now(), 
+        author: user?.data() ? userCollectionRef : null,
+        email: data.email
+      }
+  
+      // Create a new feedback
+      await addDoc(feedbacksCollectionRef, feedbackData)
+  
+      return { data: true }
     } catch (err) {
       console.log(err)
 

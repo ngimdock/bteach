@@ -13,6 +13,9 @@
 	.radio_label{
 		display: flex;
 	}
+	.CurrentSearchNav{
+		margin-left: 8px;
+	}
 }
 
 .CurrentSearchNav{
@@ -53,7 +56,10 @@
 }
 
 .w_max_content{
-	width: max-content;
+	width: fit-content;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .RepeaterCard .top_part {
@@ -65,6 +71,7 @@
 	width: 100%;
   object-fit: cover;
 }
+
 .RepeaterCard .top_part .card_repeater{
 	height: 300px;
 	width: 100%;
@@ -92,18 +99,21 @@
 #page-numbers {
   list-style: none;
   display: flex;
-  margin-top: 30px;
 }
 
 #page-numbers > li {
   margin-right: 5px;
-  color: black;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 14px;
   padding: 10px 18px;
 	border-radius: 100%;
   user-select: none;
   cursor: pointer;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 #page-numbers > li:hover{
 	color: #fff;

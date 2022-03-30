@@ -6,7 +6,7 @@ import RepeaterDomains from "../../../components/marketing/pageSections/home/Rep
 import SearchRepeaterSection from "../../../components/marketing/pageSections/home/SearchRepeaterSection";
 import SearchByCity from "../../../components/marketing/pageSections/home/SearchByCity";
 import TrainingTypes from "../../../components/marketing/pageSections/home/TrainingTypes";
-import StudentsOpinion from "../../../components/marketing/pageSections/home/StudentsOpinion";
+import FeedBackForm from "../../../components/marketing/pageSections/home/FeedBackForm";
 import "../../../css/home.css"
 
 const BodyHome = () => {
@@ -18,7 +18,8 @@ const BodyHome = () => {
 			<SearchRepeaterSection />
 			<SearchByCity />
 			<TrainingTypes />
-			<StudentsOpinion />
+			{/* <StudentsOpinion /> */}
+			<FeedBackForm />
 		</>
 	)
 }

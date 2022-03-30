@@ -1,4 +1,14 @@
-import { ADD_SERVICE, ADD_ALL_SERVICES, REMOVE_SERVICE, UPDATE_SERVICE } from "./types"
+import { 
+	ADD_SERVICE, 
+	ADD_ALL_SERVICES, 
+	REMOVE_SERVICE, 
+	UPDATE_SERVICE,
+
+    CREATE_NOTE_SERVICE,
+    UPDATE_NOTE_SERVICE,
+    DELETE_NOTE_SERVICE,
+    STORE_ALL_NOTES_SERVICE
+} from "./types"
 
 const addService = (data) => {
 	return {
@@ -21,8 +31,56 @@ const removeService = (idService) => {
 	}
 }
 
+//notes actions
+const createNoteService = (idService, idSender, data) => {
+	return {
+		type: CREATE_NOTE_SERVICE,
+		payload: {
+			idService,
+			idSender,
+			data
+		}
+	}
+}
+
+const updateNoteService = (idService, idNote, data) => {
+	return {
+		type: UPDATE_NOTE_SERVICE,
+		payload: {
+			idService,
+			idNote,
+			data
+		}
+	}
+}
+
+const deleteNoteService = (idService, idNote) => {
+	return {
+		type: DELETE_NOTE_SERVICE,
+		payload: {
+			idService,
+			idNote
+		}
+	}
+}
+
+const storeAllNotesService = (idService, notes) => {
+	return {
+		type: STORE_ALL_NOTES_SERVICE,
+		payload: {
+			idService,
+			notes
+		}
+	}
+}
+
 export {
 	addService,
 	addAllServices,
-	removeService
+	removeService,
+
+	createNoteService,
+	updateNoteService,
+	deleteNoteService,
+	storeAllNotesService
 }

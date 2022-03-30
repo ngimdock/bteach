@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import H2 from "../../../elements/titles/H2";
 import Button from "../../../elements/buttons/Button";
@@ -6,10 +6,22 @@ import CityCircle from "./elements/CityCircle";
 import Container from '../../../utils/Container';
 import Paragraphe from '../../../elements/p/Paragraphe';
 import currentUserContext from '../../../../dataManager/context/currentUserContext'
+import ChooseTypeOfSignupForm from "../../../utils/modals/ChooseTypeOfSignupForm";
 
 
 const SearchByCity = () => {
 	const { currentUser } = useContext(currentUserContext)
+
+	// Set local state
+	const [isModalOpen, setIsModalOpen] = useState(false)
+
+	const handleOpenModal = () => {
+		setIsModalOpen(true)
+	}
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false)
+	}
 
 	return(
 		<Container classe="mt-20 md:mt-40 px-5 md:px-10">
@@ -27,9 +39,13 @@ const SearchByCity = () => {
 			{
 				!currentUser && (
 					<div className="mt-16 flex justify-center">
-						<Button  size="big" theme="red" classe="mt-1">Inscription</Button>
+						<Button action={handleOpenModal}  size="big" theme="red" classe="mt-1">Inscription</Button>
 					</div>
 				)
+			}
+
+			{
+				isModalOpen && <ChooseTypeOfSignupForm isOpen={isModalOpen} closeModal={handleCloseModal} />
 			}
 		</Container>
 	);

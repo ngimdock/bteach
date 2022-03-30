@@ -26,16 +26,18 @@ import {
 
 	createAnnonce,
 	updateAnnonce,
-	changeAnnonceVisibility,
-
-	deleteRepeater,
-	certifiedRepeater
+	changeAnnonceVisibility
 } from "./dataManager/data/currentUser/currentUserAction"
 
 import {
 	addService,
 	addAllServices,
-	removeService
+	removeService,
+
+	createNoteService,
+	updateNoteService,
+	deleteNoteService,
+	storeAllNotesService
 } from "./dataManager/data/services/servicesActions" 
 
 
@@ -132,6 +134,10 @@ const ContextProvider = ({ children }) => {
 		dispatchServices(removeService(idService))
 	}
 
+	const servicesStoreAllNotes = (idService, notes) => {
+		dispatchServices(storeAllNotesService(idService, notes))
+	}
+
 	const currentUserContextValue ={
 		currentUser,
 		login: userLogin,
@@ -161,7 +167,9 @@ const ContextProvider = ({ children }) => {
 		services,
 		addService: servicesAddService,
 		addAllServices: servicesAddAllServices,
-		removeService: servicesRemoveService
+		removeService: servicesRemoveService,
+
+		storeAllNotesService: servicesStoreAllNotes
 	}
 
 	return (

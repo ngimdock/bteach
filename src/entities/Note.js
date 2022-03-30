@@ -4,14 +4,18 @@ class Note{
 	stars;
 	messages;
 	isVisible;
+	service;
+	author; //id for person who send the note
 
 	constructor(data){
-		const { id, stars, message } = data
+		const { id, stars, message, service, author } = data
 
 		this.id = id
 		this.stars = stars
 		this.message = message
 		this.isVisible = 1
+		this.service = service
+		this.author = author
 	}
 
 
@@ -39,6 +43,21 @@ class Note{
 	 get getIsVisible(){
 	 	return this.isVisible
 	 }
+
+	/**
+	 * @returns number
+	 */
+	  get getService(){
+		return this.service
+	}
+
+	/**
+	 * @returns number
+	 */
+	 get getAuthor(){
+		return this.author
+	}
+
 
 	 updateNote(data){
 	 	const { stars, message } = data

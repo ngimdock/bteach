@@ -172,7 +172,8 @@ const firebaseServiceUpdateService = async (idService, data) => {
 			coursesType,
 			coursesLocation,
 			description,
-      isVisible
+      isVisible,
+      categories
     } = data
 
     const credentials = {
@@ -183,6 +184,7 @@ const firebaseServiceUpdateService = async (idService, data) => {
 			coursesType: coursesType ? coursesType : [],
 			coursesLocation: coursesLocation ? coursesLocation : [],
 			description: description ? description : "",
+      categories: categories ? categories : [],
       isVisible
     }
 

@@ -218,9 +218,13 @@ const currentUserReducer = (state, action) => {
 
 		case UPDATE_SERVICE: {
 			if(action.payload){
+				console.log("2")
 				if(state.getRole === 1 && state.getService !== null){
-					const { data } = action.payload
+					console.log("3")
+					const data = action.payload
+					
 					const repeater = new Repeater(state)
+					console.log(data)
 					repeater.updateService(data)
 					return repeater
 				}

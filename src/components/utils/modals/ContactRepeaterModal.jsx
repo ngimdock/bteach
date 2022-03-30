@@ -50,7 +50,7 @@ function ContactRepeaterModal({ isOpen, closeModal, data }) {
                         Adresse email
                     </H4>
                     <Paragraphe size="small">
-                      { data.getEmail }
+                    <a href={`mailto:${data.getEmail}`}>{ data.getEmail }</a>
                     </Paragraphe>
                 </div>
                 <div>

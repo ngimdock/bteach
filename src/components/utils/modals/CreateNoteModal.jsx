@@ -1,12 +1,19 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useContext } from 'react'
 import Paragraphe from '../../elements/p/Paragraphe';
 import Button from '../../elements/buttons/Button';
 import InputText from '../../elements/inputs/Input';
 import { BsStar, BsStarFill } from 'react-icons/bs';
+import {firebaseCreateNote, firebaseGetNotes} from "../../../api/Notes"
+import currentUserContext from '../../../dataManager/context/currentUserContext';
 
-function CreateNoteModal({ isOpen, closeModal }) {
+function CreateNoteModal({ isOpen, closeModal, serviceId }) {
   const [stars, setStars] = useState(0)
+  const [message, setMessage] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  //context
+  const { currentUser } = useContext(currentUserContext)
 
   const handleGiveStar = (value) => {
     setStars(value)
@@ -16,6 +23,32 @@ function CreateNoteModal({ isOpen, closeModal }) {
     setStars(0)
 
     closeModal()
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    
+    if (validateForm() && !loading) {
+      setLoading(true)
+      console.log("yo")
+      const data = { stars, message } // get data from the state
+    
+      
+      console.log({idUser: currentUser.getId, serviceId, ...data })
+  
+      firebaseCreateNote(currentUser.getId, serviceId, data) //store note on database 
+    
+      setLoading(false)
+
+      handleClose()
+    }
+  }
+
+  const validateForm = () => {
+    if (stars > 0 && message)
+      return true
+
+    return false
   }
 
 	const formatStars = (stars) => {
@@ -99,9 +132,10 @@ function CreateNoteModal({ isOpen, closeModal }) {
                     </div>
 
                     <InputText
+                      value={message}
                       type="text"
                       placeholder="votre message"
-                      handleChange={() => {}}
+                      handleChange={(e) => setMessage(e.target.value)}
                     />
                   </div>
 
@@ -117,9 +151,8 @@ function CreateNoteModal({ isOpen, closeModal }) {
                     annuler
                   </Button>
                   <Button
-                    type="button"
                     size="small"
-                    action={handleClose}
+                    action={handleSubmit}
                   >
                     récommander
                   </Button>

@@ -190,3 +190,28 @@
 	border-radius: 50%;
 	margin-bottom: 10px;
 }
+
+@media screen and (max-width: 1024px) {
+	.feedback-img {
+		width: 500px;
+		height: auto;
+		margin: 0 auto;
+	}
+
+	.feedback-form {
+		width: 500px;
+		margin: 10px auto;
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.feedback-img {
+		width: calc(100% - 20px);
+		padding: 0 10px;
+	}
+
+	.feedback-form {
+		width: calc(100% - 20px);
+		padding: 0 10px;
+	}
+}

@@ -6,7 +6,7 @@ const DropdownCities = ({ onAddFilter }) => {
 
 	const options = [
 		{ value: 'Villes' },
-		{ value: 'Yaounde' },
+		{ value: 'Yaoundé' },
 		{ value: 'Douala' },
 		{ value: 'Bafoussam' },
 		{ value: 'Ebolowa' },

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Routes, Route, Redirect } from "react-router-dom";
+import React from 'react'
+import { Routes, Route } from "react-router-dom";
 
 import Home from './pages/home/Home'
 import Signin from './pages/signin/Signin'
@@ -9,7 +9,9 @@ import ClientProfile from './pages/clientProfile/ClientProfile'
 import RepeaterProfile from './pages/repeaterProfile/RepeaterProfile'
 import SearchRepeaters from './pages/searchRepeaters/SearchRepeaters'
 import SearchClients from './pages/searchClients/SearchClients'
+import Team from './pages/team/Team'
 import Error404 from './pages/error404/Error404'
+import TermOfService from './pages/termOfService/TermOfService';
 
 
 
@@ -36,6 +38,10 @@ const Router = () => {
 					<Route  path="clients" element={<SearchClients />} />
 					<Route  path="repeaters" element={<SearchRepeaters />} />
 				</Route>
+
+				<Route path="terms_of_service" element={<TermOfService/> } />
+				
+				<Route path="team" element={<Team />} />
 
 				<Route  path="*" element={<Error404 />} />
 			</Route>

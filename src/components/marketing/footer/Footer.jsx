@@ -24,7 +24,7 @@ const Footer = () => {
 	}
 
 	return(
-		<footer className={`${style.footer} mt-20 md:mt-32` }>
+		<footer className={`${style.footer} bg-black mt-20 md:mt-32` }>
 			<div className={style.footerOne}>
 				<div className={style.footerTwo}>
 					<span className={style.footerTitle}>Type répétiteurs</span>
@@ -39,7 +39,7 @@ const Footer = () => {
 					<span className={style.footerTitle}>A propos</span>
 
 					<nav className={style.footerNav}>
-						<ALink classe={style.footerNavLink} link="#">Notre equipe</ALink>
+						<ALink classe={style.footerNavLink} link="/team">Notre equipe</ALink>
 						<ALink classe={style.footerNavLink} link="#">Nos valeurs</ALink>
 						<ALink classe={style.footerNavLink} link="#">Nos references</ALink>
 					</nav>
@@ -50,7 +50,7 @@ const Footer = () => {
 					<span className={style.footerTitle}>Politique</span>
 
 					<nav className={style.footerNav}>
-						<ALink classe={style.footerNavLink} link="#">Condition d'utilisation</ALink>
+						<ALink classe={style.footerNavLink} link="/terms_of_service">Condition d'utilisation</ALink>
 						<ALink classe={style.footerNavLink} link="#">Politique de confidentialite</ALink>
 					</nav>
 				</div>
